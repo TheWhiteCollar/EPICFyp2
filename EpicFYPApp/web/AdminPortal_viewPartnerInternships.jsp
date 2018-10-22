@@ -3,9 +3,9 @@
 <%@page import="Model.Entity.Internship"%>
 <%@page import="Model.Dao.InternshipDAO"%>
 <%@page import="java.time.LocalDate"%>
-<%@page import="Model.Dao.PartnerDAO"%>
+<%@page import="Model.Dao.CompanyDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Model.Entity.Partner"%>
+<%@page import="Model.Entity.Company"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -80,15 +80,15 @@
                                 
                                     for (int i = 0; i < approvedInternships.size(); i++) {
                                         Internship internship = approvedInternships.get(i);
-                                        Partner partner = PartnerDAO.getPartnerByID(internship.getInternshipPartnerID());
+                                        Company company = CompanyDAO.getCompanyByID(internship.getInternshipPartnerID());
                                         counta += 1;
                                 %>
                                 <tr>
                                     <td class = "align-center"><%out.print(counta);%></td>
                                     <td><%out.print(internship.getInternshipName());%></td>
-                                    <td><%out.print(partner.getPartnerName());%></td>
+                                    <td><%out.print(company.getCompanyName());%></td>
                                     <td><%out.print(internship.getInternshipFieldOfStudy());%></td>
-                                    <td><%out.print(partner.getPartnerCountry());%></td>
+                                    <td><%out.print(company.getCompanyCountry());%></td>
                                     <td><%out.print(internship.getInternshipVacancy());%></td>
                                     <td><button type="button" class="button" data-toggle="modal" data-target="#myModalApproved<%out.print(i);%>">View</button></td>
                                 </tr>
@@ -135,13 +135,13 @@
                                 
                                     for (int i = 0; i < pendingInternships.size(); i++) {
                                         Internship internship = pendingInternships.get(i);
-                                        Partner partner = PartnerDAO.getPartnerByID(internship.getInternshipPartnerID());
+                                        Company company= CompanyDAO.getCompanyByID(internship.getInternshipPartnerID());
                                         countp += 1;
                                 %>
                                 <tr>
                                     <td class = "align-center"><%out.print(countp);%></td>
                                     <td><%out.print(internship.getInternshipName());%></td>
-                                    <td><%out.print(partner.getPartnerName());%></td>
+                                    <td><%out.print(company.getCompanyName());%></td>
                                     <td><%out.print(internship.getInternshipSupervisor());%></td>
                                     <td><%out.print(internship.getInternshipSupervisorEmail());%></td>
                                     <td><button type="button" class="button" data-toggle="modal" data-target="#myModalPending<%out.print(i);%>">View</button></td>
@@ -188,13 +188,13 @@
                                 
                                     for (int i = 0; i < rejectedInternships.size(); i++) {
                                         Internship internship = rejectedInternships.get(i);
-                                        Partner partner = PartnerDAO.getPartnerByID(internship.getInternshipPartnerID());
+                                        Company company = CompanyDAO.getCompanyByID(internship.getInternshipPartnerID());
                                         countr += 1;
                                 %>
                                 <tr>
                                     <td class = "align-center"><%out.print(countr);%></td>
                                     <td><%out.print(internship.getInternshipName());%></td>
-                                    <td><%out.print(partner.getPartnerName());%></td>
+                                    <td><%out.print(company.getCompanyName());%></td>
                                     <td><%out.print(internship.getInternshipSupervisor());%></td>
                                     <td><%out.print(internship.getInternshipSupervisorEmail());%></td>
                                     <td><button type="button" class="button" data-toggle="modal" data-target="#myModalRejected<%out.print(i);%>">View</button></td>
@@ -219,7 +219,7 @@
                 if (!approvedInternships.isEmpty()) {
                     for (int i = 0; i < approvedInternships.size(); i++) {
                         Internship internship = approvedInternships.get(i);
-                        Partner partner = PartnerDAO.getPartnerByID(internship.getInternshipPartnerID());
+                        Company company = CompanyDAO.getCompanyByID(internship.getInternshipPartnerID());
                         
                         String dateTimes = internship.getInternshipDatetime();
                         String[] dateTimeList = dateTimes.split("\\s*,\\s*");
@@ -236,7 +236,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title align-center"><b><%out.print(partner.getPartnerName()); %></b> internship application for <b><%out.print(internship.getInternshipName());%></b></h4>
+                                <h4 class="modal-title align-center"><b><%out.print(company.getCompanyName()); %></b> internship application for <b><%out.print(internship.getInternshipName());%></b></h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -245,10 +245,10 @@
                                         <table class="align-center">
                                             <tbody>
                                                 <tr>
-                                                    <td><b><%out.print(partner.getPartnerName()); %></b></td>
+                                                    <td><b><%out.print(company.getCompanyName()); %></b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><%out.print(partner.getPartnerCountry()); %>, <%out.print(partner.getPartnerState()); %></td>
+                                                    <td><%out.print(company.getCompanyCountry()); %>, <%out.print(company.getCompanyState()); %></td>
                                                 </tr>
 
                                             </tbody>
@@ -339,7 +339,7 @@
                 if (!pendingInternships.isEmpty()) {
                     for (int i = 0; i < pendingInternships.size(); i++) {
                         Internship internship = pendingInternships.get(i);
-                        Partner partner = PartnerDAO.getPartnerByID(internship.getInternshipPartnerID());
+                        Company company = CompanyDAO.getCompanyByID(internship.getInternshipPartnerID());
                         
                         
                                       
@@ -349,7 +349,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title align-center"><b><%out.print(partner.getPartnerName()); %></b> internship application for <b><%out.print(internship.getInternshipName());%></b></h4>
+                                <h4 class="modal-title align-center"><b><%out.print(company.getCompanyName()); %></b> internship application for <b><%out.print(internship.getInternshipName());%></b></h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -358,10 +358,10 @@
                                         <table class="align-center">
                                             <tbody>
                                                 <tr>
-                                                    <td><b><%out.print(partner.getPartnerName()); %></b></td>
+                                                    <td><b><%out.print(company.getCompanyName()); %></b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><%out.print(partner.getPartnerCountry()); %>, <%out.print(partner.getPartnerState()); %></td>
+                                                    <td><%out.print(company.getCompanyCountry()); %>, <%out.print(company.getCompanyState()); %></td>
                                                 </tr>
 
                                             </tbody>
@@ -446,7 +446,7 @@
                 if (!rejectedInternships.isEmpty()) {
                     for (int i = 0; i < rejectedInternships.size(); i++) {
                         Internship internship = rejectedInternships.get(i);
-                        Partner partner = PartnerDAO.getPartnerByID(internship.getInternshipPartnerID());
+                        Company company = CompanyDAO.getCompanyByID(internship.getInternshipPartnerID());
                         
                         String dateTimes = internship.getInternshipDatetime();
                         String[] dateTimeList = dateTimes.split("\\s*,\\s*");
@@ -462,7 +462,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title align-center"><b><%out.print(partner.getPartnerName()); %></b> internship application for <b><%out.print(internship.getInternshipName());%></b></h4>
+                                <h4 class="modal-title align-center"><b><%out.print(company.getCompanyName()); %></b> internship application for <b><%out.print(internship.getInternshipName());%></b></h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -471,10 +471,10 @@
                                         <table class="align-center">
                                             <tbody>
                                                 <tr>
-                                                    <td><b><%out.print(partner.getPartnerName()); %></b></td>
+                                                    <td><b><%out.print(company.getCompanyName()); %></b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><%out.print(partner.getPartnerCountry()); %>, <%out.print(partner.getPartnerState()); %></td>
+                                                    <td><%out.print(company.getCompanyCountry()); %>, <%out.print(company.getCompanyState()); %></td>
                                                 </tr>
 
                                             </tbody>

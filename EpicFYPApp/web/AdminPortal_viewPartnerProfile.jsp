@@ -1,7 +1,7 @@
 <%@page import="java.time.LocalDate"%>
-<%@page import="Model.Dao.PartnerDAO"%>
+<%@page import="Model.Dao.CompanyDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Model.Entity.Partner"%>
+<%@page import="Model.Entity.Company"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -81,18 +81,18 @@
                     </thead>
                     <tbody>
                         <%
-                            ArrayList<Partner> allPartners = PartnerDAO.getAllPartners();
+                            ArrayList<Company> allPartners = CompanyDAO.getAllCompanies();
                             int count = 0;
                             if (!allPartners.isEmpty()) {
                                 for (int i = 0; i < allPartners.size(); i++) {
-                                    Partner p = allPartners.get(i);
+                                    Company p = allPartners.get(i);
                                     count += 1;
                         %>
                         <tr>
                             <td class="align-center"><%out.print(count);%></td>
-                            <td><% out.print(p.getPartnerName()); %></td>                      
-                            <td><% out.print(p.getPartnerCountry()); %></td>
-                            <td class="align-center"><% out.print(p.getPartnerState()); %></td>
+                            <td><% out.print(p.getCompanyName()); %></td>                      
+                            <td><% out.print(p.getCompanyCountry()); %></td>
+                            <td class="align-center"><% out.print(p.getCompanyState()); %></td>
                             <td class="align-center"><button type="button" class="button" data-toggle="modal" data-target="#myModal<%out.print(i);%>">View</button></td>
                         </tr>
                         <%
@@ -105,7 +105,7 @@
                 <%
                     if (!allPartners.isEmpty()) {
                         for (int i = 0; i < allPartners.size(); i++) {
-                            Partner p = allPartners.get(i);
+                            Company p = allPartners.get(i);
 
                 %>
                 <div class="modal fade" id="myModal<%out.print(i);%>" role="dialog">
@@ -113,7 +113,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title align-center"><b><%out.print(p.getPartnerName()); %></b></h4>
+                                <h4 class="modal-title align-center"><b><%out.print(p.getCompanyName()); %></b></h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -122,7 +122,7 @@
                                         <table class="align-center">
                                             <tbody>
                                                 <tr>
-                                                    <td><b><%out.print(p.getPartnerName()); %></b></td>
+                                                    <td><b><%out.print(p.getCompanyName()); %></b></td>
                                                 </tr>
 
                                             </tbody>
@@ -133,15 +133,15 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="align-right"><b>Country </b></td>
-                                                    <td><%out.print(p.getPartnerCountry()); %></td>
+                                                    <td><%out.print(p.getCompanyCountry()); %></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="align-right"><b>State </b></td>
-                                                    <td><%out.print(p.getPartnerState()); %></td>
+                                                    <td><%out.print(p.getCompanyState()); %></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="align-right"><b>Description </b></td>
-                                                    <td><% out.print(p.getPartnerDescription()); %></td>
+                                                    <td><% out.print(p.getCompanyDescription()); %></td>
                                                 </tr>
                                                 
                                             </tbody>
