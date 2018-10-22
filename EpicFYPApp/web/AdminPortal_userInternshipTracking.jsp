@@ -9,9 +9,9 @@
 <%@page import="Model.Entity.InternshipStudent"%>
 <%@page import="Model.Dao.InternshipStudentDAO"%>
 <%@page import="java.time.LocalDate"%>
-<%@page import="Model.Dao.PartnerDAO"%>
+<%@page import="Model.Dao.CompanyDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Model.Entity.Partner"%>
+<%@page import="Model.Entity.Company"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -91,7 +91,7 @@
                                             InternshipStudent ci = confirmedInternship.get(i);
                                             int internshipID = ci.getInternshipID();
                                             Internship internship = InternshipDAO.getInternshipByID(internshipID);
-                                            Partner partner = PartnerDAO.getPartnerByID(internshipID);
+                                            Company company= CompanyDAO.getCompanyByID(internshipID);
                                             User user = UserDAO.getUser(ci.getInternshipUserEmail());
                                             countConfirmed += 1;
                                             String lastUpdatedString = ci.getInternshipStudentLastUpdate();
@@ -100,7 +100,7 @@
                                     %>
                                     <tr>
                                         <td><%out.print(countConfirmed);%></td>
-                                        <td><b><%out.print(partner.getPartnerName());%></b> - <%out.print(internship.getInternshipName());%></td>
+                                        <td><b><%out.print(company.getCompanyName());%></b> - <%out.print(internship.getInternshipName());%></td>
                                         <td><%out.print(user.getUserFirstName());%> <%out.print(user.getUserLastName());%></td>
                                         <td><%out.print(reformattedStr);%></td>
                                         <td><button type="button" class="button" data-toggle="modal" data-target="#myModalConfirmed<%out.print(i);%>">View</button></td>
@@ -333,7 +333,7 @@
                                             User user = UserDAO.getUser(ci.getInternshipUserEmail());
                                             int internshipID = ci.getInternshipID();
                                             Internship internship = InternshipDAO.getInternshipByID(internshipID);
-                                            Partner partner = PartnerDAO.getPartnerByID(internshipID);
+                                            Company company = CompanyDAO.getCompanyByID(internshipID);
 
                                             countCancelled += 1;
 
@@ -344,7 +344,7 @@
                                     <tr>
                                         <td><%out.print(countCancelled);%></td>
                                         <td><%out.print(user.getUserFirstName());%> <%out.print(user.getUserLastName());%></td>
-                                        <td><b><%out.print(partner.getPartnerName());%></b> - <%out.print(internship.getInternshipName());%></td>   
+                                        <td><b><%out.print(company.getCompanyName());%></b> - <%out.print(internship.getInternshipName());%></td>   
                                         <td><%out.print(internship.getInternshipSupervisor());%></td>
                                         <td><%out.print(internship.getInternshipSupervisorEmail());%></td>
                                         <td><%out.print(reformattedStr);%></td>
@@ -370,7 +370,7 @@
                         InternshipStudent ci = confirmedInternship.get(i);
                         int internshipID = ci.getInternshipID();
                         Internship internship = InternshipDAO.getInternshipByID(internshipID);
-                        Partner partner = PartnerDAO.getPartnerByID(internshipID);
+                        Company company = CompanyDAO.getCompanyByID(internshipID);
                         User user = UserDAO.getUser(ci.getInternshipUserEmail());
                         
                         String userName = user.getUserFirstName() + " " + user.getUserLastName();
@@ -381,7 +381,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title align-center"><b><%out.print(userName);%></b> has accepted <b><%out.print(partner.getPartnerName());%> - <%out.print(internship.getInternshipName());%></b></h4>
+                                <h4 class="modal-title align-center"><b><%out.print(userName);%></b> has accepted <b><%out.print(company.getCompanyName());%> - <%out.print(internship.getInternshipName());%></b></h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -391,11 +391,11 @@
                                                 
                                                 <tr>
                                                     <td class="align-right"><b>Company Name</b></td>
-                                                    <td><%out.print(partner.getPartnerName()); %></td>
+                                                    <td><%out.print(company.getCompanyName()); %></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="align-right"><b>Country</b></td>
-                                                    <td><%out.print(partner.getPartnerCountry()); %>, <%out.print(partner.getPartnerState()); %></td>
+                                                    <td><%out.print(company.getCompanyCountry()); %>, <%out.print(company.getCompanyState()); %></td>
                                                 </tr>
                                                 
                                                 <tr>

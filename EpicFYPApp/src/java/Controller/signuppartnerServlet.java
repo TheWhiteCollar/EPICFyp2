@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Model.Dao.PartnerDAO;
+import Model.Dao.CompanyDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
@@ -64,7 +64,7 @@ public class signuppartnerServlet extends HttpServlet {
 
             // Insert into database
             //set companyLogo as null (cause unsolved),set companyID as 1 as incremeted automatically, set companyTermsAndConditions as 1 cause unsure about the checkbox
-            Boolean inserted = PartnerDAO.addCompany(1, companyEmail, 1, companyName, companyContact, companyContinent, companyCountry, companyState, companyDescription, companyPassword, null);
+            Boolean inserted = CompanyDAO.addCompany(1, companyEmail, 1, companyName, companyContact, companyContinent, companyCountry, companyState, companyDescription, companyPassword, null);
 
             if (inserted == true) {
 
