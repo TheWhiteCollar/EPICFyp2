@@ -80,6 +80,14 @@
         <servlet-name>getAllCountryInternship</servlet-name>
         <servlet-class>Controller.getAllCountryInternship</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CompanyDAO</servlet-name>
+        <servlet-class>Model.Dao.CompanyDAO</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Company</servlet-name>
+        <servlet-class>Model.Entity.Company</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TripsDAO</servlet-name>
         <url-pattern>/TripsDAO</url-pattern>
@@ -159,6 +167,14 @@
     <servlet-mapping>
         <servlet-name>getAllCountryInternship</servlet-name>
         <url-pattern>/getAllCountryInternship</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompanyDAO</servlet-name>
+        <url-pattern>/CompanyDAO</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Company</servlet-name>
+        <url-pattern>/Company</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
