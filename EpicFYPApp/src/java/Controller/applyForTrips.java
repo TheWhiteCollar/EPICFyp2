@@ -40,7 +40,8 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         int tripID = Integer.parseInt(request.getParameter("tripID"));
         
         if(TripsDAO.insertStudent(tripUserEmail, tripStudentPaymentID, tripStudentStatus, tripStudentReview, tripStudentRating, tripID)){
-            response.sendRedirect("payment.jsp");
+            String url = "payment.jsp?tripId=" + tripID +"&user=" + tripUserEmail;
+            response.sendRedirect(url);
         }      
          
         response.setContentType("text/html;charset=UTF-8");
