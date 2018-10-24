@@ -88,6 +88,10 @@
         <servlet-name>Company</servlet-name>
         <servlet-class>Model.Entity.Company</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getAllCompaniesServlet</servlet-name>
+        <servlet-class>Controller.getAllCompaniesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TripsDAO</servlet-name>
         <url-pattern>/TripsDAO</url-pattern>
@@ -175,6 +179,10 @@
     <servlet-mapping>
         <servlet-name>Company</servlet-name>
         <url-pattern>/Company</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getAllCompaniesServlet</servlet-name>
+        <url-pattern>/getAllCompaniesServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

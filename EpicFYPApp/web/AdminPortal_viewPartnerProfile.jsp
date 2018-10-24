@@ -143,7 +143,14 @@
                                                     <td class="align-right"><b>Description </b></td>
                                                     <td><% out.print(p.getCompanyDescription()); %></td>
                                                 </tr>
-                                                
+                                                <tr>
+                                                    <td class="align-right"><b>Email </b></td>
+                                                    <td><% out.print(p.getCompanyEmail()); %></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-right"><b>Contact No </b></td>
+                                                    <td><% out.print(p.getCompanyContact()); %></td>
+                                                </tr>
                                             </tbody>
 
                                         </table>
