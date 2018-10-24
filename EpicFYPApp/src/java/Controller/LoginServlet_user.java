@@ -6,8 +6,10 @@
 package Controller;
 
 import Model.Dao.AdminDAO;
+import Model.Dao.CompanyDAO;
 import Model.Dao.UserDAO;
 import Model.Entity.Admin;
+import Model.Entity.Company;
 import Model.Entity.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -50,9 +52,8 @@ public class LoginServlet_user extends HttpServlet {
 
             //create an empty user
             User user = null;
-            // Validate login
-            
             user = UserDAO.getUserByLogin(userid, userpassword);
+            
             if (user != null) {
                 session.setAttribute("User", user);
                 if (comefrom != null && comefrom.equals("studyTrip")) {
@@ -66,20 +67,29 @@ public class LoginServlet_user extends HttpServlet {
                 }
         
                 return;
-            } else {
-                Admin admin = null;
+            }
+            
+            Admin admin = null;
                 admin = AdminDAO.getAdminByLogin(userid, userpassword);
-                if (admin != null) {
+            
+                if (admin != null){
                     session.setAttribute("Admin", admin);
                     response.sendRedirect("index_admin.jsp");
                     return;
+                    }
                 }
-            }
-            
-        }
+        
+            Company company = null;
+                company = CompanyDAO.getCompanyByLogin(userid, userpassword);
 
-        request.setAttribute("Student_ErrorMsg", "Invalid userid/password");
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+                if (company != null){
+                    session.setAttribute("Company", company);
+                    response.sendRedirect("index_partner.jsp");
+                    return;
+                    }
+                
+            request.setAttribute("Student_ErrorMsg", "Invalid userid/password");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
 
     }
 

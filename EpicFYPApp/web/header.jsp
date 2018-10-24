@@ -1,3 +1,4 @@
+<%@page import="Model.Entity.Company"%>
 <%@page import="Model.Entity.Admin"%>
 <%@page import="Model.Entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,11 +14,11 @@
 
             <nav id="nav">
                 <ul>
-
-
                     <%
                         User User = (User) session.getAttribute("User");
                         Admin admin = (Admin) session.getAttribute("Admin");
+                        Company company = (Company) session.getAttribute("Company");
+                        
                         if (User != null) {
                             String Username = User.getUserFirstName();
                             if (Username != null && !Username.isEmpty()) {
@@ -33,13 +34,26 @@
                         </ul>
 
                     </li>
+                    
+                    <%
+                        }
+                    } else if (company != null) {
+                        String Username = company.getCompanyName();
+                        if (Username != null && !Username.isEmpty()) {
+                    %>
+                    <li><a href="index_partner.jsp">Hello, <% out.println(Username); %></a>
+                        <ul>
+                            <li><a href="logout.jsp">Logout</a></li>
+                        </ul>
+                    </li>
+                    
                     <%
                         }
                     } else if (admin != null) {
                         String Username = admin.getAdminName();
                         if (Username != null && !Username.isEmpty()) {
                     %>
-<!--                    <li><a href="underConstruction.jsp">Site Statistics</a></li>-->
+
                 
                     <li><a href="AdminPortal_trips.jsp">Manage Trips</a>
                         <ul>

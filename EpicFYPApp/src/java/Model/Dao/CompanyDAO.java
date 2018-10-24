@@ -175,4 +175,26 @@ public class CompanyDAO {
         }
         return true;
     }
+    
+    public static Company getCompanyByLogin(String companyEmail, String companyPassword) {
+
+        Company company = null;
+        String sql = "SELECT * FROM company WHERE companyEmail LIKE ? AND companyPassword LIKE ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, companyEmail);
+            stmt.setString(2, companyPassword);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (company == null) {
+                    company = new Company(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getBlob(11));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CompanyDAO.class.getName()).log(Level.WARNING, "Unable to retrieve" + companyEmail + ".", ex);
+        }
+
+        return company;
+    }
 }
