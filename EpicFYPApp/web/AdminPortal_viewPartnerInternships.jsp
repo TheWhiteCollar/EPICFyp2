@@ -44,9 +44,9 @@
                 
                 <!--tabs-->
                 <div class="tab align-center">
-                    <button class="tablinks" onclick="openUser(event, 'approved')">Approved Applications</button>
-                    <button class="tablinks" onclick="openUser(event, 'pending')" id="defaultOpen">Pending Applications</button>
-                    <button class="tablinks" onclick="openUser(event, 'rejected')">Rejected Applications</button>
+                    <button class="tablinks" onclick="openUser(event, 'approved')">Approved</button>
+                    <button class="tablinks" onclick="openUser(event, 'pending')" id="defaultOpen">Pending</button>
+                    <button class="tablinks" onclick="openUser(event, 'rejected')">Rejected</button>
                 </div>
                 
                 <!--tabs' content 1.approved 2.pending 3.rejected-->
@@ -67,8 +67,8 @@
                             <thead>
                                 <tr>
                                     <th class="align-center">#</th>
-                                    <th class="align-center">Job Title</th>
                                     <th class="align-center">Partner Company</th>
+                                    <th class="align-center">Job Title</th>
                                     <th class="align-center">Field of Study</th>
                                     <th class="align-center">Country</th>
                                     <th class="align-center">Vacancy</th>
@@ -85,8 +85,8 @@
                                 %>
                                 <tr>
                                     <td class = "align-center"><%out.print(counta);%></td>
-                                    <td><%out.print(internship.getInternshipName());%></td>
                                     <td><%out.print(company.getCompanyName());%></td>
+                                    <td><%out.print(internship.getInternshipName());%></td>
                                     <td><%out.print(internship.getInternshipFieldOfStudy());%></td>
                                     <td><%out.print(company.getCompanyCountry());%></td>
                                     <td><%out.print(internship.getInternshipVacancy());%></td>
@@ -123,11 +123,12 @@
                             <thead>
                                 <tr>
                                     <th class="align-center">#</th>
-                                    <th class="align-center">Job Title</th>
                                     <th class="align-center">Partner Company</th>
+                                    <th class="align-center">Job Title</th>
                                     <th class="align-center">Contact's Name</th>
                                     <th class="align-center">Contact's Email</th>
                                     <th class="align-center">More Information</th>
+                                    <th class="align-center">Approved?</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -140,11 +141,13 @@
                                 %>
                                 <tr>
                                     <td class = "align-center"><%out.print(countp);%></td>
-                                    <td><%out.print(internship.getInternshipName());%></td>
                                     <td><%out.print(company.getCompanyName());%></td>
+                                    <td><%out.print(internship.getInternshipName());%></td>
                                     <td><%out.print(internship.getInternshipSupervisor());%></td>
                                     <td><%out.print(internship.getInternshipSupervisorEmail());%></td>
                                     <td><button type="button" class="button" data-toggle="modal" data-target="#myModalPending<%out.print(i);%>">View</button></td>
+                                    <td><button onclick="addToApproved()" class="button">Yes</button>
+                                    <button onclick="addToRejected()" class="button">No</button></td>
                                 </tr>
                                 <%
                                 }
@@ -176,8 +179,8 @@
                             <thead>
                                 <tr>
                                     <th class="align-center">#</th>
-                                    <th class="align-center">Job Title</th>
                                     <th class="align-center">Partner Company</th>
+                                    <th class="align-center">Job Title</th>
                                     <th class="align-center">Contact's Name</th>
                                     <th class="align-center">Contact's Email</th>
                                     <th class="align-center">More Information</th>
@@ -193,8 +196,8 @@
                                 %>
                                 <tr>
                                     <td class = "align-center"><%out.print(countr);%></td>
-                                    <td><%out.print(internship.getInternshipName());%></td>
                                     <td><%out.print(company.getCompanyName());%></td>
+                                    <td><%out.print(internship.getInternshipName());%></td>
                                     <td><%out.print(internship.getInternshipSupervisor());%></td>
                                     <td><%out.print(internship.getInternshipSupervisorEmail());%></td>
                                     <td><button type="button" class="button" data-toggle="modal" data-target="#myModalRejected<%out.print(i);%>">View</button></td>
