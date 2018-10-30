@@ -69,7 +69,8 @@ INSERT INTO `company` (`companyID`, `companyEmail`, `companyTermsAndConditions`,
 (1, '', 0, 'AA Pte Ltd', 0, '0', 'Myanmar', 'Shan', 'Here are AA Pte Ltd, we believe that only the best should be given to our customers.', 'test', ''),
 (2, '', 0, 'BB Pte Ltd', 0, '0', 'Singapore', 'Singapore', 'Here are BB Pte Ltd, we believe that only the best should be given to our customers.', 'test', ''),
 (3, '', 0, 'CC Pte Ltd', 0, '0', 'Malaysia', 'Kuala Lumpur', 'Here are CC Pte Ltd, we believe that only the best should be given to our customers.', 'test', ''),
-(4, '', 0, 'DD Pte Ltd', 0, '0', 'China', 'Shanghai', 'Here are DD Pte Ltd, we believe that only the best should be given to our customers.', 'test', '');
+(4, '', 0, 'DD Pte Ltd', 0, '0', 'China', 'Shanghai', 'Here are DD Pte Ltd, we believe that only the best should be given to our customers.', 'test', ''),
+(5, '123.com', 0, 'Company123', 12345678, '0', 'China', 'Shanghai', 'Here are Company123', '123', '');
 
 -- --------------------------------------------------------
 
@@ -200,7 +201,10 @@ INSERT INTO `internship` (`internshipID`, `internshipName`, `internshipApproval`
 (6, 'Archives Intern', 'pending', 'Law', 'Intern will be in charge of managing the Law archives. These includes retrieving appropriate texts, and opportunities to closely collaborate with full time lawyers building their cases.', '2018-11-11', '2019-11-11', '1000.00', 'Bob Ma', 'tommy.ma@xwy.com', 1, 2, '2018-08-08 12:40:30'),
 (7, 'Nurse Intern', 'rejected', 'Medicine', 'Possess strong emotional strength. It is preferrable if intern is able to speak in dialect.', '2018-11-11', '2019-11-11', '1000.00', 'Mary Tan', 'mary.tan@xwy.com', 1, 3, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
 (8, 'Machine Learning Intern', 'rejected', 'Computing', 'Intern is expected to be self-directed and motivated. Project requires strong foundational knowledge of Machine Learning concepts. ', '2018-11-11', '2019-11-11', '1000.00', 'Mary Tan', 'mary.tan@xwy.com', 2, 3, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
-(9, 'English Researcher Intern', 'rejected', 'History', 'Interns will be researching into the history of words, and curating how the language has evolved overtime. If intern has the language capabilities, he/she might have the opportunity to collaborate in a research paper.', '2018-11-11', '2019-11-11', '1000.00', 'Sally Pi', 'sally.pi@xwy.com', 3, 4, '2018-08-08 12:40:30, 2018-09-08 12:40:30');
+(9, 'English Researcher Intern', 'rejected', 'History', 'Interns will be researching into the history of words, and curating how the language has evolved overtime. If intern has the language capabilities, he/she might have the opportunity to collaborate in a research paper.', '2018-11-11', '2019-11-11', '1000.00', 'Sally Pi', 'sally.pi@xwy.com', 3, 4, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
+(10, 'English Researcher Intern', 'rejected', 'History', 'Interns rej', '2018-11-11', '2019-11-11', '850.00', 'Emily Tan', 'emily@gmail.com', 3, 4, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
+(11, 'English Researcher Intern', 'pending', 'History', 'Interns pend', '2018-11-11', '2019-11-11', '750.00', 'Josh Lau', 'josh@gmail.com', 3, 4, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
+(12, 'English Researcher Intern', 'approved', 'History', 'Interns apprv', '2018-11-11', '2019-11-11', '900.00', 'Andy Lim', 'andy@gmail.com', 3, 4, '2018-08-08 12:40:30, 2018-09-08 12:40:30');
 
 -- --------------------------------------------------------
 
