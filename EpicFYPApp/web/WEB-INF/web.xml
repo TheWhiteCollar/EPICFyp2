@@ -96,6 +96,10 @@
         <servlet-name>getAllInternshipsServlet</servlet-name>
         <servlet-class>Controller.getAllInternshipsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addPartnerInternship</servlet-name>
+        <servlet-class>Controller.addPartnerInternship</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TripsDAO</servlet-name>
         <url-pattern>/TripsDAO</url-pattern>
@@ -191,6 +195,10 @@
     <servlet-mapping>
         <servlet-name>getAllInternshipsServlet</servlet-name>
         <url-pattern>/getAllInternshipsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addPartnerInternship</servlet-name>
+        <url-pattern>/addPartnerInternship</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

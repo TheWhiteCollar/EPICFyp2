@@ -58,8 +58,8 @@
                     let internshipSupervisor = $('input[name="internshipSupervisor"]').val();
                     let internshipSupervisorEmail = $('input[name="internshipSupervisorEmail"]').val();
                     let internshipFieldOfStudy = $("#internshipFieldOfStudyInput option:selected").val();
-                    let internshipDescription = $('input[name="internshipDescription"]').val();
-                    
+                    let internshipDescription = $('textarea[name="internshipDescription"]').val();
+                    let internshipPartnerID = $('input[name="internshipPartnerID"]').val();
                     let internshipData = {
                         "internshipName": internshipName,
                         "internshipStart": internshipStart,
@@ -69,8 +69,10 @@
                         "internshipSupervisor": internshipSupervisor,
                         "internshipSupervisorEmail": internshipSupervisorEmail,
                         "internshipFieldOfStudy": internshipFieldOfStudy,
+                        "internshipPartnerID": internshipPartnerID,
                         "internshipDescription": internshipDescription
                     }
+                    console.log(internshipData);
                     
                     $.post('/EpicFYPApp/addPartnerInternship', internshipData, function (response) {
                         $('button[data-dismiss="modal"]').click();

@@ -73,7 +73,7 @@ public class InternshipDAO {
         }
         return true;
     }
-    
+        
     //increase vacancy by 1 - update internship
     public static boolean updateInternshipVacancyIncrease(int internshipID) {
 
@@ -99,13 +99,29 @@ public class InternshipDAO {
     }
 
     // Add existing parnter/bulk new parnters
-    public static boolean addInternship(int internshipID, String internshipName, String internshipApproval, String internshipFieldOfStudy, String internshipDescription, Date internshipStart, Date internshipEnd, double internshipPay, String internshipSupervisor, String internshipSupervisorEmail, int internshipVacancy, int internshipPartnerID) {
+    public static boolean addInternship(String internshipName, String internshipApproval, String internshipFieldOfStudy, String internshipDescription, Date internshipStart, Date internshipEnd, double internshipPay, String internshipSupervisor, String internshipSupervisorEmail, int internshipVacancy, int internshipPartnerID,String internshipDatetime) {
+        String sql1 = "SELECT CONVERT(MAX(CONVERT(internshipID,UNSIGNED INTEGER)),CHAR(200)) FROM internship ";
 
-        String sql = "INSERT INTO internship (internshipID, internshipName, internshipApproval, internshipFieldOfStudy, internshipDescription, internshipStart, internshipEnd, internshipPay, internshipSupervisor, internshipSupervisorEmail, internshipVacancy, internshipPartnerID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        int maxInternshipID = 0;
+        try (
+                Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql1);) {
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            maxInternshipID = rs.getInt(1);
+            System.out.println("maxInternship " + maxInternshipID);
 
-        try (Connection conn = ConnectionManager.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(InternshipDAO.class.getName()).log(Level.WARNING, "Unable to insert internship", ex);
+            return false;
+        }
+        
+        String sql = "INSERT INTO `internship` (`internshipID`,`internshipName`, `internshipApproval`, `internshipFieldOfStudy`, `internshipDescription`, `internshipStart`, `internshipEnd`, `internshipPay`, `internshipSupervisor`, `internshipSupervisorEmail`, `internshipVacancy`, `internshipPartnerID`, `internshipDatetime`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        maxInternshipID++;
+        try (
+                Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
-            stmt.setInt(1, internshipID);
+            stmt.setInt(1, maxInternshipID);
             stmt.setString(2, internshipName);
             stmt.setString(3, internshipApproval);
             stmt.setString(4, internshipFieldOfStudy);
@@ -117,13 +133,12 @@ public class InternshipDAO {
             stmt.setString(10, internshipSupervisorEmail);
             stmt.setInt(11, internshipVacancy);          
             stmt.setInt(12, internshipPartnerID);
-
-            int result = stmt.executeUpdate();
-            if (result == 0) {
-                return false;
-            }
+            stmt.setString(13, internshipDatetime);
+            stmt.executeUpdate();
+            
         } catch (SQLException ex) {
-            Logger.getLogger(InternshipDAO.class.getName()).log(Level.WARNING, "Failed to add new Internship information", ex);
+            Logger.getLogger(InternshipDAO.class.getName()).log(Level.WARNING, "Failed to add new Internship", ex);
+            return false;
         }
         return true;
     }

@@ -5,7 +5,9 @@
  */
 package Controller;
 
-import Model.Dao.TripsDAO;
+import Model.Dao.CompanyDAO;
+import Model.Dao.InternshipDAO;
+import Model.Entity.Company;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -14,21 +16,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.io.File;
-import java.util.List;
-
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Lenovo
  */
-@WebServlet(name = "addTrip", urlPatterns = {"/addTrip"})
-public class addTrip extends HttpServlet {
+@WebServlet(name = "addPartnerInternship", urlPatterns = {"/addPartnerInternship"})
+public class addPartnerInternship extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +37,6 @@ public class addTrip extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,44 +65,24 @@ public class addTrip extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String tripTitle = request.getParameter("tripTitle");
-        double tripPrice = Double.parseDouble(request.getParameter("tripPrice"));
-        String tripItinerary = null;
-        String tripDescription = request.getParameter("tripDescription");
-        String tripCountry = request.getParameter("tripCountry");
-        String tripState = request.getParameter("tripState");
-        Date tripStart = Date.valueOf(request.getParameter("tripStart"));
-        Date tripEnd = Date.valueOf(request.getParameter("tripEnd"));
-        int tripDuration = Integer.parseInt(request.getParameter("tripDuration"));
-        int tripActivation = Integer.parseInt(request.getParameter("tripActivation"));
-        String tripInterest = request.getParameter("tripInterest");
-        int tripTotalSignUp = Integer.parseInt(request.getParameter("tripTotalSignUp"));
-        String tripPromo = null;
-        double tripPromoPercentage = 0;
+        System.out.println("nvjfnvjsknvlksmvs");
+        
+        //int internshipID = Integer.parseInt(request.getParameter("internshipID"));
+        String internshipName = request.getParameter("internshipName");
+        String internshipApproval = "pending";
+        String internshipFieldOfStudy = request.getParameter("internshipFieldOfStudy");
+        String internshipDescription = request.getParameter("internshipDescription");
+        Date internshipStart = Date.valueOf(request.getParameter("internshipStart"));
+        Date internshipEnd = Date.valueOf(request.getParameter("internshipEnd"));
+        Double internshipPay = Double.parseDouble(request.getParameter("internshipPay"));
+        String internshipSupervisor = request.getParameter("internshipSupervisor");
+        String internshipSupervisorEmail = request.getParameter("internshipSupervisorEmail");
+        int internshipVacancy = Integer.parseInt(request.getParameter("internshipVacancy"));
+        int internshipPartnerID = 0;
+        String internshipDatetime = "2018-08-08 12:40:30, 2018-09-08 12:40:30";
         String text = "fail";
-
-        // For itinerary uploading
-        if (ServletFileUpload.isMultipartContent(request)) {
-            try {
-                List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-                for (FileItem item : multiparts) {
-                    if (!item.isFormField()) {
-                        String name = new File(item.getName()).getName();
-                        tripItinerary = name;
-                        //item.write(new File("../../../web/documents/itinerary" + File.separator + name));
-                        item.write(new File("c:/temp" + File.separator + name));
-                    }
-                }
-                //File uploaded successfully
-                request.setAttribute("gurumessage", "File Uploaded Successfully");
-            } catch (Exception ex) {
-                request.setAttribute("gurumessage", "File Upload Failed due to " + ex);
-            }
-        } else {
-            request.setAttribute("gurumessage", "No File found");
-        }
-
-        if (tripEnd.after(tripStart) && TripsDAO.insertTrip(tripTitle, tripPrice, tripItinerary, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripTotalSignUp, tripPromo, tripPromoPercentage)) {
+        
+        if (internshipEnd.after(internshipStart) && InternshipDAO.addInternship(internshipName, internshipApproval, internshipFieldOfStudy, internshipDescription, internshipStart, internshipEnd, internshipPay, internshipSupervisor, internshipSupervisorEmail, internshipVacancy, internshipPartnerID, internshipDatetime)) {
             text = "success";
         }
 
