@@ -78,7 +78,7 @@ public class addPartnerInternship extends HttpServlet {
         String internshipSupervisor = request.getParameter("internshipSupervisor");
         String internshipSupervisorEmail = request.getParameter("internshipSupervisorEmail");
         int internshipVacancy = Integer.parseInt(request.getParameter("internshipVacancy"));
-        int internshipPartnerID = 0;
+        int internshipPartnerID = Integer.parseInt(request.getParameter("internshipPartnerID"));;
         String internshipDatetime = "2018-08-08 12:40:30, 2018-09-08 12:40:30";
         String text = "fail";
         

@@ -130,8 +130,16 @@
                 <div id="addInternshipTab" class="tabcontent">
                     <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
                     <form id="addPartnerInternship" enctype="multipart/form-data">
+                        
                         <div class = "row 50% uniform">
-                            <div class = "6u 12u(xsmall)">
+                            <div class = "1u 12u(xsmall)">
+                                <p>
+                                    Your ID: <input name="internshipPartnerID" required type="text" placeholder="E.g: 1">
+                                </p>
+                            </div>
+                        </div>
+                        <div class = "row 50% uniform">
+                            <div class = "4u 12u(xsmall)">
                                 <p>
                                     Internship Position: <input required type="text" name="internshipName" placeholder="E.g: Data Analytics Intern">
                                 </p>
@@ -171,8 +179,7 @@
                                 </p>
                             </div>
                         </div>
-                                
-                        <div class ="row 50% uniform">
+                        <div class = "row 50% uniform">
                             <div class = "4u 12u(xsmall)">
                                 <p>
                                     Salary ($): <input name="internshipPay" required type="number" min="1" placeholder="E.g: 900">
