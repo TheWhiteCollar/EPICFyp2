@@ -8,18 +8,21 @@ package Model.Entity;
 /* Database sequence
     #1: paymentID (int 11)
     #2: paymentMode (varchar 100)
-    #3: paymentAmount (double)
+    #3: paymentTransaction (varchar 100)
+    #4: paymentAmount (double)
  */
 
 public class Payment {
 
    private int paymentID;
    private String paymentMode;
+   private String paymentTransaction;
    private double paymentAmount;
 
-    public Payment(int paymentID, String paymentMode, double paymentAmount) {
+    public Payment(int paymentID, String paymentMode, String paymentTransaction, double paymentAmount) {
         this.paymentID = paymentID;
         this.paymentMode = paymentMode;
+        this.paymentTransaction = paymentTransaction;
         this.paymentAmount = paymentAmount;
     }
 
@@ -37,6 +40,14 @@ public class Payment {
 
     public void setPaymentMode(String paymentMode) {
         this.paymentMode = paymentMode;
+    }
+
+    public String getPaymentTransaction() {
+        return paymentTransaction;
+    }
+
+    public void setPaymentTransaction(String paymentTransaction) {
+        this.paymentTransaction = paymentTransaction;
     }
 
     public double getPaymentAmount() {
