@@ -16,22 +16,133 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="description" content="Imparting life skills through overseas exposure via internships and study missions. Countries of focus: Cambodia, Laos, Myanmar, Vietnam, India, Indonesia, Thailand, Japan and China." />
         <meta name="keywords" content="overseas, study missions, internships, training, life skills, career exposure" />
-        <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+        
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap-notify.min.js"></script>
         <script src="js/skel.min.js"></script>
         <script src="js/skel-layers.min.js"></script>
         <script src="js/init.js"></script>
+        
         <noscript>
         <link rel="stylesheet" href="css/skel.css" />
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/style-xlarge.css" />
         </noscript>
-        <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+        
+        <script>
+            $(function () {
+                $.get('/EpicFYPApp/getAllInternshipsServlet', function (internshipJson) {
+                    var internships = JSON.parse(internshipJson);
+                    var internshipHTML = '<div class="table-wrapper"><table>';
+                    $.each(internships, function (index, internship) {
+                        internshipHTML += '<thead><tr><th>Internship ID : ' + internship.internshipID + '</th><th colspan="3">' + internship.internshipName + "</th></tr></thead>";
+                        internshipHTML += "<tr><td><form class=\"updateInternshipApproval\">";
+                        internshipHTML += "<input style=\"display: none\" type=\"text\" name=\"internshipID\" value=\"" + internship.internshipID + "\"/>";
+                        //internshipHTML += "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Yes</button></form></td>";
+                    });
+                    internshipHTML += '</table></div>';
+                    $("#internships").append(internshipHTML);
+
+                    $(".updateInternshipApproval").submit(function (event) {
+                        var internshipID = "" + $(this).children("input").val();
+                        var approveData = {
+                            'id': internshipID
+                        };
+                       
+                        $.post('/EpicFYPApp/updateInternshipApproval', approveData, function (response) {
+                            if (response === "success") {
+                                $.notify({
+                                    // options
+                                    message: 'Response recorded'
+                                }, {
+                                    // settings
+                                    type: 'success'
+                                });
+                            } else {
+                                $.notify({
+                                    message: 'Fail to update application'
+                                }, {
+                                    type: 'danger'
+                                });
+                            }
+                            reloadTable();
+                        })
+                        event.preventDefault();
+                    });
+                });
+            });   
+                
+            function addToApproved() {
+                $.post('/EpicFYPApp/updateInternshipApproval', approveData, function (response) {
+                            if (response === "success") {
+                                $.notify({
+                                    // options
+                                    message: 'Response recorded'
+                                }, {
+                                    // settings
+                                    type: 'success'
+                                });
+                            } else {
+                                $.notify({
+                                    message: 'Fail to update application'
+                                }, {
+                                    type: 'danger'
+                                });
+                            }
+                            reloadTable();
+                        })
+                event.preventDefault();
+            }
+                
+            function reloadTable() {
+                $.get('/EpicFYPApp/getAllInternshipsServlet', function (internshipJson) {
+                        //parse string into JSON object
+                    var internships = JSON.parse(internshipJson);
+                        
+                    $("#internships").empty();
+                    var internshipHTML = '<div class="table-wrapper"><table>';
+                        
+                    $.each(internships, function (index, internship) {
+                        internshipHTML += '<thead><tr><th>Internship ID : ' + internship.internshipID + '</th><th colspan="3">' + internship.internshipName + "</th></tr></thead>";
+                        internshipHTML += "<tr><td><form class=\"updateInternshipApproval\">";
+                        internshipHTML += "<input style=\"display: none\" type=\"text\" name=\"internshipID\" value=\"" + internship.internshipID + "\"/>";
+                        //internshipHTML += "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Yes</button></form></td>";
+                    });
+                    internshipHTML += '</table></div>';
+                    $("#internships").append(internshipHTML);
+
+                    $(".updateInternshipApproval").submit(function (event) {
+                        var internshipID = "" + $(this).children("input").val();
+                        var approveData = {
+                            'id': internshipID
+                        };
+
+                        $.post('/EpicFYPApp/updateInternshipApproval', approveData, function (response) {
+                            if (response === "success") {
+                                $.notify({
+                                    message: 'Response recorded'
+                                }, {
+                                    type: 'success'
+                                });
+                            } else {
+                                $.notify({
+                                    message: 'Fail to update application'
+                                }, {
+                                    type: 'danger'
+                                });
+                            }
+                            reloadTable();
+                        })
+                        event.preventDefault();
+                    });
+                });
+            }
+        </script>
     </head>
     <body>
 
@@ -128,7 +239,7 @@
                                     <th class="align-center">Contact's Name</th>
                                     <th class="align-center">Contact's Email</th>
                                     <th class="align-center">More Information</th>
-                                    <th class="align-center">Approved?</th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>
@@ -146,8 +257,7 @@
                                     <td><%out.print(internship.getInternshipSupervisor());%></td>
                                     <td><%out.print(internship.getInternshipSupervisorEmail());%></td>
                                     <td><button type="button" class="button" data-toggle="modal" data-target="#myModalPending<%out.print(i);%>">View</button></td>
-                                    <td><button onclick="addToApproved()" class="button">Yes</button>
-                                    <button onclick="addToRejected()" class="button">No</button></td>
+                                    
                                 </tr>
                                 <%
                                 }

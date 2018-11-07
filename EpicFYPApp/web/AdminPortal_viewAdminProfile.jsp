@@ -176,7 +176,6 @@
                             }
                             reloadTable();
                         })
-                        //prevents form from being submitted
                         event.preventDefault();
                     });
                 });
