@@ -61,18 +61,17 @@ public class AdminBootstrapServlet extends HttpServlet {
                     String userGender = user[4];
                     String userCitizenship = user[5];
                     int yearOfBirth = Integer.parseInt(user[6]);
-                    String userProfilePic = user[7];
-                    String userInterest = user[8];
-                    String userPassword = user[9];
-                    String userOccupation = user[10];
-                    String userResume = user[11];
-                    String userIsEmailConfirm = user[12]; // by right should be boolean
-                    String userHighestEducation = user[13];
-                    String userFieldOfStudy = user[14];
-                    String userDescription = user[15];
-                    String userSchool = user[16];
+                    String userInterest = user[7];
+                    String userPassword = user[8];
+                    String userOccupation = user[9];
+                    String userResume = user[10];
+                    String userIsEmailConfirm = user[11]; // by right should be boolean
+                    String userHighestEducation = user[12];
+                    String userFieldOfStudy = user[13];
+                    String userDescription = user[14];
+                    String userSchool = user[15];
 
-                    Boolean inserted = UserDAO.addUser(userEmail, userFirstName, userLastName, userPhone, userGender, userCitizenship, yearOfBirth, null, userInterest, userPassword, userOccupation, null, userIsEmailConfirm, userHighestEducation, userFieldOfStudy, userDescription, userSchool);
+                    Boolean inserted = UserDAO.addUser(userEmail, userFirstName, userLastName, userPhone, userGender, userCitizenship, yearOfBirth, userInterest, userPassword, userOccupation, null, userIsEmailConfirm, userHighestEducation, userFieldOfStudy, userDescription, userSchool);
 
                 }
             } else {

@@ -91,7 +91,7 @@ public class signupServlet extends HttpServlet {
         if (!userFirstName.equals("") && !userLastName.equals("") && !userEmail.equals("") && !userPassword.equals("") && !userOccupation.equals("")) {
 
             // Insert into database
-            Boolean inserted = UserDAO.addUser(userEmail, userFirstName, userLastName, userPhone, userGender, userCitizenship, yearOfBirth, null, userInterest, userPassword, userOccupation, null, userIsEmailConfirm, userHighestEducation, userFieldOfStudy, userDescription, userSchool);
+            Boolean inserted = UserDAO.addUser(userEmail, userFirstName, userLastName, userPhone, userGender, userCitizenship, yearOfBirth, userInterest, userPassword, userOccupation, null, userIsEmailConfirm, userHighestEducation, userFieldOfStudy, userDescription, userSchool);
 
             if (inserted == true) {
 

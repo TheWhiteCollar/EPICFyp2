@@ -25,18 +25,22 @@ import javax.servlet.http.Part;
 public class UserDAO {
 
     /* Database sequence
-    #1: userEmail (varchar)
-    #2: userFirstName (varchar)
-    #3: userLastName (varchar)
-    #4: userPhone (int)
-    #5: userGender (varchar)
-    #6: userCitizenship (varchar)
-    #7: userAge (int)
-    #8: userDescription (varchar)
-    #9: userProfilePic (blob)
-    #10: userInterest (varchar)
-    #11: userPassword (varchar)
-    #12: userRole (varchar)
+    #1: userEmail (varchar 50)
+    #2: userFirstName (varchar 50)
+    #3: userLastName (varchar 50)
+    #4: userPhone (int 15)
+    #5: userGender (varchar 1)
+    #6: userCitizenship (varchar 100)
+    #7: userDOB (year 4)
+    #8: userInterest (varchar 1000)
+    #9: userPassword (varchar 50)
+    #10: userOccupation (varchar 100)
+    #11: userResume (mediumblob)
+    #12: userIsEmailConfirm (varchar 10)
+    #13: userHighestEducation (varchar 100)
+    #14: userFieldOfStudy (varchar 100)
+    #15: userDescription (varchar 500)
+    #16: userSchool (varchar 50)
      */
     // Get user and their details with userid and password
     public static User getUserByLogin(String userid, String password) {
@@ -51,7 +55,7 @@ public class UserDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 if (user == null) {
-                    user = new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getBlob(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getBlob(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17));
+                    user = new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getBlob(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16));
                 }
             }
         } catch (SQLException ex) {
@@ -62,9 +66,9 @@ public class UserDAO {
     }
 
     // Add existing users/bulk new users
-    public static boolean addUser(String userEmail, String userFirstName, String userLastName, int userPhone, String userGender, String userCitizenship, int userDOB, Part userProfilePic, String userInterest, String userPassword, String userOccupation, Part userResume, String userIsEmailConfirm, String userHighestEducation, String userFieldOfStudy, String userDescription, String userSchool) {
+    public static boolean addUser(String userEmail, String userFirstName, String userLastName, int userPhone, String userGender, String userCitizenship, int userDOB, String userInterest, String userPassword, String userOccupation, Part userResume, String userIsEmailConfirm, String userHighestEducation, String userFieldOfStudy, String userDescription, String userSchool) {
 
-        String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -76,36 +80,16 @@ public class UserDAO {
             stmt.setString(6, userCitizenship);
             stmt.setInt(7, userDOB);
             
-            stmt.setString(9, userInterest);
-            stmt.setString(10, userPassword);
-            stmt.setString(11, userOccupation);
+            stmt.setString(8, userInterest);
+            stmt.setString(9, userPassword);
+            stmt.setString(10, userOccupation);
 
-            stmt.setString(13, userIsEmailConfirm);
-            stmt.setString(14, userHighestEducation);
-            stmt.setString(15, userFieldOfStudy);
-            stmt.setString(16, userDescription);
-            stmt.setString(17, userSchool);
+            stmt.setString(12, userIsEmailConfirm);
+            stmt.setString(13, userHighestEducation);
+            stmt.setString(14, userFieldOfStudy);
+            stmt.setString(15, userDescription);
+            stmt.setString(16, userSchool);
 
-            //picture upload
-            InputStream picInputStream = null;
-            if (userProfilePic != null){
-                System.out.println(userProfilePic.getName());
-                System.out.println(userProfilePic.getSize());
-                System.out.println(userProfilePic.getContentType());
-
-                 try{
-                    picInputStream = userProfilePic.getInputStream();
-                }catch(IOException e){
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to upload picture into database", e);
-                }
-            }
-
-            if(picInputStream!= null){
-                stmt.setBinaryStream(8, picInputStream, (int) userProfilePic.getSize());
-            }else{
-                stmt.setNull(8, java.sql.Types.BLOB);
-            }
-            
             //resume upload
             InputStream resumeInputStream = null;
             if (userResume != null){
@@ -121,9 +105,9 @@ public class UserDAO {
             }
             
             if(resumeInputStream!= null){
-                stmt.setBinaryStream(12, resumeInputStream, (int) userResume.getSize());
+                stmt.setBinaryStream(11, resumeInputStream, (int) userResume.getSize());
             }else{
-                stmt.setNull(12, java.sql.Types.BLOB);
+                stmt.setNull(11, java.sql.Types.BLOB);
             }
 
             int result = stmt.executeUpdate();
@@ -137,46 +121,6 @@ public class UserDAO {
         return true;
     }
 
-    public static boolean updateProfilePic(Part userProfilePic, String userEmail){
-
-        String sql = "UPDATE user SET userProfilePic = ? WHERE userEmail = ?";
-
-        try (Connection conn = ConnectionManager.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
-            stmt.setString(2, userEmail);
-            
-            //upload picture
-            InputStream picInputStream = null;
-            if (userProfilePic != null){
-                System.out.println(userProfilePic.getName());
-                System.out.println(userProfilePic.getSize());
-                System.out.println(userProfilePic.getContentType());
-
-                 try{
-                    picInputStream = userProfilePic.getInputStream();
-                }catch(IOException e){
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to upload picture into database", e);
-                }
-            }
-
-            if(picInputStream!= null){
-                stmt.setBinaryStream(1, picInputStream, (int) userProfilePic.getSize());
-            }else{
-                stmt.setNull(1, java.sql.Types.BLOB);
-            }
-            
-            //execute query
-            int result = stmt.executeUpdate();
-            if (result == 0) {
-                return false;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Image not uploaded successfully", ex);
-        }
-        return true;
-    }
-
     // get all users
     public static ArrayList<User> getAllUsers() {
         ArrayList<User> result = new ArrayList<>();
@@ -185,7 +129,7 @@ public class UserDAO {
             PreparedStatement stmt = conn.prepareStatement("select * from user");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                result.add(new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getBlob(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getBlob(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17)));
+                result.add(new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getBlob(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16)));
             }
             rs.close();
             stmt.close();
@@ -215,9 +159,9 @@ public class UserDAO {
     }
 
     // Update a particular user row
-    public static boolean updateUser(String userEmail, String userFirstName, String userLastName, int userPhone, String userGender, String userCitizenship, int userDOB, Part userProfilePic, String userInterest, String userPassword, String userOccupation, Part userResume, String userIsEmailConfirm, String userHighestEducation, String userFieldOfStudy, String userDescription, String userSchool) {
+    public static boolean updateUser(String userEmail, String userFirstName, String userLastName, int userPhone, String userGender, String userCitizenship, int userDOB, String userInterest, String userPassword, String userOccupation, Part userResume, String userIsEmailConfirm, String userHighestEducation, String userFieldOfStudy, String userDescription, String userSchool) {
 
-        String sql = "UPDATE user SET userFirstName=?, userLastName=?, userPhone=?, userGender=?, userCitizenship=?, userDOB=?,userProfilePic=?,userInterest=?,userPassword=?,userOccupation=?,userResume=?,userIsEmailConfirm=?,userHighestEducation=?,userFieldOfStudy=?,userDescription=?,userSchool=?  WHERE userEmail = ?";
+        String sql = "UPDATE user SET userFirstName=?, userLastName=?, userPhone=?, userGender=?, userCitizenship=?, userDOB=?,userInterest=?,userPassword=?,userOccupation=?,userResume=?,userIsEmailConfirm=?,userHighestEducation=?,userFieldOfStudy=?,userDescription=?,userSchool=?  WHERE userEmail = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
@@ -228,36 +172,17 @@ public class UserDAO {
             stmt.setString(4, userGender);
             stmt.setString(5, userCitizenship);
             stmt.setInt(6, userDOB);
-            stmt.setString(8, userInterest);
-            stmt.setString(9, userPassword);
-            stmt.setString(10, userOccupation);
-            stmt.setString(12, userIsEmailConfirm);
-            stmt.setString(13, userHighestEducation);
-            stmt.setString(14, userFieldOfStudy);
-            stmt.setString(15, userDescription);
-            stmt.setString(16, userSchool);
-            stmt.setString(17, userEmail);
+            stmt.setString(7, userInterest);
+            stmt.setString(8, userPassword);
+            stmt.setString(9, userOccupation);
+            stmt.setString(11, userIsEmailConfirm);
+            stmt.setString(12, userHighestEducation);
+            stmt.setString(13, userFieldOfStudy);
+            stmt.setString(14, userDescription);
+            stmt.setString(15, userSchool);
+            stmt.setString(16, userEmail);
             
-            //picture update
-            InputStream picInputStream = null;
-            if (userProfilePic != null){
-                System.out.println(userProfilePic.getName());
-                System.out.println(userProfilePic.getSize());
-                System.out.println(userProfilePic.getContentType());
 
-                try{
-                    picInputStream = userProfilePic.getInputStream();
-                }catch(IOException e){
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to upload picture into database", e);
-                }
-            }
-            
-            if(picInputStream!= null){
-                stmt.setBinaryStream(7, picInputStream, (int) userProfilePic.getSize());
-            }else{
-                stmt.setNull(7, java.sql.Types.BLOB);
-            }
-            
             //resume update
             InputStream resumeInputStream = null;
             if (userResume != null){
@@ -274,9 +199,9 @@ public class UserDAO {
             }
             
             if(resumeInputStream!= null){
-                stmt.setBinaryStream(11, resumeInputStream, (int) userResume.getSize());
+                stmt.setBinaryStream(10, resumeInputStream, (int) userResume.getSize());
             }else{
-                stmt.setNull(11, java.sql.Types.BLOB);
+                stmt.setNull(10, java.sql.Types.BLOB);
             }
             
             int result = stmt.executeUpdate();
@@ -310,9 +235,9 @@ public class UserDAO {
     }
 
     //update a particular user based on the profile update details
-    public static boolean updateUser(String userEmail, String userFirstName, String userLastName, int userPhone, String userGender, String userCitizenship, int userDOB, Part userProfilePic, String userInterest, String userPassword, String userOccupation, String userHighestEducation, String userFieldOfStudy, String userDescription, String userSchool){
+    public static boolean updateUser(String userEmail, String userFirstName, String userLastName, int userPhone, String userGender, String userCitizenship, int userDOB, String userInterest, String userPassword, String userOccupation, String userHighestEducation, String userFieldOfStudy, String userDescription, String userSchool){
 
-        String sql = "UPDATE user SET userFirstName=?, userLastName=?, userPhone=?, userGender=?, userCitizenship=?, userDOB=?,userProfilePic=?,userInterest=?,userPassword=?,userOccupation=?,userHighestEducation=?,userFieldOfStudy=?,userDescription=?,userSchool=?  WHERE userEmail = ?";
+        String sql = "UPDATE user SET userFirstName=?, userLastName=?, userPhone=?, userGender=?, userCitizenship=?, userDOB=?, userInterest=?,userPassword=?,userOccupation=?,userHighestEducation=?,userFieldOfStudy=?,userDescription=?,userSchool=?  WHERE userEmail = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
@@ -323,35 +248,15 @@ public class UserDAO {
             stmt.setString(4, userGender);
             stmt.setString(5, userCitizenship);
             stmt.setInt(6, userDOB);
-            stmt.setString(8, userInterest);
-            stmt.setString(9, userPassword);
-            stmt.setString(10, userOccupation);
-            stmt.setString(11, userHighestEducation);
-            stmt.setString(12, userFieldOfStudy);
-            stmt.setString(13, userDescription);
-            stmt.setString(14, userSchool);
-            stmt.setString(15, userEmail);
-            
-            //picture update
-            InputStream picInputStream = null;
-            if (userProfilePic != null){
-                System.out.println(userProfilePic.getName());
-                System.out.println(userProfilePic.getSize());
-                System.out.println(userProfilePic.getContentType());
-
-                try{
-                    picInputStream = userProfilePic.getInputStream();
-                }catch(IOException e){
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to upload picture into database", e);
-                }
-            }
-            
-            if(picInputStream!= null){
-                stmt.setBinaryStream(7, picInputStream, (int) userProfilePic.getSize());
-            }else{
-                stmt.setNull(7, java.sql.Types.BLOB);
-            }
-            
+            stmt.setString(7, userInterest);
+            stmt.setString(8, userPassword);
+            stmt.setString(9, userOccupation);
+            stmt.setString(10, userHighestEducation);
+            stmt.setString(11, userFieldOfStudy);
+            stmt.setString(12, userDescription);
+            stmt.setString(13, userSchool);
+            stmt.setString(14, userEmail);
+             
             int result = stmt.executeUpdate();
             if (result == 0) {
                 return false;
@@ -437,7 +342,7 @@ public class UserDAO {
             stmt.setString(1, userEmail);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                user = new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getBlob(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getBlob(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17));
+                user = new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getBlob(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Cannot get user with userEmail: " + userEmail, ex);

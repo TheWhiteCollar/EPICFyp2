@@ -273,18 +273,16 @@ INSERT INTO `internshipstudentstatus` (`internshipStudentStatusID`, `internshipS
 CREATE TABLE `payment` (
   `paymentID` int(11) NOT NULL,
   `paymentMode` varchar(100) NOT NULL,
-  `paymentType` varchar(100) NOT NULL,
-  `paymentAmount` double NOT NULL,
-  `paymentRefund` double DEFAULT NULL
+  `paymentAmount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`paymentID`, `paymentMode`, `paymentType`, `paymentAmount`, `paymentRefund`) VALUES
-(1, 'Visa', 'deposit', 10.9, 0),
-(2, 'Mastercard', 'full amount', 99.4, 0);
+INSERT INTO `payment` (`paymentID`, `paymentMode`, `paymentAmount`) VALUES
+(1, 'None chosen', 0),
+(2, 'Cheque', 300);
 
 -- --------------------------------------------------------
 
@@ -356,7 +354,6 @@ CREATE TABLE `user` (
   `userGender` varchar(1) NOT NULL,
   `userCitizenship` varchar(100) NOT NULL,
   `userDOB` year(4) NOT NULL,
-  `userProfilePic` mediumblob,
   `userInterest` varchar(1000) DEFAULT NULL,
   `userPassword` varchar(50) NOT NULL,
   `userOccupation` varchar(100) NOT NULL,
@@ -372,12 +369,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userEmail`, `userFirstName`, `userLastName`, `userPhone`, `userGender`, `userCitizenship`, `userDOB`, `userProfilePic`, `userInterest`, `userPassword`, `userOccupation`, `userResume`, `userIsEmailConfirm`, `userHighestEducation`, `userFieldOfStudy`, `userDescription`, `userSchool`) VALUES
-('mediani.2015@sis.smu.edu.sg', 'Mediani', 'Law', 83036983, 'F', 'Singapore PR', 1996, NULL, 'Service & Social Innovation, Academic & Business', '1234', 'Student', NULL, 'pending', 'Bachelor Degree', 'Law', 'I love the exercise! It is my favourite thing. It makes me happy and beautiful.', 'SMU'),
-('rachael.low.2015@sis.smu.edu.sg', 'Rachael', 'Low', 91234567, 'M', 'Algerian', 1995, NULL, 'Academic & Business', 'fyp1234', 'Student', NULL, 'confirmed', 'ITE', 'History', 'Weeee. The life of greatness and happiness is amazinggggg.', 'NTU'),
-('suhailahs.2015@smu.edu.sg', 'Nurul', 'Suhailah', 81290722, 'F', 'Singaporean', 1993, NULL, 'Academic & Business, Nature & Culture', 'Ashrvf14', 'Student', NULL, 'pending', 'bachelor', 'Business', 'I love travelling.', 'Singapore Management University'),
-('xiuwen.yeo@gmail.com', 'Xiu Wen', 'Yeo', 98769876, 'F', 'Singaporean', 1994, NULL, 'Nature & Culture', '1234', 'Student', NULL, 'pending', 'Postgraduate Diploma', 'Computing', 'I am really into helping others. When others feel happy, I feel happy too.', 'SMU'),
-('yijing.oon.2015@smu.edu.sg', 'Yi Jing', 'Oon', 98766789, 'F', 'Singapore PR', 1993, NULL, 'Nature & Culture, Service & Social Innovation', 'oonyijing', 'Student', NULL, 'confirmed', 'Masters/Doctorate', 'Computing', 'Greatness is in the eye of the beholder. I believe with great power comes great responsibility.', 'NTU');
+INSERT INTO `user` (`userEmail`, `userFirstName`, `userLastName`, `userPhone`, `userGender`, `userCitizenship`, `userDOB`, `userInterest`, `userPassword`, `userOccupation`, `userResume`, `userIsEmailConfirm`, `userHighestEducation`, `userFieldOfStudy`, `userDescription`, `userSchool`) VALUES
+('mediani.2015@sis.smu.edu.sg', 'Mediani', 'Law', 83036983, 'F', 'Singapore PR', 1996, 'Service & Social Innovation, Academic & Business', '1234', 'Student', NULL, 'pending', 'Bachelor Degree', 'Law', 'I love the exercise! It is my favourite thing. It makes me happy and beautiful.', 'SMU'),
+('rachael.low.2015@sis.smu.edu.sg', 'Rachael', 'Low', 91234567, 'M', 'Algerian', 1995, 'Academic & Business', 'fyp1234', 'Student', NULL, 'confirmed', 'ITE', 'History', 'Weeee. The life of greatness and happiness is amazinggggg.', 'NTU'),
+('suhailahs.2015@smu.edu.sg', 'Nurul', 'Suhailah', 81290722, 'F', 'Singaporean', 1993, 'Academic & Business, Nature & Culture', 'Ashrvf14', 'Student', NULL, 'pending', 'bachelor', 'Business', 'I love travelling.', 'Singapore Management University'),
+('xiuwen.yeo@gmail.com', 'Xiu Wen', 'Yeo', 98769876, 'F', 'Singaporean', 1994, 'Nature & Culture', '1234', 'Student', NULL, 'pending', 'Postgraduate Diploma', 'Computing', 'I am really into helping others. When others feel happy, I feel happy too.', 'SMU'),
+('yijing.oon.2015@smu.edu.sg', 'Yi Jing', 'Oon', 98766789, 'F', 'Singapore PR', 1993, 'Nature & Culture, Service & Social Innovation', 'oonyijing', 'Student', NULL, 'confirmed', 'Masters/Doctorate', 'Computing', 'Greatness is in the eye of the beholder. I believe with great power comes great responsibility.', 'NTU');
 
 --
 -- Indexes for dumped tables

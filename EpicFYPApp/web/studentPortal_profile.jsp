@@ -108,13 +108,13 @@
                                                         if (gender.equals("F")) {
                                                     %>
                                                     <option value =" <% out.print(gender);%>"/>Female</option>
-                                                    <option value ="Male"/>Male</option>
+                                                    <option value ="M"/>Male</option>
                                                     <%
                                                         }
                                                         if (gender.equals("M")) {
                                                     %>
                                                     <option value ="<% out.print(gender);%>"/>Male</option>
-                                                    <option value ="Female"/>Female</option>                                                        
+                                                    <option value ="F"/>Female</option>                                                        
                                                     <%
                                                         }
                                                     %>
