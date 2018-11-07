@@ -8,26 +8,11 @@ package Controller;
 import Model.Dao.UserDAO;
 import Model.Entity.User;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -48,6 +33,7 @@ public class updateUserServlet extends HttpServlet {
             throws ServletException, IOException {
         
         // retrieve user input
+        
         String userEmail = request.getParameter("userEmail");
         String userFirstName = request.getParameter("firstName");
         String userLastName = request.getParameter("lastName");
@@ -57,8 +43,6 @@ public class updateUserServlet extends HttpServlet {
         String userCitizenship = request.getParameter("citizenship");
         String yob = request.getParameter("yob");
         int yearOfBirth = Integer.parseInt(yob);
-        //profile pic
-        Part userProfilePic = request.getPart("profilePicture");
         String[] userInterestString = request.getParameterValues("interest");
         String userInterest = "";
         for (int i = 0; i < userInterestString.length; i++) {
@@ -80,9 +64,9 @@ public class updateUserServlet extends HttpServlet {
         if (!userFirstName.equals("") && !userLastName.equals("") && !userCitizenship.equals("") && !userHighestEducation.equals("") && !userSchool.equals("") && !userFieldOfStudy.equals("")) {
 
             // Insert into database
-            boolean insertedUser = UserDAO.updateUser(userEmail, userFirstName, userLastName, userPhone, userGender, userCitizenship, yearOfBirth, userProfilePic, userInterest, userPassword, userOccupation, userHighestEducation, userFieldOfStudy, userDescription, userSchool);
+            boolean insertedUser = UserDAO.updateUser(userEmail, userFirstName, userLastName, userPhone, userGender, userCitizenship, yearOfBirth, userInterest, userPassword, userOccupation, userHighestEducation, userFieldOfStudy, userDescription, userSchool);
             if (insertedUser == true) {
-                response.sendRedirect("successMessage.jsp?message=updateprofile");
+                response.sendRedirect("successMessage.jsp?message=updateprofile&gender"+userGender);
                 return;
             } else {
                 String url = "failureMessage.jsp";
