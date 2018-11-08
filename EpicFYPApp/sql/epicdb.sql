@@ -273,6 +273,7 @@ INSERT INTO `internshipstudentstatus` (`internshipStudentStatusID`, `internshipS
 CREATE TABLE `payment` (
   `paymentID` int(11) NOT NULL,
   `paymentMode` varchar(100) NOT NULL,
+  `paymentTransaction` varchar(100) NOT NULL,
   `paymentAmount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -280,9 +281,9 @@ CREATE TABLE `payment` (
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`paymentID`, `paymentMode`, `paymentAmount`) VALUES
-(1, 'None chosen', 0),
-(2, 'Cheque', 300);
+INSERT INTO `payment` (`paymentID`, `paymentMode`, `paymentTransaction`, `paymentAmount`) VALUES
+(1, 'None chosen', 0, 0),
+(2, 'Cheque', 'X923423', 300);
 
 -- --------------------------------------------------------
 
