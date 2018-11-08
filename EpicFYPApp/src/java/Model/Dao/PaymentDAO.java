@@ -101,4 +101,23 @@ public class PaymentDAO {
         }
         return null;
     }
+    
+    public static int countPayments(){
+        int count = 0;
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(paymentID) FROM payment");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return count;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 }
