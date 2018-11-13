@@ -66,8 +66,6 @@ public class addPartnerInternship extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("nvjfnvjsknvlksmvs");
-        
-        //int internshipID = Integer.parseInt(request.getParameter("internshipID"));
         String internshipName = request.getParameter("internshipName");
         String internshipApproval = "pending";
         String internshipFieldOfStudy = request.getParameter("internshipFieldOfStudy");
@@ -78,8 +76,11 @@ public class addPartnerInternship extends HttpServlet {
         String internshipSupervisor = request.getParameter("internshipSupervisor");
         String internshipSupervisorEmail = request.getParameter("internshipSupervisorEmail");
         int internshipVacancy = Integer.parseInt(request.getParameter("internshipVacancy"));
-        int internshipPartnerID = Integer.parseInt(request.getParameter("internshipPartnerID"));;
-        String internshipDatetime = "2018-08-08 12:40:30, 2018-09-08 12:40:30";
+        int internshipPartnerID = Integer.parseInt(request.getParameter("internshipPartnerID"));
+        
+        java.util.Date dt = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String internshipDatetime = sdf.format(dt);
         String text = "fail";
         
         if (internshipEnd.after(internshipStart) && InternshipDAO.addInternship(internshipName, internshipApproval, internshipFieldOfStudy, internshipDescription, internshipStart, internshipEnd, internshipPay, internshipSupervisor, internshipSupervisorEmail, internshipVacancy, internshipPartnerID, internshipDatetime)) {
