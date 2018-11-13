@@ -218,11 +218,11 @@
                 </div>
             </div>
 
-            <div class ="container">
+<!--            <div class ="container">
                 <br>
                 <h2>All Listed Internships</h2>
                 <div id="internships" class ="container"></div>
-            </div>
+            </div>-->
         </section>
     <script src="js/custom-file-input.js"></script>
     <script src="js/tabs.js"></script>
