@@ -48,7 +48,6 @@
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
                     String tripIDS = request.getParameter("tripId");
                     int tripID = Integer.parseInt(tripIDS);
-                    String userEmail = request.getParameter("user");
 
                     Trip trip = TripsDAO.getTrip(tripID);
                     if (trip != null) {
@@ -144,12 +143,13 @@
                                             <li>The above package price excludes any applicable visa fees.   </li>
                                             <li>Please note that any incidentals costs or any other items not mentioned above will be at participant’s own expense. </li>
                                         </ul>
-                                        <form action="paymentOptions.jsp">
-                                            <input type="checkbox" id="t&c" name="t&c" value="agree">
-                                            <label for="t&c">I agree to the Terms & Conditions.</label>
-                                            <input type="hidden" name="userEmail" vallue="<%out.print(userEmail);%>">
-                                            <input type="submit"  value ="Proceed to make payment">
-                                        </form>
+                                        
+                                        <p>By clicking on the Proceed button, you agree to the Terms & Conditions outlined.</p>
+                                        <%
+                                        String url = "paymentOptions.jsp?tripId=" + tripID;
+                                        %>
+                                        <a href="<%out.print(url);%>" class="button">Proceed to make payment</a>
+                                      
                                     </td>
                                 </tr>
                             </tbody>

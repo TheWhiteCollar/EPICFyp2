@@ -1,4 +1,5 @@
 
+<%@page import="Model.Entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -35,22 +36,27 @@
         <section id="main" class="wrapper">
             <div class="container align-center">
                 <%
+                    User user = (User) session.getAttribute("User");
+                    String userEmail = user.getUserEmail();
                 %>
-                <h3><b>Payment Method : Cheque</b></h3>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td class="align-right">Total Amount : </td>
-                            <td class="align-left">$ 100</td>
-                        </tr>
-                        <tr>
-                            <td class="align-right">Cheque Number : </td>
-                            <td class="align-left"><input type="text"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p>Please ensure that the cheque has been cleared within 3 working days. Otherwise your application will be cancelled.</p>
-                <input type="submit" value ="Submit">
+                <form action="addNewPaymentCheque" method="post">
+                    <h3><b>Payment Method : Cheque</b></h3>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="align-right">Total Amount : </td>
+                                <td class="align-left">$ 100</td>
+                            </tr>
+                            <tr>
+                                <td class="align-right">Cheque Number : </td>
+                                <td class="align-left"><input type="text" name="cheque"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Please ensure that the cheque has been cleared within 3 working days. Otherwise your application will be cancelled.</p>
+                    <input type="hidden" name="amount" value="100">
+                    <input type="submit" value ="Submit">
+                </form>
             </div>
         </section>
     </body>

@@ -35,12 +35,14 @@
         <section id="main" class="wrapper">
             <div class="container align-center">
                 <%
+                    String tripIDS = request.getParameter("tripId");
+                    int tripID = Integer.parseInt(tripIDS);
                 %>
                 <h3><b>Choose your payment options :</b></h3>
 
-                <a href="paymentCheque.jsp?tripId user " class="button">Cheque</a>
-                <a href="paymentBankTransfer.jsp?tripId user " class="button">Bank Transfer</a>
-                <a href="paymentPayNow.jsp?tripId user " class="button">PayNow</a>
+                <a href="paymentCheque.jsp?tripId=<%out.print(tripID);%>" class="button">Cheque</a>
+                <a href="paymentBankTransfer.jsp?tripId=<%out.print(tripID);%>" class="button">Bank Transfer</a>
+                <a href="paymentPayNow.jsp?tripId=<%out.print(tripID);%>" class="button">PayNow</a>
             </div>
         </section>
     </body>

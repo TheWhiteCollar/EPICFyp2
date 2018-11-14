@@ -34,14 +34,16 @@
         <!-- Details -->
         <section id="main" class="wrapper">
             <div class="container align-center">
-                    
+                    <%
+                    String paymentId = request.getParameter("paymentId");
+                    %>
                     <div class="row">
                         <div class="3u 12u(xsmall)">
                             <img src="images/success.png" height=auto width="100%"> 
                         </div>
                         <div class="9u 12u(xsmall) align-center">
                             <p></p>
-                            <h4><b>[ Payment ID : 1 ]</b> Your application will be reviewed soon</h4>
+                            <h4><b>[ Payment ID : <%out.print(paymentId);%> ]</b> Your application will be reviewed soon</h4>
                             <p class="align-left">
                         Thank you for choosing EPIC. An email will be sent to you once your payment is successfully received.
                         If you have any queries, please contact: isabelle@epicjourney.sg

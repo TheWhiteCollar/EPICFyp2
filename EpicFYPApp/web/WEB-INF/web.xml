@@ -108,6 +108,10 @@
         <servlet-name>addPartnerInternship</servlet-name>
         <servlet-class>Controller.addPartnerInternship</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addPayment</servlet-name>
+        <servlet-class>Controller.addPayment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TripsDAO</servlet-name>
         <url-pattern>/TripsDAO</url-pattern>
@@ -215,6 +219,10 @@
     <servlet-mapping>
         <servlet-name>addPartnerInternship</servlet-name>
         <url-pattern>/addPartnerInternship</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addPayment</servlet-name>
+        <url-pattern>/addPayment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

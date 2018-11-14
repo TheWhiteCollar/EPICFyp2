@@ -17,43 +17,25 @@ import java.util.logging.Logger;
 
 /* Database sequence
     #1: paymentID (int 11)
-    #2: paymentMode (varchar 100)
-    #3: paymentAmount (double)
+    #2: paymentTripStudentID (int 11)
+    #3: paymentMode (varchar 100)
+    #4: paymentTransaction (varchar 100)
+    #5: paymentAmount (double)
  */
 
 public class PaymentDAO {
-    // Update a particular payment row
-    public static boolean updatePayment(int paymentID, String paymentMode, String paymentTransaction, double paymentAmount) {
-
-        String sql = "UPDATE payment SET paymentMode=?, paymentTransaction=?, paymentAmount=? WHERE paymentID=?";
-
-        try (Connection conn = ConnectionManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);) {
-            stmt.setString(1, paymentMode);
-            stmt.setString(2, paymentTransaction);
-            stmt.setDouble(3, paymentAmount);
-            stmt.setInt(4, paymentID);          
-            
-            int result = stmt.executeUpdate();
-            if (result == 0) {
-                return false;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PaymentDAO.class.getName()).log(Level.WARNING, "Failed to update: " + paymentID + ".", ex);
-        }
-        return true;
-    }
-
+  
     // Add a new payment row
-    public static boolean addPayment(String paymentMode, String paymentTransaction, double paymentAmount) {
+    public static boolean addPayment(int paymentTripStudentID, String paymentMode, String paymentTransaction, double paymentAmount) {
 
-        String sql = "INSERT INTO payment (paymentMode, paymentTransaction, paymentAmount) VALUES (?,?,?)";
+        String sql = "INSERT INTO payment (paymentTripStudentID, paymentMode, paymentTransaction, paymentAmount) VALUES (?,?,?,?)";
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
-            stmt.setString(1, paymentMode);
-            stmt.setString(2, paymentTransaction);
-            stmt.setDouble(3, paymentAmount);
+            stmt.setInt(1, paymentTripStudentID);
+            stmt.setString(2, paymentMode);
+            stmt.setString(3, paymentTransaction);
+            stmt.setDouble(4, paymentAmount);
             
             int result = stmt.executeUpdate();
             if (result == 0) {
@@ -90,7 +72,7 @@ public class PaymentDAO {
             PreparedStatement stmt = conn.prepareStatement("select * from payment");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                result.add(new Payment(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4)));
+                result.add(new Payment(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getDouble(5)));
             }
             rs.close();
             stmt.close();
@@ -101,23 +83,5 @@ public class PaymentDAO {
         }
         return null;
     }
-    
-    public static int countPayments(){
-        int count = 0;
-        try {
-            Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(paymentID) FROM payment");
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                count = rs.getInt(1);
-            }
-            rs.close();
-            stmt.close();
-            conn.close();
-            return count;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return count;
-    }
+
 }
