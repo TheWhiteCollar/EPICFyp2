@@ -66,7 +66,7 @@ public class updateUserServlet extends HttpServlet {
             // Insert into database
             boolean insertedUser = UserDAO.updateUser(userEmail, userFirstName, userLastName, userPhone, userGender, userCitizenship, yearOfBirth, userInterest, userPassword, userOccupation, userHighestEducation, userFieldOfStudy, userDescription, userSchool);
             if (insertedUser == true) {
-                response.sendRedirect("successMessage.jsp?message=updateprofile&gender"+userGender);
+                response.sendRedirect("successMessage.jsp?message=updateprofile");
                 return;
             } else {
                 String url = "failureMessage.jsp";
