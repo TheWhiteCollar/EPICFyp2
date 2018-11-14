@@ -5,33 +5,31 @@
  */
 package Model.Entity;
 
+import java.sql.Date;
+
 /* Database sequence
     
-    #1: tripUserEmail (varchar 50)
-    #2: tripStudentPaymentID (int 11)
-    #3: tripStudentStatus (varchar 100)
-    #4: tripStudentReview (varchar 500)
-    #5: tripStudentRating (int 1)
-    #6: tripID (int 11)
+    #1: tripStudentID (int 11)
+    #2: tripUserEmail (varchar 50)
+    #3: tripID (int 11)
+    #4: tripStudentStatus (varchar 100)
+    #5: tripStudentTimestamp (Date)
  */
 
 public class TripStudent {
 
-    
+    private int tripStudentID;
     private String tripUserEmail;
-    private int tripStudentPaymentID;
-    private String tripStudentStatus;
-    private String tripStudentReview;
-    private int tripStudentRating;
     private int tripID;
+    private String tripStudentStatus;
+    private String tripStudentTimestamp;
 
-    public TripStudent(String tripUserEmail, int tripStudentPaymentID, String tripStudentStatus, String tripStudentReview, int tripStudentRating, int tripID) {
+    public TripStudent(int tripStudentID, String tripUserEmail, int tripID, String tripStudentStatus, String tripStudentTimestamp) {
+        this.tripStudentID = tripStudentID;
         this.tripUserEmail = tripUserEmail;
-        this.tripStudentPaymentID = tripStudentPaymentID;
-        this.tripStudentStatus = tripStudentStatus;
-        this.tripStudentReview = tripStudentReview;
-        this.tripStudentRating = tripStudentRating;
         this.tripID = tripID;
+        this.tripStudentStatus = tripStudentStatus;
+        this.tripStudentTimestamp = tripStudentTimestamp;
     }
 
     public int getTripID() {
@@ -50,14 +48,6 @@ public class TripStudent {
         this.tripUserEmail = tripUserEmail;
     }
 
-    public int getTripStudentPayment() {
-        return tripStudentPaymentID;
-    }
-
-    public void setTripStudentPayment(int tripStudentPaymentID) {
-        this.tripStudentPaymentID = tripStudentPaymentID;
-    }
-
     public String getTripStudentStatus() {
         return tripStudentStatus;
     }
@@ -66,20 +56,20 @@ public class TripStudent {
         this.tripStudentStatus = tripStudentStatus;
     }
 
-    public String getTripStudentReview() {
-        return tripStudentReview;
+    public int getTripStudentID() {
+        return tripStudentID;
     }
 
-    public void setTripStudentReview(String tripStudentReview) {
-        this.tripStudentReview = tripStudentReview;
+    public void setTripStudentID(int tripStudentID) {
+        this.tripStudentID = tripStudentID;
     }
 
-    public int getTripStudentRating() {
-        return tripStudentRating;
+    public String getTripStudentTimestamp() {
+        return tripStudentTimestamp;
     }
 
-    public void setTripStudentRating(int tripStudentRating) {
-        this.tripStudentRating = tripStudentRating;
+    public void setTripStudentTimestamp(String tripStudentTimestamp) {
+        this.tripStudentTimestamp = tripStudentTimestamp;
     }
- 
+    
 }
