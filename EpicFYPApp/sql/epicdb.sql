@@ -264,26 +264,6 @@ INSERT INTO `internshipstudentstatus` (`internshipStudentStatusID`, `internshipS
 (14, 'User accepted internship offer', 3, 'done'),
 (15, 'Internship Cancelled', 4, 'done');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `payment`
---
-
-CREATE TABLE `payment` (
-  `paymentID` int(11) NOT NULL,
-  `paymentMode` varchar(100) NOT NULL,
-  `paymentTransaction` varchar(100) NOT NULL,
-  `paymentAmount` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `payment`
---
-
-INSERT INTO `payment` (`paymentID`, `paymentMode`, `paymentTransaction`, `paymentAmount`) VALUES
-(1, 'None chosen', 0, 0),
-(2, 'Cheque', 'X923423', 300);
 
 -- --------------------------------------------------------
 
@@ -325,21 +305,47 @@ INSERT INTO `trip` (`tripID`, `tripTitle`, `tripPrice`, `tripItinerary`, `tripDe
 --
 
 CREATE TABLE `tripstudent` (
+  `tripStudentID` int(11) NOT NULL,
   `tripUserEmail` varchar(50) NOT NULL,
-  `tripStudentPaymentID` int(11) NOT NULL,
+  `tripID` int(11) NOT NULL,
   `tripStudentStatus` varchar(100) DEFAULT '',
-  `tripStudentReview` varchar(500) DEFAULT '',
-  `tripStudentRating` int(1) DEFAULT NULL,
-  `tripID` int(11) NOT NULL
+  `tripStudentTimestamp` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tripstudent`
 --
 
-INSERT INTO `tripstudent` (`tripUserEmail`, `tripStudentPaymentID`, `tripStudentStatus`, `tripStudentReview`, `tripStudentRating`, `tripID`) VALUES
-('mediani.2015@sis.smu.edu.sg', 1, 'pending deposit payment', 'This is an excellent trip. I loved everything about it.', 2, 2),
-('rachael.low.2015@sis.smu.edu.sg', 2, 'trip confirmed', '', 4, 2);
+INSERT INTO `tripstudent` (`tripStudentID`, `tripUserEmail`, `tripID`, `tripStudentStatus`, `tripStudentTimestamp`) VALUES
+(1, 'mediani.2015@sis.smu.edu.sg', 1, 'deposit made', '2018-09-01 12:32:21'),
+(2, 'rachael.low.2015@sis.smu.edu.sg', 2, 'deposit made', '2018-10-02 12:32:21'),
+(3, 'rachael.low.2015@sis.smu.edu.sg', 2, 'trip confirmed', '2018-10-02 12:32:21'),
+(4, 'mediani.2015@sis.smu.edu.sg', 1, 'trip cancelled', '2018-10-01 12:32:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `paymentID` int(11) NOT NULL,
+  `tripStudentID` int(11) NOT NULL,
+  `paymentMode` varchar(100) NOT NULL,
+  `paymentTransaction` varchar(100) NOT NULL,
+  `paymentAmount` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`paymentID`, `tripStudentID`, `paymentMode`, `paymentTransaction`, `paymentAmount`) VALUES
+(1, 1, 'PayNow', 'Sh-123-123', 400),
+(2, 2, 'Cheque', 'X923423', 300),
+(3, 3, 'Bank', 'P2342-234', 200),
+(4, 4, 'Refund', 'D2342-2342', 400);
+
 
 -- --------------------------------------------------------
 
@@ -439,12 +445,6 @@ ALTER TABLE `internshipstudentstatus`
   ADD PRIMARY KEY (`internshipStudentStatusID`);
 
 --
--- Indexes for table `payment`
---
-ALTER TABLE `payment`
-  ADD PRIMARY KEY (`paymentID`);
-
---
 -- Indexes for table `trip`
 --
 ALTER TABLE `trip`
@@ -455,10 +455,17 @@ ALTER TABLE `trip`
 -- Indexes for table `tripstudent`
 --
 ALTER TABLE `tripstudent`
-  ADD PRIMARY KEY (`tripUserEmail`,`tripID`,`tripStudentPaymentID`),
+  ADD PRIMARY KEY (`tripStudentID`),
   ADD KEY `tripUserEmail` (`tripUserEmail`),
-  ADD KEY `tripID` (`tripID`),
-  ADD KEY `tripStudentPaymentID` (`tripStudentPaymentID`);
+  ADD KEY `tripID` (`tripID`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`paymentID`),
+  ADD KEY `tripStudentID` (`tripStudentID`);
+
 
 --
 -- Indexes for table `user`
@@ -480,11 +487,18 @@ ALTER TABLE `company`
 --
 ALTER TABLE `internship`
   MODIFY `internshipID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tripstudent`
+--
+ALTER TABLE `tripstudent`
+  MODIFY `tripStudentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `paymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `paymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `trip`
 --
@@ -518,8 +532,15 @@ ALTER TABLE `trip`
 --
 ALTER TABLE `tripstudent`
   ADD CONSTRAINT `tripstudent_fk1` FOREIGN KEY (`tripUserEmail`) REFERENCES `user` (`userEmail`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tripstudent_fk2` FOREIGN KEY (`tripID`) REFERENCES `trip` (`tripID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tripstudent_fk3` FOREIGN KEY (`tripStudentPaymentID`) REFERENCES `payment` (`paymentID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tripstudent_fk2` FOREIGN KEY (`tripID`) REFERENCES `trip` (`tripID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ --
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `payment_fk1` FOREIGN KEY (`tripStudentID`) REFERENCES `tripstudent` (`tripStudentID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ 
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
