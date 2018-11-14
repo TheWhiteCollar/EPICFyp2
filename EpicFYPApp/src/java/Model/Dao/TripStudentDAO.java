@@ -15,45 +15,26 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+    #1: tripStudentID (int 11)
+    #2: tripUserEmail (varchar 50)
+    #3: tripID (int 11)
+    #4: tripStudentStatus (varchar 100)
+    #5: tripStudentTimestamp (Date)
+*/
+
 public class TripStudentDAO {
-     //update a particular tripStudent row
-    public static boolean updateTripStudent(String tripUserEmail, int tripStudentPaymentID, String tripStudentStatus, String tripStudentReview, int tripStudentRating, int tripID) {
-
-        String sql = "UPDATE tripstudent SET tripStudentPaymentID=?, tripStudentStatus=?, tripStudentReview=?, tripStudentRating=? WHERE tripID=? AND tripUserEmail=?";
-
-        try (Connection conn = ConnectionManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);) {
-                       
-            stmt.setInt(1, tripStudentPaymentID);
-            stmt.setString(2, tripStudentStatus);
-            stmt.setString(3, tripStudentReview);           
-            stmt.setInt(4, tripStudentRating);
-            stmt.setInt(5, tripID);
-            stmt.setString(6, tripUserEmail);
-           
-            int result = stmt.executeUpdate();
-            if (result == 0) {
-                return false;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Failed to update new tripStudent information", ex);
-        }
-        return true;
-    }
-
     // Add existing tripStudent/bulk new tripStudent
-    public static boolean addTripStudent(String tripUserEmail, int tripStudentPaymentID, String tripStudentStatus, String tripStudentReview, int tripStudentRating, int tripID) {
+    public static boolean addTripStudent(String tripUserEmail, int tripID, String tripStudentStatus, String tripStudentTimestamp) {
 
-        String sql = "INSERT INTO tripstudent (tripUserEmail, tripStudentPaymentID, tripStudentStatus, tripStudentReview, tripStudentRating, tripID) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO tripstudent (tripUserEmail, tripID, tripStudentStatus, tripStudentTimestamp) VALUES (?,?,?,?)";
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setString(1, tripUserEmail);
-            stmt.setInt(2, tripStudentPaymentID);
+            stmt.setInt(2, tripID);
             stmt.setString(3, tripStudentStatus);
-            stmt.setString(4, tripStudentReview);
-            stmt.setInt(5, tripStudentRating);
-            stmt.setInt(6, tripID);
+            stmt.setString(4, tripStudentTimestamp);
 
             int result = stmt.executeUpdate();
             if (result == 0) {
@@ -73,7 +54,7 @@ public class TripStudentDAO {
             PreparedStatement stmt = conn.prepareStatement("select * from tripstudent");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                result.add(new TripStudent(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6)));
+                result.add(new TripStudent(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5)));
             }
             rs.close();
             stmt.close();
@@ -93,7 +74,7 @@ public class TripStudentDAO {
             stmt.setString(1, userEmail);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                result.add(new TripStudent(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6)));
+                result.add(new TripStudent(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5)));
             }
             rs.close();
             stmt.close();
@@ -114,7 +95,7 @@ public class TripStudentDAO {
             stmt.setString(1, userEmail);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                result.add(new TripStudent(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6)));
+                result.add(new TripStudent(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5)));
             }
             rs.close();
             stmt.close();
@@ -126,25 +107,5 @@ public class TripStudentDAO {
         return null;
 
     }
-
-    //delete a particular TripStudent row
-    public static boolean deleteTripStudent(int tripID, String tripUserEmail, int tripStudentPaymentID) {
-
-        String sql1 = "DELETE FROM tripstudent WHERE tripID=? AND tripUserEmail=? AND tripStudentPaymentID=?";
-
-        try (
-            Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql1);) {
-            stmt.setInt(1, tripID);
-            stmt.setString(2, tripUserEmail);
-            stmt.setInt(3, tripStudentPaymentID);
-            stmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Unable to delete tripStudent, tripID = '" + tripID +", userEmail:  "+ tripUserEmail, ex);
-            return false;
-        }
-        return true;
-    }
-
 
 }
