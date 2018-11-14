@@ -97,6 +97,14 @@
         <servlet-class>Controller.getAllInternshipsServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>updateInternshipApproval</servlet-name>
+        <servlet-class>Controller.updateInternshipApproval</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateInternshipRejection</servlet-name>
+        <servlet-class>Controller.updateInternshipRejection</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>addPartnerInternship</servlet-name>
         <servlet-class>Controller.addPartnerInternship</servlet-class>
     </servlet>
@@ -195,6 +203,14 @@
     <servlet-mapping>
         <servlet-name>getAllInternshipsServlet</servlet-name>
         <url-pattern>/getAllInternshipsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateInternshipApproval</servlet-name>
+        <url-pattern>/updateInternshipApproval</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateInternshipRejection</servlet-name>
+        <url-pattern>/updateInternshipRejection</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addPartnerInternship</servlet-name>
