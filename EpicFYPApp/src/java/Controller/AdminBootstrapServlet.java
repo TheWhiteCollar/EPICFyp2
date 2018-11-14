@@ -120,12 +120,11 @@ public class AdminBootstrapServlet extends HttpServlet {
                     String[] tripStudent = line.split(",");
                     int tripID = Integer.parseInt(tripStudent[0]);
                     String tripUserEmail = tripStudent[1];
-                    int tripStudentPayment = Integer.parseInt(tripStudent[2]);
-                    String tripStudentStatus = tripStudent[3];
-                    String tripStudentReview = tripStudent[4];
-                    int tripStudentRating = Integer.parseInt(tripStudent[5]);
-
-                    if (TripsDAO.addTripStudent(tripUserEmail, tripStudentPayment, tripStudentStatus, tripStudentReview, tripStudentRating, tripID)) {
+                    String tripStudentStatus = tripStudent[2];
+                    String tripStudentTimestamp = tripStudent[3];
+                
+                    
+                    if (TripsDAO.addTripStudent(tripUserEmail, tripID, tripStudentStatus, tripStudentTimestamp)) {
                         writer.println("TripStudent Successfully updated");
                     } else {
                         writer.println("Not inserted into database");

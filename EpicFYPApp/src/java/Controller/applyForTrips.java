@@ -33,13 +33,15 @@ public class applyForTrips extends HttpServlet {
 protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         String tripUserEmail = request.getParameter("tripUserEmail");
-        int tripStudentPaymentID = 1;
-        String tripStudentStatus = null;
-        String tripStudentReview = null;
-        int tripStudentRating = 0;
         int tripID = Integer.parseInt(request.getParameter("tripID"));
+        String tripStudentStatus = null; //change this?
+        //get current date
+        java.util.Date dt = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = sdf.format(dt);
         
-        if(TripsDAO.insertStudent(tripUserEmail, tripStudentPaymentID, tripStudentStatus, tripStudentReview, tripStudentRating, tripID)){
+        //tripUserEmail, tripID, tripStudentStatus, currentTime
+        if(TripsDAO.insertStudent(tripUserEmail, tripID, tripStudentStatus, currentTime)){
             String url = "payment.jsp?tripId=" + tripID;
             response.sendRedirect(url);
         }      
