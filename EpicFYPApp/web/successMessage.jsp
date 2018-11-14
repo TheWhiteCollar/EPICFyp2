@@ -34,7 +34,7 @@
 
             <%
                 String message = request.getParameter("message");
-                if(message.equals("signup")){
+            if(message.equals("signup")){
             %>
             <h2>You have successfully created an account!</h2>
             <p>Please confirm your account via email</p>
