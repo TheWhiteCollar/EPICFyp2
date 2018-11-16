@@ -74,36 +74,6 @@ public class InternshipDAO {
         return true;
     }
     
-    public static boolean updateApproval(int internshipID) {
-
-        String sql = "UPDATE internship SET internshipApproval=? WHERE internshipID=?";
-
-        try (Connection conn = ConnectionManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);) {
-            String a = "approved";
-            stmt.setString(3, a);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(InternshipDAO.class.getName()).log(Level.WARNING, "Failed to update internship status", ex);
-        }
-        return true;
-    }
-    
-    public static boolean updateRejection(int internshipID) {
-
-        String sql = "UPDATE internship SET internshipApproval=? WHERE internshipID=?";
-
-        try (Connection conn = ConnectionManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);) {
-            String r = "rejected";
-            stmt.setString(3, r);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(InternshipDAO.class.getName()).log(Level.WARNING, "Failed to update internship status", ex);
-        }
-        return true;
-    }
-    
     //increase vacancy by 1 - update internship
     public static boolean updateInternshipVacancyIncrease(int internshipID) {
 
