@@ -47,58 +47,8 @@
                     });
                     internshipHTML += '</table></div>';
                     $("#internships").append(internshipHTML);
-
-                    $(".updateInternshipApproval").submit(function (event) {
-                        var internshipID = "" + $(this).children("input").val();
-                        var approveData = {
-                            'id': internshipID
-                        };
-                       
-                        $.post('/EpicFYPApp/updateInternshipApproval', approveData, function (response) {
-                            if (response === "success") {
-                                $.notify({
-                                    // options
-                                    message: 'Response recorded'
-                                }, {
-                                    // settings
-                                    type: 'success'
-                                });
-                            } else {
-                                $.notify({
-                                    message: 'Fail to update application'
-                                }, {
-                                    type: 'danger'
-                                });
-                            }
-                            reloadTable();
-                        })
-                        event.preventDefault();
-                    });
                 });
             });   
-                
-            function addToApproved() {
-                $.post('/EpicFYPApp/updateInternshipApproval', approveData, function (response) {
-                            if (response === "success") {
-                                $.notify({
-                                    // options
-                                    message: 'Response recorded'
-                                }, {
-                                    // settings
-                                    type: 'success'
-                                });
-                            } else {
-                                $.notify({
-                                    message: 'Fail to update application'
-                                }, {
-                                    type: 'danger'
-                                });
-                            }
-                            reloadTable();
-                        })
-                event.preventDefault();
-            }
-                
             function reloadTable() {
                 $.get('/EpicFYPApp/getAllInternshipsServlet', function (internshipJson) {
                         //parse string into JSON object
@@ -115,31 +65,6 @@
                     });
                     internshipHTML += '</table></div>';
                     $("#internships").append(internshipHTML);
-
-                    $(".updateInternshipApproval").submit(function (event) {
-                        var internshipID = "" + $(this).children("input").val();
-                        var approveData = {
-                            'id': internshipID
-                        };
-
-                        $.post('/EpicFYPApp/updateInternshipApproval', approveData, function (response) {
-                            if (response === "success") {
-                                $.notify({
-                                    message: 'Response recorded'
-                                }, {
-                                    type: 'success'
-                                });
-                            } else {
-                                $.notify({
-                                    message: 'Fail to update application'
-                                }, {
-                                    type: 'danger'
-                                });
-                            }
-                            reloadTable();
-                        })
-                        event.preventDefault();
-                    });
                 });
             }
         </script>
