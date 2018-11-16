@@ -9,6 +9,7 @@ import Model.Dao.InternshipDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Lenovo
  */
+@WebServlet(name = "deletePartnerInternship", urlPatterns = {"/deletePartnerInternship"})
 public class deletePartnerInternship extends HttpServlet {
 
     /**
@@ -30,7 +32,7 @@ public class deletePartnerInternship extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int internshipID = Integer.parseInt(request.getParameter("id"));
+        int internshipID = Integer.parseInt(request.getParameter("internshipID"));
         String text = "fail";
         if(InternshipDAO.deleteInternship(internshipID)){
            text = "success";
