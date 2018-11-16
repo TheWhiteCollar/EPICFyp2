@@ -67,7 +67,7 @@ public class addPartnerInternship extends HttpServlet {
             throws ServletException, IOException {
         System.out.println("nvjfnvjsknvlksmvs");
         String internshipName = request.getParameter("internshipName");
-        String internshipApproval = "pending";
+        String internshipApproval = "approved";
         String internshipFieldOfStudy = request.getParameter("internshipFieldOfStudy");
         String internshipDescription = request.getParameter("internshipDescription");
         Date internshipStart = Date.valueOf(request.getParameter("internshipStart"));

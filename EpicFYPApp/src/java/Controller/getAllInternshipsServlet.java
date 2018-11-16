@@ -50,7 +50,7 @@ public class getAllInternshipsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Internship> allInternships = InternshipDAO.getAllInternships();
+        ArrayList<Internship> allInternships = InternshipDAO.getAllApprovedInternships();
         Gson gson = new Gson();
         PrintWriter pw = response.getWriter();
         pw.print(gson.toJson(allInternships));
