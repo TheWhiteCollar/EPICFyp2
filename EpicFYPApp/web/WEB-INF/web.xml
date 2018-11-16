@@ -112,6 +112,10 @@
         <servlet-name>addPayment</servlet-name>
         <servlet-class>Controller.addPayment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deletePartnerInternship</servlet-name>
+        <servlet-class>Controller.deletePartnerInternship</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TripsDAO</servlet-name>
         <url-pattern>/TripsDAO</url-pattern>
@@ -223,6 +227,10 @@
     <servlet-mapping>
         <servlet-name>addPayment</servlet-name>
         <url-pattern>/addPayment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deletePartnerInternship</servlet-name>
+        <url-pattern>/deletePartnerInternship</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
