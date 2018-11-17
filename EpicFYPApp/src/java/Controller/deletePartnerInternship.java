@@ -5,25 +5,21 @@
  */
 package Controller;
 
-import Model.Dao.CompanyDAO;
 import Model.Dao.InternshipDAO;
-import Model.Entity.Company;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Lenovo
  */
-@WebServlet(name = "addPartnerInternship", urlPatterns = {"/addPartnerInternship"})
-public class addPartnerInternship extends HttpServlet {
+@WebServlet(name = "deletePartnerInternship", urlPatterns = {"/deletePartnerInternship"})
+public class deletePartnerInternship extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,8 +32,16 @@ public class addPartnerInternship extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        int internshipID = Integer.parseInt(request.getParameter("internshipID"));
+        String text = "fail";
+        if(InternshipDAO.deleteInternship(internshipID)){
+           text = "success";
+        }
+        response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+        response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+        response.getWriter().write(text);  
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -65,31 +69,6 @@ public class addPartnerInternship extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("nvjfnvjsknvlksmvs");
-        String internshipName = request.getParameter("internshipName");
-        String internshipApproval = "approved";
-        String internshipFieldOfStudy = request.getParameter("internshipFieldOfStudy");
-        String internshipDescription = request.getParameter("internshipDescription");
-        Date internshipStart = Date.valueOf(request.getParameter("internshipStart"));
-        Date internshipEnd = Date.valueOf(request.getParameter("internshipEnd"));
-        Double internshipPay = Double.parseDouble(request.getParameter("internshipPay"));
-        String internshipSupervisor = request.getParameter("internshipSupervisor");
-        String internshipSupervisorEmail = request.getParameter("internshipSupervisorEmail");
-        int internshipVacancy = Integer.parseInt(request.getParameter("internshipVacancy"));
-        int internshipPartnerID = Integer.parseInt(request.getParameter("internshipPartnerID"));
-        
-        java.util.Date dt = new java.util.Date();
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String internshipDatetime = sdf.format(dt);
-        String text = "fail";
-        
-        if (internshipEnd.after(internshipStart) && InternshipDAO.addInternship(internshipName, internshipApproval, internshipFieldOfStudy, internshipDescription, internshipStart, internshipEnd, internshipPay, internshipSupervisor, internshipSupervisorEmail, internshipVacancy, internshipPartnerID, internshipDatetime)) {
-            text = "success";
-        }
-
-        response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-        response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-        response.getWriter().write(text);       // Write response body.
         processRequest(request, response);
     }
 

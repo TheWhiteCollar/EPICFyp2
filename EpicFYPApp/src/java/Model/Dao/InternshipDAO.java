@@ -73,7 +73,7 @@ public class InternshipDAO {
         }
         return true;
     }
-        
+    
     //increase vacancy by 1 - update internship
     public static boolean updateInternshipVacancyIncrease(int internshipID) {
 

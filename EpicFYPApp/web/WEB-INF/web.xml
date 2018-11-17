@@ -97,12 +97,24 @@
         <servlet-class>Controller.getAllInternshipsServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>updateInternshipApproval</servlet-name>
+        <servlet-class>Controller.updateInternshipApproval</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateInternshipRejection</servlet-name>
+        <servlet-class>Controller.updateInternshipRejection</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>addPartnerInternship</servlet-name>
         <servlet-class>Controller.addPartnerInternship</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>addPayment</servlet-name>
         <servlet-class>Controller.addPayment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deletePartnerInternship</servlet-name>
+        <servlet-class>Controller.deletePartnerInternship</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TripsDAO</servlet-name>
@@ -201,12 +213,24 @@
         <url-pattern>/getAllInternshipsServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>updateInternshipApproval</servlet-name>
+        <url-pattern>/updateInternshipApproval</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateInternshipRejection</servlet-name>
+        <url-pattern>/updateInternshipRejection</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>addPartnerInternship</servlet-name>
         <url-pattern>/addPartnerInternship</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addPayment</servlet-name>
         <url-pattern>/addPayment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deletePartnerInternship</servlet-name>
+        <url-pattern>/deletePartnerInternship</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
