@@ -16,6 +16,12 @@
         <meta name="description" content="Imparting life skills through overseas exposure via internships and study missions. Countries of focus: Cambodia, Laos, Myanmar, Vietnam, India, Indonesia, Thailand, Japan and China." />
         <meta name="keywords" content="overseas, study missions, internships, training, life skills, career exposure" />
         <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
         <script src="js/jquery.min.js"></script>
         <script src="js/skel.min.js"></script>
         <script src="js/skel-layers.min.js"></script>
@@ -45,65 +51,263 @@
                     <h2>Account Information</h2>                     
                 </header>
 
-                <form action="updateUserServlet" method="post" enctype="multipart/form-data">
-                    <div class="row"> 
-                        <%
-                            User User = (User) session.getAttribute("User");
-                            if (User != null) {
-                                String email = User.getUserEmail();
-                                String password = User.getUserPassword();
-                                String firstName = User.getUserFirstName();
-                                String lastName = User.getUserLastName();
-                                String occupation = User.getUserOccupation();
-                                int yob = User.getUserDOB();
-                                int phone = User.getUserPhone();
-                                String gender = User.getUserGender();
-                                String citizenship = User.getUserCitizenship();
-                                String interest = User.getUserInterest();
-                                String userFos = User.getUserFieldOfStudy();
-                                String qualification = User.getUserHighestEducation();
-                                String school = User.getUserSchool();
-                                String description = User.getUserDescription();
-                        %>
-                        <div class="3u 12u(xsmall)" align="center"> 
-                            <% if (gender.equals("F")) {%>
-                                <img src="images/profilePicF.png" class = "avatar-image" alt ="avatar-image" height="80%" width="80%">
-                             
-                            <%    } else { %>
-                                <img src="images/profilePicM.png" class = "avatar-image" alt ="avatar-image" height="80%" width="80%">
-                            <% } %>
-                           
+                <div class="row"> 
+                    <%
+                        User User = (User) session.getAttribute("User");
+                        if (User != null) {
+                            String email = User.getUserEmail();
+                            String password = User.getUserPassword();
+                            String firstName = User.getUserFirstName();
+                            String lastName = User.getUserLastName();
+                            String occupation = User.getUserOccupation();
+                            int yob = User.getUserDOB();
+                            int phone = User.getUserPhone();
+                            String gender = User.getUserGender();
+                            String citizenship = User.getUserCitizenship();
+                            String interest = User.getUserInterest();
+                            String userFos = User.getUserFieldOfStudy();
+                            String qualification = User.getUserHighestEducation();
+                            String school = User.getUserSchool();
+                            String description = User.getUserDescription();
+                    %>
+                    <div class="3u 12u(xsmall)" align="center"> 
+                        <% if (gender.equals("F")) {%>
+                        <img src="images/profilePicF.png" class = "avatar-image" alt ="avatar-image" height="80%" width="80%">
+
+                        <%    } else { %>
+                        <img src="images/profilePicM.png" class = "avatar-image" alt ="avatar-image" height="80%" width="80%">
+                        <% } %>
+                        <button type="button" class="button" data-toggle="modal" data-target="#myModalEdit1">Change Password</button>
+                    </div>
+
+                    <div class="9u 12u(xsmall)">
+                        <div class="table-wrapper">
+                            <table class="blank">
+
+                                <tbody>
+                                    <tr>
+                                        <td class="align-right"><b>User email</b></td>
+                                        <td><% out.print(email);%> </td>
+                                        <td></td>    
+                                    </tr>
+
+                                    <tr>
+                                        <td class="align-right"><b>First Name</b></td>
+                                        <td><% out.print(firstName);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit2">Edit</button></td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td class="align-right"><b>Last Name</b></td>
+                                        <td><% out.print(lastName);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit3">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-right"><b>Phone number</b></td>
+                                        <td><%out.print(phone);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit4">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-right"><b>Gender</b></td>
+                                        <td><% out.print(gender);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit5">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-right"><b>Citizenship</b></td>
+                                        <td><% out.print(citizenship);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit6">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-right"><b>Year of birth</b></td>
+                                        <td><% out.print(yob);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit7">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-right"><b>Occupation</b></td>
+                                        <td><% out.print(occupation);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit8">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-right"><b>Field of Study</b></td>
+                                        <td><%out.print(userFos);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit9">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-right"><b>Highest Qualification</b></td>
+                                        <td><%out.print(qualification);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit10">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-right"><b>School</b></td>
+                                        <td><% out.print(school);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit11">Edit</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-right"><b>Interest</b></td>
+                                        <td>
+                                            <%
+                                                //user selected put in an arraylist
+                                                ArrayList<String> selectedInterestitems = new ArrayList<String>(Arrays.asList(interest.split("\\s*,\\s*")));
+
+                                                for (int i = 0; i < selectedInterestitems.size(); i++) {
+                                                    String interestName = selectedInterestitems.get(i);
+                                            %>
+                                            <%out.print(interestName);%><br>
+                                            <%
+                                                }
+
+                                            %>
+
+
+                                        </td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit12">Edit</button></td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <td class="align-right"><b>Description</b></td>
+                                        <td><% out.print(description);%></td>
+                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEdit13">Edit</button></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
                         </div>
+                    </div>
+                </div>
+            </div>
 
-                        <div class="9u 12u(xsmall)">
-                            <div class="table-wrapper">
-                                <table class="blank">
+        </section>
 
-                                    <tbody>
-                                        <tr>
-                                            <td class="align-right"><b>User email</b></td>
-                                            <td><% out.print(email);%> </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Password</b></td>
-                                            <td><input type ="password" name ="password" value =" <% out.print(password);%>"/> </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>First Name</b></td>
-                                            <td><input type ="text" name ="firstName" value =" <% out.print(firstName);%>"/> </td>
-                                        </tr>
+        <div class="modal fade" id="myModalEdit1" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit Password</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletPassword" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Password :</td>
+                                        <td><input type="text" name ="password" placeholder ="New password"/></td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
 
-                                        <tr>
-                                            <td class="align-right"><b>Last Name</b></td>
-                                            <td><input type ="text" name ="lastName" value =" <% out.print(lastName);%>"/></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Phone number</b></td>
-                                            <td><input type ="number" name ="phone" value ="<%out.print(phone);%>"/></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Gender</b></td>
-                                            <td><select name ="gender">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModalEdit2" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit first name</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletFirstName" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New First Name :</td>
+                                        <td><input type="text" name ="firstName" placeholder ="New first name"/></td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>                            
+        <div class="modal fade" id="myModalEdit3" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit last name</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletLastName" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Last name :</td>
+                                        <td><input type="text" name ="lastName" placeholder ="New last name"/></td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModalEdit4" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit Phone number</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletPhone" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Phone number :</td>
+                                        <td><input type="number" name ="phone" placeholder ="New phone"/></td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+                                
+        <div class="modal fade" id="myModalEdit5" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit Gender</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletGender" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Gender :</td>
+                                        <td>
+                                            <select name ="gender">
                                                     <%
                                                         if (gender.equals("F")) {
                                                     %>
@@ -120,12 +324,36 @@
                                                     %>
 
                                                 </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Citizenship</b></td>
-                                            <td>
-                                                <select name ="citizenship">
+                                        </td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                                    
+        <div class="modal fade" id="myModalEdit6" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit Citizenship</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletCitizenship" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Citizenship :</td>
+                                        <td>
+                                      <select name="citizenship">
                                                     <option selected value ="<% out.print(citizenship);%>"/><% out.print(citizenship);%></option>
                                                     <option value="Singaporean">Singaporean</option>
                                                     <option value="Singapore PR">Singapore PR</option>
@@ -321,169 +549,311 @@
                                                     <option value="Zambian">Zambian</option>
                                                     <option value="Zimbabwean">Zimbabwean</option>
                                                 </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Year of birth</b></td>
-                                            <td>
-                                                <select name = "yob">
-                                                    <option selected value="<% out.print(yob);%>"><% out.print(yob);%></option>
-                                                    <option value="2012">2012</option>
-                                                    <option value="2011">2011</option>
-                                                    <option value="2010">2010</option>
-                                                    <option value="2009">2009</option>
-                                                    <option value="2008">2008</option>
-                                                    <option value="2007">2007</option>
-                                                    <option value="2006">2006</option>
-                                                    <option value="2005">2005</option>
-                                                    <option value="2004">2004</option>
-                                                    <option value="2003">2003</option>
-                                                    <option value="2002">2002</option>
-                                                    <option value="2001">2001</option>
-                                                    <option value="2000">2000</option>
-                                                    <option value="1999">1999</option>
-                                                    <option value="1998">1998</option>
-                                                    <option value="1997">1997</option>
-                                                    <option value="1996">1996</option>
-                                                    <option value="1995">1995</option>
-                                                    <option value="1994">1994</option>
-                                                    <option value="1993">1993</option>
-                                                    <option value="1992">1992</option>
-                                                    <option value="1991">1991</option>
-                                                    <option value="1990">1990</option>
-                                                    <option value="1989">1989</option>
-                                                    <option value="1988">1988</option>
-                                                    <option value="1987">1987</option>
-                                                    <option value="1986">1986</option>
-                                                    <option value="1985">1985</option>
-                                                    <option value="1984">1984</option>
-                                                    <option value="1983">1983</option>
-                                                    <option value="1982">1982</option>
-                                                    <option value="1981">1981</option>
-                                                    <option value="1980">1980</option>
-                                                    <option value="1979">1979</option>
-                                                    <option value="1978">1978</option>
-                                                    <option value="1977">1977</option>
-                                                    <option value="1976">1976</option>
-                                                    <option value="1975">1975</option>
-                                                    <option value="1974">1974</option>
-                                                    <option value="1973">1973</option>
-                                                    <option value="1972">1972</option>
-                                                    <option value="1971">1971</option>
-                                                    <option value="1970">1970</option>
-                                                    <option value="1969">1969</option>
-                                                    <option value="1968">1968</option>
-                                                    <option value="1967">1967</option>
-                                                    <option value="1966">1966</option>
-                                                    <option value="1965">1965</option>
-                                                    <option value="1964">1964</option>
-                                                    <option value="1963">1963</option>
-                                                    <option value="1962">1962</option>
-                                                    <option value="1961">1961</option>
-                                                    <option value="1960">1960</option>
-                                                    <option value="1959">1959</option>
-                                                    <option value="1958">1958</option>
-                                                    <option value="1957">1957</option>
-                                                    <option value="1956">1956</option>
-                                                    <option value="1955">1955</option>
-                                                    <option value="1954">1954</option>
-                                                    <option value="1953">1953</option>
-                                                    <option value="1952">1952</option>
-                                                    <option value="1951">1951</option>
-                                                    <option value="1950">1950</option>
-                                                    <option value="1949">1949</option>
-                                                    <option value="1948">1948</option>
-                                                    <option value="1947">1947</option>
-                                                    <option value="1946">1946</option>
-                                                    <option value="1945">1945</option>
-                                                    <option value="1944">1944</option>
-                                                    <option value="1943">1943</option>
-                                                    <option value="1942">1942</option>
-                                                    <option value="1941">1941</option>
-                                                    <option value="1940">1940</option>
-                                                    <option value="1939">1939</option>
-                                                    <option value="1938">1938</option>
-                                                    <option value="1937">1937</option>
-                                                    <option value="1936">1936</option>
-                                                    <option value="1935">1935</option>
-                                                    <option value="1934">1934</option>
-                                                    <option value="1933">1933</option>
-                                                    <option value="1932">1932</option>
-                                                    <option value="1931">1931</option>
-                                                    <option value="1930">1930</option>
-                                                    <option value="1929">1929</option>
-                                                    <option value="1928">1928</option>
-                                                    <option value="1927">1927</option>                                      
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Occupation</b></td>
-                                            <td>
-                                                <select name="occupation" >
-                                                    <option selected value="<% out.print(occupation);%>"><% out.print(occupation);%></option>
-                                                    <option value="Not Applicable">-  Student</option>
-                                                    <option value="Not Applicable">-  Business Executive/Agent</option>
-                                                    <option value="Not Applicable">-  Financial Executive</option>
-                                                    <option value="Not Applicable">-  Teacher/Trainer/Instructor</option>
-                                                    <option value="Not Applicable">-  Medical Practitioner</option>
-                                                    <option value="Not Applicable">-  Architecture/Engineer/Operator</option>
-                                                    <option value="Not Applicable">-  Artist/Designer</option>
-                                                    <option value="Not Applicable">-  Specialist/Scientist</option>
-                                                    <option value="Not Applicable">-  Law Practitioner</option>
-                                                    <option value="Not Applicable">-  Others</option>
+
+                                        </td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
                                                     
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Field of Study</b></td>
-                                            <td>
-                                                <select name="fos">
-                                                    <option selected value="<%out.print(userFos);%>"><%out.print(userFos);%></option>
-                                                    <%
-                                                        ArrayList<String> allFieldOfStudy = FieldOfStudyDAO.getFieldOfStudies();
+        <div class="modal fade" id="myModalEdit7" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit Year of Birth</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletYob" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Year of Birth :</td>
+                                        <td>
+                                            <select name="yob">
+                                                <option selected value="<% out.print(yob);%>"><% out.print(yob);%></option>
+                                                <option value="2012">2012</option>
+                                                <option value="2011">2011</option>
+                                                <option value="2010">2010</option>
+                                                <option value="2009">2009</option>
+                                                <option value="2008">2008</option>
+                                                <option value="2007">2007</option>
+                                                <option value="2006">2006</option>
+                                                <option value="2005">2005</option>
+                                                <option value="2004">2004</option>
+                                                <option value="2003">2003</option>
+                                                <option value="2002">2002</option>
+                                                <option value="2001">2001</option>
+                                                <option value="2000">2000</option>
+                                                <option value="1999">1999</option>
+                                                <option value="1998">1998</option>
+                                                <option value="1997">1997</option>
+                                                <option value="1996">1996</option>
+                                                <option value="1995">1995</option>
+                                                <option value="1994">1994</option>
+                                                <option value="1993">1993</option>
+                                                <option value="1992">1992</option>
+                                                <option value="1991">1991</option>
+                                                <option value="1990">1990</option>
+                                                <option value="1989">1989</option>
+                                                <option value="1988">1988</option>
+                                                <option value="1987">1987</option>
+                                                <option value="1986">1986</option>
+                                                <option value="1985">1985</option>
+                                                <option value="1984">1984</option>
+                                                <option value="1983">1983</option>
+                                                <option value="1982">1982</option>
+                                                <option value="1981">1981</option>
+                                                <option value="1980">1980</option>
+                                                <option value="1979">1979</option>
+                                                <option value="1978">1978</option>
+                                                <option value="1977">1977</option>
+                                                <option value="1976">1976</option>
+                                                <option value="1975">1975</option>
+                                                <option value="1974">1974</option>
+                                                <option value="1973">1973</option>
+                                                <option value="1972">1972</option>
+                                                <option value="1971">1971</option>
+                                                <option value="1970">1970</option>
+                                                <option value="1969">1969</option>
+                                                <option value="1968">1968</option>
+                                                <option value="1967">1967</option>
+                                                <option value="1966">1966</option>
+                                                <option value="1965">1965</option>
+                                                <option value="1964">1964</option>
+                                                <option value="1963">1963</option>
+                                                <option value="1962">1962</option>
+                                                <option value="1961">1961</option>
+                                                <option value="1960">1960</option>
+                                                <option value="1959">1959</option>
+                                                <option value="1958">1958</option>
+                                                <option value="1957">1957</option>
+                                                <option value="1956">1956</option>
+                                                <option value="1955">1955</option>
+                                                <option value="1954">1954</option>
+                                                <option value="1953">1953</option>
+                                                <option value="1952">1952</option>
+                                                <option value="1951">1951</option>
+                                                <option value="1950">1950</option>
+                                                <option value="1949">1949</option>
+                                                <option value="1948">1948</option>
+                                                <option value="1947">1947</option>
+                                                <option value="1946">1946</option>
+                                                <option value="1945">1945</option>
+                                                <option value="1944">1944</option>
+                                                <option value="1943">1943</option>
+                                                <option value="1942">1942</option>
+                                                <option value="1941">1941</option>
+                                                <option value="1940">1940</option>
+                                                <option value="1939">1939</option>
+                                                <option value="1938">1938</option>
+                                                <option value="1937">1937</option>
+                                                <option value="1936">1936</option>
+                                                <option value="1935">1935</option>
+                                                <option value="1934">1934</option>
+                                                <option value="1933">1933</option>
+                                                <option value="1932">1932</option>
+                                                <option value="1931">1931</option>
+                                                <option value="1930">1930</option>
+                                                <option value="1929">1929</option>
+                                                <option value="1928">1928</option>
+                                                <option value="1927">1927</option>                                      
+                                            </select>
+                                        </td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>                                            
+                                                    
+         <div class="modal fade" id="myModalEdit8" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit Year of Birth</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletOccupation" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Year of Birth :</td>
+                                        <td>
+                                            <select name="occupation">
+                                                <option selected value="<% out.print(occupation);%>"><% out.print(occupation);%></option>
+                                                <option value="Student">Student</option>
+                                                <option value="Business Executive/Agent">Business Executive/Agent</option>
+                                                <option value="Financial Executive">Financial Executive</option>
+                                                <option value="Teacher/Trainer/Instructor">Teacher/Trainer/Instructor</option>
+                                                <option value="Medical Practitioner">Medical Practitioner</option>
+                                                <option value="Architecture/Engineer/Operator">Architecture/Engineer/Operator</option>
+                                                <option value="Artist/Designer">Artist/Designer</option>
+                                                <option value="Specialist/Scientist">Specialist/Scientist</option>
+                                                <option value="Law Practitioner">Law Practitioner</option>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>                                           
+                                                    
+        <div class="modal fade" id="myModalEdit9" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit Field of Study</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletFOS" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Field of Study :</td>
+                                        <td>
+                                            <select name="fos">
+                                                <option selected value="<%out.print(userFos);%>"><%out.print(userFos);%></option>
+                                                <%
+                                                    ArrayList<String> allFieldOfStudy = FieldOfStudyDAO.getFieldOfStudies();
 
-                                                        if (!allFieldOfStudy.isEmpty()) {
-                                                            for (int i = 0; i < allFieldOfStudy.size(); i++) {
-                                                                String fos = allFieldOfStudy.get(i);
+                                                    if (!allFieldOfStudy.isEmpty()) {
+                                                        for (int i = 0; i < allFieldOfStudy.size(); i++) {
+                                                            String fos = allFieldOfStudy.get(i);
 
-                                                    %>
-                                                    <option value="<%out.print(fos);%>"><%out.print(fos);%></option>
-                                                    <%    }
-                                                        }
+                                                %>
+                                                <option value="<%out.print(fos);%>"><%out.print(fos);%></option>
+                                                <%    }
+                                                    }
 
-                                                    %>
-                                                </select> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Highest Qualification</b></td>
-                                            <td>
-                                                <select name="highest_qualification" >
-                                                    <option selected value="<%out.print(qualification);%>"> <%out.print(qualification);%></option>
-                                                    <option value="primary">Primary School</option>
-                                                    <option value="secondary" >Secondary School</option>
-                                                    <option value="post-secondary" >Post-secondary (non-tertiary) School</option>
-                                                    <option value="polytechnic" >Polytechnic Diploma</option>
-                                                    <option value="ite" >ITE</option>
-                                                    <option value="bachelor" >Bachelor Degree</option>
-                                                    <option value="postgraduate" >Postgraduate Diploma</option>
-                                                    <option value="Masters/Doctorate" >Masters/Doctorate</option>
-                                                </select> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>School</b></td>
-                                            <td><input type ="text" name ="school" value ="<% out.print(school);%>"/></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Interest</b></td>
-                                            <td>
-                                                    <%
-                                                        //user selected put in an arraylist
-                                                        ArrayList<String> selectedInterestitems = new ArrayList<String>(Arrays.asList(interest.split("\\s*,\\s*")));
-
+                                                %>
+                                            </select>
+                                        </td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                
+        <div class="modal fade" id="myModalEdit10" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit Highest Qualification</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletHighestQualification" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Highest Qualification :</td>
+                                        <td>
+                                            <select name="highest_qualification" >
+                                                <option selected value="<%out.print(qualification);%>"> <%out.print(qualification);%></option>
+                                                <option value="Primary School">Primary School</option>
+                                                <option value="Secondary School" >Secondary School</option>
+                                                <option value="Post-secondary (non-tertiary) School" >Post-secondary (non-tertiary) School</option>
+                                                <option value="Polytechnic Diploma" >Polytechnic Diploma</option>
+                                                <option value="ITE" >ITE</option>
+                                                <option value="Bachelor Degree" >Bachelor Degree</option>
+                                                <option value="Postgraduate Diploma" >Postgraduate Diploma</option>
+                                                <option value="Masters/Doctorate" >Masters/Doctorate</option>
+                                            </select> 
+                                        </td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+                                
+        <div class="modal fade" id="myModalEdit11" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit School</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletSchool" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New School :</td>
+                                        <td><input type="text" name ="school" placeholder ="New school"/></td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>                        
+                                                    
+        <div class="modal fade" id="myModalEdit12" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit Interests</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletInterest" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Interests :</td>
+                                        <td>
+                                         <%
+                 
                                                         for (int i = 0; i < selectedInterestitems.size(); i++) {
                                                             String interestName = selectedInterestitems.get(i);
                                                     %>
@@ -506,38 +876,52 @@
 
                                                     %>
 
-                                            </td>
-
-
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Description</b></td>
-                                            <td><textarea name ="description" rows="6"/><% out.print(description);%></textarea></td>
-                                        </tr>
-
-                                    </tbody>
-
-
+                                        </td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
                                 </table>
-
-                                <br>
-                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
-                                <input type="submit" value="Save" class="full_width">
-                            </div>
+                            </form>
                         </div>
-                        <%
-                            }
-                        %> 
-                </form>
-
-
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div>                                             
+                                                    
+        <div class="modal fade" id="myModalEdit13" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>Edit Description</b></h4>
+                    </div>
+                    <div class="modal-body">           
+                        <div class="row">
+                            <form action="updateUserServletDescription" method="post">
+                                <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                                <table>
+                                    <tr>
+                                        <td>New Description :</td>
+                                        <td><textarea name ="description" rows="6"/>New Description</textarea></td>
+                                        <td><input type="submit" value="Save"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>  
+                                
+        <%
+            }
+        %> 
 
-    </section>
-
-
-
-    <script src="js/custom-file-input.js"></script>
-</body>
+        <script src="js/custom-file-input.js"></script>
+    </body>
 </html> 

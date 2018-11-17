@@ -64,6 +64,28 @@ public class UserDAO {
 
         return user;
     }
+    
+    // Get user and their details with userid
+    public static User getUserByID(String userid) {
+
+        User user = null;
+        String sql = "SELECT * FROM user WHERE userEmail LIKE ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, userid);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (user == null) {
+                    user = new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getBlob(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Unable to retrieve userid = '" + userid + "'.", ex);
+        }
+
+        return user;
+    }
 
     // Add existing users/bulk new users
     public static boolean addUser(String userEmail, String userFirstName, String userLastName, int userPhone, String userGender, String userCitizenship, int userDOB, String userInterest, String userPassword, String userOccupation, Part userResume, String userIsEmailConfirm, String userHighestEducation, String userFieldOfStudy, String userDescription, String userSchool) {
@@ -266,7 +288,248 @@ public class UserDAO {
         }
         return true;
     }
+    
+    //update user firstname
+    public static boolean updateUserFirstName(String userEmail, String userFirstName) {
 
+        String sql = "UPDATE user SET userFirstName=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, userFirstName);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    }
+    
+    //update user lastname
+    public static boolean updateUserLastName(String userEmail, String userLastName) {
+
+        String sql = "UPDATE user SET userLastName=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, userLastName);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    }
+    
+    //update user phone number
+    public static boolean updateUserPhone(String userEmail, int userPhone) {
+
+        String sql = "UPDATE user SET userPhone=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setInt(1, userPhone);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    }
+
+ //update user gender
+    public static boolean updateUserGender(String userEmail, String userGender) {
+
+        String sql = "UPDATE user SET userGender=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, userGender);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    }   
+    
+    //update user citizenship
+    public static boolean updateUserCitizenship(String userEmail, String userCitizenship) {
+
+        String sql = "UPDATE user SET userCitizenship=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, userCitizenship);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    } 
+    
+     //update user year of birth
+    public static boolean updateUserYob(String userEmail, int userDob) {
+
+        String sql = "UPDATE user SET userDOB=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setInt(1, userDob);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    } 
+    
+    //update user interest
+    public static boolean updateUserInterest(String userEmail, String userInterest) {
+
+        String sql = "UPDATE user SET userInterest=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, userInterest);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    } 
+    
+    //update user occupation
+    public static boolean updateUserOccupation(String userEmail, String userOccupation) {
+
+        String sql = "UPDATE user SET userOccupation=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, userOccupation);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    } 
+    
+    //update user field of study
+    public static boolean updateUserFieldOfStudy(String userEmail, String userFieldOfStudy) {
+
+        String sql = "UPDATE user SET userFieldOfStudy=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, userFieldOfStudy);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    } 
+    
+    //update user highest education
+    public static boolean updateUserHighestEducation(String userEmail, String userHighestEducation) {
+
+        String sql = "UPDATE user SET userHighestEducation=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, userHighestEducation);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    } 
+    
+    
+    //update user description
+    public static boolean updateUserDescription(String userEmail, String userDescription) {
+
+        String sql = "UPDATE user SET userDescription=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, userDescription);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    } 
+    
+     //update user description
+    public static boolean updateUserSchool(String userEmail, String userSchool) {
+
+        String sql = "UPDATE user SET userSchool=? WHERE userEmail = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, userSchool);
+            stmt.setString(2, userEmail);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to update user: " + userEmail + ".", ex);
+        }
+        return true;
+    } 
+    
     //update a particular user based on the internship details
     public static boolean updateUser(String userEmail, String userFirstName, String userLastName, int userPhone, String userCitizenship, String userHighestEducation, String userFieldOfStudy, String userSchool, Part userResume){
 
@@ -354,7 +617,7 @@ public class UserDAO {
     //update user email confirmation
     public static boolean updateUserPassword(String userEmail, String userPassword) {
 
-        String sql = "UPDATE user SET userPassword = ? WHERE userEmail = ?";
+        String sql = "UPDATE user SET userPassword=? WHERE userEmail = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
