@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "addNewPaymentCheque", urlPatterns = {"/addNewPaymentCheque"})
-public class addNewPaymentCheque extends HttpServlet {
+@WebServlet(name = "addNewPaymentPaynow", urlPatterns = {"/addNewPaymentPaynow"})
+public class addNewPaymentPaynow extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,8 +47,8 @@ public class addNewPaymentCheque extends HttpServlet {
             TripsDAO.insertStudent(userEmail, tripID, "Deposit Made", currentTime);
             int tripStudentID = TripStudentDAO.getTripStudentID(userEmail, tripID, "Deposit Made", currentTime);
             //insert payment into payment table
-            Boolean inserted = PaymentDAO.addPayment(tripStudentID, "Cheque", chequeNumber, amountI);
-            int paymentID = PaymentDAO.getPaymentID(tripStudentID, "Cheque", chequeNumber, amountI);
+            Boolean inserted = PaymentDAO.addPayment(tripStudentID, "PayNow", chequeNumber, amountI);
+            int paymentID = PaymentDAO.getPaymentID(tripStudentID, "PayNow", chequeNumber, amountI);
             if (inserted==true) {
                 response.sendRedirect("paymentMade.jsp?paymentId=" + paymentID);
                 return;

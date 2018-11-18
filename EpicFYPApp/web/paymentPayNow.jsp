@@ -1,4 +1,8 @@
 
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="Model.Entity.Trip"%>
+<%@page import="Model.Dao.TripsDAO"%>
+<%@page import="Model.Entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -35,30 +39,43 @@
         <section id="main" class="wrapper">
             <div class="container align-center">
                 <%
+                    User User = (User) session.getAttribute("User");
+                    String email = User.getUserEmail();
+                    
+                    
+                    String tripIDS = request.getParameter("tripId");
+                    int tripID = Integer.parseInt(tripIDS);
+                    Trip trip = TripsDAO.getTrip(tripID);
+                    double deposit = trip.getTripPrice()/2;
+                    DecimalFormat df2 = new DecimalFormat("#.00");
                 %>
                 <h3><b>Choose your payment options : PayNow</b></h3>
+                <form action="addNewPaymentPaynow" method="post">
+                    <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                    <input type="hidden" name="tripId" value="<%out.print(tripID);%>">
+                    <input type="hidden" name="amount" value="<%out.print(deposit);%>">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="align-right">Total Amount : </td>
+                                <td class="align-left">$ <%out.print(df2.format(deposit));%></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Please scan the QR code below</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><img src="images/paynow.png" height="60%" width=auto> </td>
+                            </tr>
 
-                <table>
-                    <tbody>
-                        <tr>
-                            <td class="align-right">Total Amount : </td>
-                            <td class="align-left">$ 100</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Please scan the QR code below</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><img src="images/paynow.png" height="60%" width=auto> </td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="align-right">Transaction Number : </td>
-                            <td class="align-left"><input type="text"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p>Please ensure that the payment is successful. If you encounter any problem, do drop us an email: isabelle@epicjourney.sg</p>
-                <input type="submit" value ="Submit">
+                            <tr>
+                                <td class="align-right">Transaction Number : </td>
+                                <td class="align-left"><input type="text" name="transactionNumber"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Please ensure that the payment is successful. If you encounter any problem, do drop us an email: isabelle@epicjourney.sg</p>
+                    <input type="submit" value ="Submit">
+                </form>
             </div>
         </section>
     </body>

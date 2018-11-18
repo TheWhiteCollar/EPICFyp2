@@ -1,4 +1,8 @@
 
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="Model.Entity.User"%>
+<%@page import="Model.Entity.Trip"%>
+<%@page import="Model.Dao.TripsDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -35,26 +39,40 @@
         <section id="main" class="wrapper">
             <div class="container align-center">
                 <%
+                    User User = (User) session.getAttribute("User");
+                    String email = User.getUserEmail();
+                    
+                    
+                    String tripIDS = request.getParameter("tripId");
+                    int tripID = Integer.parseInt(tripIDS);
+                    Trip trip = TripsDAO.getTrip(tripID);
+                    double deposit = trip.getTripPrice()/2;
+                    DecimalFormat df2 = new DecimalFormat("#.00");
                 %>
                 <h3><b>Payment Method : Bank Transfer (i-Banking)</b></h3>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td class="align-right">DBS Account : </td>
-                            <td class="align-left">003 - 949452 - 1</td>
-                        </tr>
-                        <tr>
-                            <td class="align-right">Total Amount : </td>
-                            <td class="align-left">$ 100</td>
-                        </tr>
-                        <tr>
-                            <td class="align-right">Transaction Number : </td>
-                            <td class="align-left"><input type="text"</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p>Please ensure that the payment is successful. Otherwise your application will be cancelled.</p>
-                <input type="submit" value ="Submit">
+                <form action="addNewPaymentBankTransfer" method="post">
+                    <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                    <input type="hidden" name="tripId" value="<%out.print(tripID);%>">
+                    <input type="hidden" name="amount" value="<%out.print(deposit);%>">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="align-right">DBS Account to transfer to: </td>
+                                <td class="align-left">003 - 949452 - 1</td>
+                            </tr>
+                            <tr>
+                                <td class="align-right">Total Amount: </td>
+                                <td class="align-left">$ <%out.print(df2.format(deposit));%></td>
+                            </tr>
+                            <tr>
+                                <td class="align-right">Transaction Number : </td>
+                                <td class="align-left"><input type="text" name="transactionNumber"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Please ensure that the payment is successful. Otherwise your application will be cancelled.</p>
+                    <input type="submit" value ="Submit">
+                </form>
             </div>
         </section>
     </body>

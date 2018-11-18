@@ -1,4 +1,7 @@
 
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="Model.Entity.Trip"%>
+<%@page import="Model.Dao.TripsDAO"%>
 <%@page import="Model.Entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -36,25 +39,36 @@
         <section id="main" class="wrapper">
             <div class="container align-center">
                 <%
-                    User user = (User) session.getAttribute("User");
-                    String userEmail = user.getUserEmail();
+                    User User = (User) session.getAttribute("User");
+                    String email = User.getUserEmail();
+                    
+                    
+                    String tripIDS = request.getParameter("tripId");
+                    int tripID = Integer.parseInt(tripIDS);
+                    Trip trip = TripsDAO.getTrip(tripID);
+                    double deposit = trip.getTripPrice()/2;
+                    DecimalFormat df2 = new DecimalFormat("#.00");
+                    
                 %>
                 <form action="addNewPaymentCheque" method="post">
+                    <input type="hidden" name="userEmail" value="<%out.print(email);%>">
+                    <input type="hidden" name="tripId" value="<%out.print(tripID);%>">
+                    <input type="hidden" name="amount" value="<%out.print(deposit);%>">
                     <h3><b>Payment Method : Cheque</b></h3>
                     <table>
                         <tbody>
                             <tr>
-                                <td class="align-right">Total Amount : </td>
-                                <td class="align-left">$ 100</td>
+                                <td class="align-right">Total Amount: </td>
+                                <td class="align-left">$ <%out.print(df2.format(deposit));%></td>
                             </tr>
                             <tr>
                                 <td class="align-right">Cheque Number : </td>
-                                <td class="align-left"><input type="text" name="cheque"></td>
+                                <td class="align-left"><input type="text" name="transactionNumber"></td>
                             </tr>
                         </tbody>
                     </table>
                     <p>Please ensure that the cheque has been cleared within 3 working days. Otherwise your application will be cancelled.</p>
-                    <input type="hidden" name="amount" value="100">
+                    
                     <input type="submit" value ="Submit">
                 </form>
             </div>

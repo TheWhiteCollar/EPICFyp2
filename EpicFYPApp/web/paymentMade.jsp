@@ -35,7 +35,7 @@
         <section id="main" class="wrapper">
             <div class="container align-center">
                     <%
-                    String paymentId = request.getParameter("paymentId");
+                    String paymentId = request.getParameter("paymentId");                   
                     %>
                     <div class="row">
                         <div class="3u 12u(xsmall)">
@@ -45,17 +45,12 @@
                             <p></p>
                             <h4><b>[ Payment ID : <%out.print(paymentId);%> ]</b> Your application will be reviewed soon</h4>
                             <p class="align-left">
-                        Thank you for choosing EPIC. An email will be sent to you once your payment is successfully received.
-                        If you have any queries, please contact: isabelle@epicjourney.sg
-                    </p>
+                                Thank you for choosing EPIC. An email will be sent to you once your payment is successfully received.
+                                If you have any queries, please contact: <a href="mailto:isabelle@epicjourney.sg?Subject=Problems%20with%20deposit%20payment">isabelle@epicjourney.sg</a>
+                            </p>
                         </div>
                         
                     </div>
-                    
-                    
-            
-                    
-           
                 
                 <a href="index.jsp" class="button">Back to Home</a>
             </div>
