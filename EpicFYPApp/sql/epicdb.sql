@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.9
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 20, 2018 at 07:13 PM
--- Server version: 5.7.11
--- PHP Version: 5.6.19
+-- Host: 127.0.0.1:3306
+-- Generation Time: Nov 18, 2018 at 05:22 PM
+-- Server version: 5.7.21
+-- PHP Version: 5.6.35
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,10 +28,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-CREATE TABLE `admin` (
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
   `adminName` varchar(15) NOT NULL,
   `adminPassword` varchar(30) NOT NULL,
-  `adminLevel` varchar(30) NOT NULL
+  `adminLevel` varchar(30) NOT NULL,
+  PRIMARY KEY (`adminName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -46,8 +50,9 @@ INSERT INTO `admin` (`adminName`, `adminPassword`, `adminLevel`) VALUES
 -- Table structure for table `company`
 --
 
-CREATE TABLE `company` (
-  `companyID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `company`;
+CREATE TABLE IF NOT EXISTS `company` (
+  `companyID` int(11) NOT NULL AUTO_INCREMENT,
   `companyEmail` varchar(50) NOT NULL,
   `companyTermsAndConditions` int(1) NOT NULL,
   `companyName` varchar(100) NOT NULL,
@@ -57,20 +62,21 @@ CREATE TABLE `company` (
   `companyState` varchar(100) NOT NULL,
   `companyDescription` varchar(500) NOT NULL,
   `companyPassword` varchar(50) NOT NULL,
-  `companyLogo` mediumblob
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `companyLogo` mediumblob,
+  PRIMARY KEY (`companyID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `company`
 --
 
 INSERT INTO `company` (`companyID`, `companyEmail`, `companyTermsAndConditions`, `companyName`, `companyContact`, `companyContinent`, `companyCountry`, `companyState`, `companyDescription`, `companyPassword`, `companyLogo`) VALUES
-(0, '', 0, 'not assigned', 0, '0', 'Myanmar', 'not assigned', 'not assigned', '', ''),
-(1, '', 0, 'AA Pte Ltd', 0, '0', 'Myanmar', 'Shan', 'Here are AA Pte Ltd, we believe that only the best should be given to our customers.', 'test', ''),
-(2, '', 0, 'BB Pte Ltd', 0, '0', 'Singapore', 'Singapore', 'Here are BB Pte Ltd, we believe that only the best should be given to our customers.', 'test', ''),
-(3, '', 0, 'CC Pte Ltd', 0, '0', 'Malaysia', 'Kuala Lumpur', 'Here are CC Pte Ltd, we believe that only the best should be given to our customers.', 'test', ''),
-(4, '', 0, 'DD Pte Ltd', 0, '0', 'China', 'Shanghai', 'Here are DD Pte Ltd, we believe that only the best should be given to our customers.', 'test', ''),
-(5, '123.com', 0, 'Company123', 12345678, '0', 'China', 'Shanghai', 'Here are Company123', '123', '');
+(0, 'testing@gmail.com', 0, 'TESTING Pte Ltd', 11111111, 'Australia', 'Australia', 'Gold Coast', 'not assigned', 'test', ''),
+(1, 'universtar.bt21sg@gmail.com', 0, 'BT21 Pte Ltd', 61234567, 'Asia', 'South Korea', 'Seoul', 'Here are AA Pte Ltd, we want to acheive greatness and quality at the best given possible time.', 'test', ''),
+(2, 'rachaellow9011@gmail.com', 0, 'Rach Pte Ltd', 62211334, 'Asia', 'Singapore', 'Singapore', 'Here are BB Pte Ltd, we hand pick the best materials t bring to you the best BB product ever.', 'test', ''),
+(3, 'rachael9011@gmail.com', 0, 'BHE Pte Ltd', 61122335, 'Europe', 'France', 'Paris', 'Here are CC Pte Ltd, we believe that only the best should be given to our customers.', 'test', ''),
+(4, 'rjseoul2018@gmail.com', 0, 'BTS Pte Ltd', 91234567, 'America', 'USA', 'Newark', 'Here are DD Pte Ltd, we give the best for everything we do.', 'test', ''),
+(5, '123.com', 0, 'Company123', 92348343, 'Asia', 'China', 'Shanghai', 'We sell the 123s of life, and we are glad to see you join us on this journey', '123', '');
 
 -- --------------------------------------------------------
 
@@ -78,9 +84,11 @@ INSERT INTO `company` (`companyID`, `companyEmail`, `companyTermsAndConditions`,
 -- Table structure for table `countryinternship`
 --
 
-CREATE TABLE `countryinternship` (
+DROP TABLE IF EXISTS `countryinternship`;
+CREATE TABLE IF NOT EXISTS `countryinternship` (
   `countryName` varchar(100) NOT NULL,
-  `countryContinent` varchar(100) NOT NULL
+  `countryContinent` varchar(100) NOT NULL,
+  PRIMARY KEY (`countryName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -103,8 +111,10 @@ INSERT INTO `countryinternship` (`countryName`, `countryContinent`) VALUES
 -- Table structure for table `countrytrip`
 --
 
-CREATE TABLE `countrytrip` (
-  `countryTripName` varchar(100) NOT NULL
+DROP TABLE IF EXISTS `countrytrip`;
+CREATE TABLE IF NOT EXISTS `countrytrip` (
+  `countryTripName` varchar(100) NOT NULL,
+  PRIMARY KEY (`countryTripName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -122,8 +132,10 @@ INSERT INTO `countrytrip` (`countryTripName`) VALUES
 -- Table structure for table `fieldofstudy`
 --
 
-CREATE TABLE `fieldofstudy` (
-  `fieldOfStudyName` varchar(200) NOT NULL
+DROP TABLE IF EXISTS `fieldofstudy`;
+CREATE TABLE IF NOT EXISTS `fieldofstudy` (
+  `fieldOfStudyName` varchar(40) NOT NULL,
+  PRIMARY KEY (`fieldOfStudyName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -152,8 +164,10 @@ INSERT INTO `fieldofstudy` (`fieldOfStudyName`) VALUES
 -- Table structure for table `interest`
 --
 
-CREATE TABLE `interest` (
-  `interestName` varchar(50) NOT NULL
+DROP TABLE IF EXISTS `interest`;
+CREATE TABLE IF NOT EXISTS `interest` (
+  `interestName` varchar(40) NOT NULL,
+  PRIMARY KEY (`interestName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -171,8 +185,9 @@ INSERT INTO `interest` (`interestName`) VALUES
 -- Table structure for table `internship`
 --
 
-CREATE TABLE `internship` (
-  `internshipID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `internship`;
+CREATE TABLE IF NOT EXISTS `internship` (
+  `internshipID` int(11) NOT NULL AUTO_INCREMENT,
   `internshipName` varchar(100) NOT NULL,
   `internshipApproval` varchar(100) NOT NULL DEFAULT '',
   `internshipFieldOfStudy` varchar(500) NOT NULL,
@@ -184,8 +199,10 @@ CREATE TABLE `internship` (
   `internshipSupervisorEmail` varchar(100) NOT NULL DEFAULT '',
   `internshipVacancy` int(100) NOT NULL DEFAULT '0',
   `internshipPartnerID` int(11) NOT NULL DEFAULT '1',
-  `internshipDatetime` varchar(40) DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `internshipDatetime` varchar(40) DEFAULT '',
+  PRIMARY KEY (`internshipID`),
+  KEY `internshippartnerid` (`internshipPartnerID`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `internship`
@@ -212,14 +229,18 @@ INSERT INTO `internship` (`internshipID`, `internshipName`, `internshipApproval`
 -- Table structure for table `internshipstudent`
 --
 
-CREATE TABLE `internshipstudent` (
+DROP TABLE IF EXISTS `internshipstudent`;
+CREATE TABLE IF NOT EXISTS `internshipstudent` (
   `internshipID` int(11) NOT NULL,
   `internshipUserEmail` varchar(50) NOT NULL,
   `internshipStudentStatus` varchar(25) NOT NULL,
   `internshipStudentContinent` varchar(15) NOT NULL,
   `internshipStudentDatetime` varchar(210) NOT NULL,
   `internshipStudentDatetimeApplied` datetime NOT NULL,
-  `internshipStudentLastUpdate` datetime NOT NULL
+  `internshipStudentLastUpdate` datetime NOT NULL,
+  PRIMARY KEY (`internshipUserEmail`,`internshipStudentContinent`,`internshipStudentDatetimeApplied`),
+  KEY `internshipUserEmail` (`internshipUserEmail`),
+  KEY `internshipID` (`internshipID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -236,11 +257,13 @@ INSERT INTO `internshipstudent` (`internshipID`, `internshipUserEmail`, `interns
 -- Table structure for table `internshipstudentstatus`
 --
 
-CREATE TABLE `internshipstudentstatus` (
+DROP TABLE IF EXISTS `internshipstudentstatus`;
+CREATE TABLE IF NOT EXISTS `internshipstudentstatus` (
   `internshipStudentStatusID` int(2) NOT NULL,
   `internshipStudentStatusName` varchar(100) NOT NULL,
   `internshipStudentStatusAction` int(1) NOT NULL,
-  `internshipStudentStatusCycle` varchar(10) NOT NULL
+  `internshipStudentStatusCycle` varchar(10) NOT NULL,
+  PRIMARY KEY (`internshipStudentStatusID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -264,6 +287,29 @@ INSERT INTO `internshipstudentstatus` (`internshipStudentStatusID`, `internshipS
 (14, 'User accepted internship offer', 3, 'done'),
 (15, 'Internship Cancelled', 4, 'done');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+CREATE TABLE IF NOT EXISTS `payment` (
+  `paymentID` int(11) NOT NULL AUTO_INCREMENT,
+  `tripStudentID` int(11) NOT NULL,
+  `paymentMode` varchar(15) NOT NULL,
+  `paymentTransaction` varchar(100) NOT NULL,
+  `paymentAmount` double NOT NULL,
+  PRIMARY KEY (`paymentID`),
+  KEY `tripStudentID` (`tripStudentID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`paymentID`, `tripStudentID`, `paymentMode`, `paymentTransaction`, `paymentAmount`) VALUES
+(1, 3, 'PayNow', 'Sh-123-123', 400);
 
 -- --------------------------------------------------------
 
@@ -271,8 +317,9 @@ INSERT INTO `internshipstudentstatus` (`internshipStudentStatusID`, `internshipS
 -- Table structure for table `trip`
 --
 
-CREATE TABLE `trip` (
-  `tripID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `trip`;
+CREATE TABLE IF NOT EXISTS `trip` (
+  `tripID` int(11) NOT NULL AUTO_INCREMENT,
   `tripTitle` varchar(100) NOT NULL,
   `tripPrice` double NOT NULL DEFAULT '0',
   `tripItinerary` varchar(100) DEFAULT '',
@@ -286,8 +333,10 @@ CREATE TABLE `trip` (
   `tripInterest` varchar(500) NOT NULL,
   `tripTotalSignUp` int(11) DEFAULT '0',
   `tripPromo` varchar(100) DEFAULT NULL,
-  `tripPromoPercentage` double DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `tripPromoPercentage` double DEFAULT '0',
+  PRIMARY KEY (`tripID`),
+  KEY `tripCountry` (`tripCountry`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `trip`
@@ -304,48 +353,26 @@ INSERT INTO `trip` (`tripID`, `tripTitle`, `tripPrice`, `tripItinerary`, `tripDe
 -- Table structure for table `tripstudent`
 --
 
-CREATE TABLE `tripstudent` (
-  `tripStudentID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tripstudent`;
+CREATE TABLE IF NOT EXISTS `tripstudent` (
+  `tripStudentID` int(11) NOT NULL AUTO_INCREMENT,
   `tripUserEmail` varchar(50) NOT NULL,
   `tripID` int(11) NOT NULL,
-  `tripStudentStatus` varchar(100) DEFAULT '',
-  `tripStudentTimestamp` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `tripStudentStatus` varchar(25) DEFAULT '',
+  `tripStudentTimestamp` datetime NOT NULL,
+  PRIMARY KEY (`tripStudentID`),
+  KEY `tripUserEmail` (`tripUserEmail`),
+  KEY `tripID` (`tripID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tripstudent`
 --
 
 INSERT INTO `tripstudent` (`tripStudentID`, `tripUserEmail`, `tripID`, `tripStudentStatus`, `tripStudentTimestamp`) VALUES
-(1, 'mediani.2015@sis.smu.edu.sg', 1, 'deposit made', '2018-09-01 12:32:21'),
-(2, 'rachael.low.2015@sis.smu.edu.sg', 2, 'deposit made', '2018-10-02 12:32:21'),
-(3, 'rachael.low.2015@sis.smu.edu.sg', 2, 'trip confirmed', '2018-10-02 12:32:21'),
-(4, 'mediani.2015@sis.smu.edu.sg', 1, 'trip cancelled', '2018-10-01 12:32:21');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payment`
---
-
-CREATE TABLE `payment` (
-  `paymentID` int(11) NOT NULL,
-  `tripStudentID` int(11) NOT NULL,
-  `paymentMode` varchar(100) NOT NULL,
-  `paymentTransaction` varchar(100) NOT NULL,
-  `paymentAmount` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `payment`
---
-
-INSERT INTO `payment` (`paymentID`, `tripStudentID`, `paymentMode`, `paymentTransaction`, `paymentAmount`) VALUES
-(1, 1, 'PayNow', 'Sh-123-123', 400),
-(2, 2, 'Cheque', 'X923423', 300),
-(3, 3, 'Bank', 'P2342-234', 200),
-(4, 4, 'Refund', 'D2342-2342', 400);
-
+(1, 'mediani.2015@sis.smu.edu.sg', 1, 'Applied interest', '2018-11-19 02:21:59'),
+(2, 'mediani.2015@sis.smu.edu.sg', 1, 'Pending Deposit', '2018-11-19 02:22:01'),
+(3, 'mediani.2015@sis.smu.edu.sg', 1, 'Deposit Made', '2018-11-19 02:22:07');
 
 -- --------------------------------------------------------
 
@@ -353,23 +380,25 @@ INSERT INTO `payment` (`paymentID`, `tripStudentID`, `paymentMode`, `paymentTran
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
   `userEmail` varchar(50) NOT NULL,
   `userFirstName` varchar(50) NOT NULL,
   `userLastName` varchar(50) NOT NULL,
   `userPhone` int(15) NOT NULL,
   `userGender` varchar(1) NOT NULL,
-  `userCitizenship` varchar(100) NOT NULL,
+  `userCitizenship` varchar(50) NOT NULL,
   `userDOB` year(4) NOT NULL,
   `userInterest` varchar(1000) DEFAULT NULL,
   `userPassword` varchar(50) NOT NULL,
-  `userOccupation` varchar(100) NOT NULL,
+  `userOccupation` varchar(40) NOT NULL,
   `userResume` mediumblob,
   `userIsEmailConfirm` varchar(10) NOT NULL DEFAULT 'pending',
-  `userHighestEducation` varchar(100) NOT NULL,
-  `userFieldOfStudy` varchar(1000) DEFAULT NULL,
+  `userHighestEducation` varchar(40) NOT NULL,
+  `userFieldOfStudy` varchar(40) DEFAULT NULL,
   `userDescription` varchar(500) DEFAULT NULL,
-  `userSchool` varchar(50) DEFAULT NULL
+  `userSchool` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`userEmail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -383,127 +412,6 @@ INSERT INTO `user` (`userEmail`, `userFirstName`, `userLastName`, `userPhone`, `
 ('xiuwen.yeo@gmail.com', 'Xiu Wen', 'Yeo', 98769876, 'F', 'Singaporean', 1994, 'Nature & Culture', '1234', 'Student', NULL, 'pending', 'Postgraduate Diploma', 'Computing', 'I am really into helping others. When others feel happy, I feel happy too.', 'SMU'),
 ('yijing.oon.2015@smu.edu.sg', 'Yi Jing', 'Oon', 98766789, 'F', 'Singapore PR', 1993, 'Nature & Culture, Service & Social Innovation', 'oonyijing', 'Student', NULL, 'confirmed', 'Masters/Doctorate', 'Computing', 'Greatness is in the eye of the beholder. I believe with great power comes great responsibility.', 'NTU');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`adminName`);
-
---
--- Indexes for table `company`
---
-ALTER TABLE `company`
-  ADD PRIMARY KEY (`companyID`);
-
---
--- Indexes for table `countryinternship`
---
-ALTER TABLE `countryinternship`
-  ADD PRIMARY KEY (`countryName`);
-
---
--- Indexes for table `countrytrip`
---
-ALTER TABLE `countrytrip`
-  ADD PRIMARY KEY (`countryTripName`);
-
---
--- Indexes for table `fieldofstudy`
---
-ALTER TABLE `fieldofstudy`
-  ADD PRIMARY KEY (`fieldOfStudyName`);
-
---
--- Indexes for table `interest`
---
-ALTER TABLE `interest`
-  ADD PRIMARY KEY (`interestName`);
-
---
--- Indexes for table `internship`
---
-ALTER TABLE `internship`
-  ADD PRIMARY KEY (`internshipID`),
-  ADD KEY `internshippartnerid` (`internshipPartnerID`);
-
---
--- Indexes for table `internshipstudent`
---
-ALTER TABLE `internshipstudent`
-  ADD PRIMARY KEY (`internshipUserEmail`,`internshipStudentContinent`,`internshipStudentDatetimeApplied`),
-  ADD KEY `internshipUserEmail` (`internshipUserEmail`),
-  ADD KEY `internshipID` (`internshipID`);
-
---
--- Indexes for table `internshipstudentstatus`
---
-ALTER TABLE `internshipstudentstatus`
-  ADD PRIMARY KEY (`internshipStudentStatusID`);
-
---
--- Indexes for table `trip`
---
-ALTER TABLE `trip`
-  ADD PRIMARY KEY (`tripID`),
-  ADD KEY `tripCountry` (`tripCountry`);
-
---
--- Indexes for table `tripstudent`
---
-ALTER TABLE `tripstudent`
-  ADD PRIMARY KEY (`tripStudentID`),
-  ADD KEY `tripUserEmail` (`tripUserEmail`),
-  ADD KEY `tripID` (`tripID`);
-
---
--- Indexes for table `payment`
---
-ALTER TABLE `payment`
-  ADD PRIMARY KEY (`paymentID`),
-  ADD KEY `tripStudentID` (`tripStudentID`);
-
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`userEmail`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `company`
---
-ALTER TABLE `company`
-  MODIFY `companyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `internship`
---
-ALTER TABLE `internship`
-  MODIFY `internshipID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `tripstudent`
---
-ALTER TABLE `tripstudent`
-  MODIFY `tripStudentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `payment`
---
-ALTER TABLE `payment`
-  MODIFY `paymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `trip`
---
-ALTER TABLE `trip`
-  MODIFY `tripID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
@@ -522,6 +430,12 @@ ALTER TABLE `internshipstudent`
   ADD CONSTRAINT `internshipstudent_fk2` FOREIGN KEY (`internshipID`) REFERENCES `internship` (`internshipID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `payment_fk1` FOREIGN KEY (`tripStudentID`) REFERENCES `tripstudent` (`tripStudentID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `trip`
 --
 ALTER TABLE `trip`
@@ -533,14 +447,7 @@ ALTER TABLE `trip`
 ALTER TABLE `tripstudent`
   ADD CONSTRAINT `tripstudent_fk1` FOREIGN KEY (`tripUserEmail`) REFERENCES `user` (`userEmail`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tripstudent_fk2` FOREIGN KEY (`tripID`) REFERENCES `trip` (`tripID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
- --
--- Constraints for table `payment`
---
-ALTER TABLE `payment`
-  ADD CONSTRAINT `payment_fk1` FOREIGN KEY (`tripStudentID`) REFERENCES `tripstudent` (`tripStudentID`) ON DELETE CASCADE ON UPDATE CASCADE;
- 
-
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
