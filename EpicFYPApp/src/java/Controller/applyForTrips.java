@@ -9,6 +9,7 @@ import Model.Dao.TripsDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,14 +35,24 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         throws ServletException, IOException {
         String tripUserEmail = request.getParameter("tripUserEmail");
         int tripID = Integer.parseInt(request.getParameter("tripID"));
-        String tripStudentStatus = null; //change this?
+        String tripStudentStatus = "Applied interest"; 
+        
         //get current date
         java.util.Date dt = new java.util.Date();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(dt);
         
-        //tripUserEmail, tripID, tripStudentStatus, currentTime
+        //date time add 2 seconds
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dt);
+        cal.add(Calendar.SECOND, 2);
+        java.util.Date date = cal.getTime();
+        String currentTime2seconds = sdf.format(date);
+        
+        //insert status="Applied interest" into tripstudent table
         if(TripsDAO.insertStudent(tripUserEmail, tripID, tripStudentStatus, currentTime)){
+            //insert status="Pending desposit" into tripstudent table
+            TripsDAO.insertStudent(tripUserEmail, tripID, "Pending Deposit", currentTime2seconds);
             String url = "payment.jsp?tripId=" + tripID;
             response.sendRedirect(url);
         }      
