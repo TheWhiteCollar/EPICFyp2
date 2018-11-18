@@ -66,6 +66,31 @@ public class TripStudentDAO {
         return null;
     }
     
+    //get particular tripstudent entry
+    public static int getTripStudentID(String userEmail, int tripID, String tripStudentStatus, String timestamp) {
+
+        int tripStudentID=0;
+        String sql = "SELECT tripStudentID FROM tripstudent WHERE tripUserEmail=? AND tripID=? AND tripStudentStatus=? AND tripStudentTimestamp=?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, userEmail);
+            stmt.setInt(2, tripID);
+            stmt.setString(3, tripStudentStatus);
+            stmt.setString(4, timestamp);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                
+                tripStudentID = rs.getInt(1);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Unable to retrieve tripstudentID", ex);
+        }
+
+        return tripStudentID;
+    }
+    
     public static ArrayList<TripStudent> getTripsByUser(String userEmail) {
         ArrayList<TripStudent> result = new ArrayList<>();
         String sql = "SELECT * FROM tripstudent WHERE tripUserEmail = ?";

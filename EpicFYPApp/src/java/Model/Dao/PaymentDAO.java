@@ -26,13 +26,13 @@ import java.util.logging.Logger;
 public class PaymentDAO {
   
     // Add a new payment row
-    public static boolean addPayment(int paymentTripStudentID, String paymentMode, String paymentTransaction, double paymentAmount) {
+    public static boolean addPayment(int tripStudentID, String paymentMode, String paymentTransaction, double paymentAmount) {
 
-        String sql = "INSERT INTO payment (paymentTripStudentID, paymentMode, paymentTransaction, paymentAmount) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO payment (tripStudentID, paymentMode, paymentTransaction, paymentAmount) VALUES (?,?,?,?)";
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
-            stmt.setInt(1, paymentTripStudentID);
+            stmt.setInt(1, tripStudentID);
             stmt.setString(2, paymentMode);
             stmt.setString(3, paymentTransaction);
             stmt.setDouble(4, paymentAmount);
@@ -82,6 +82,31 @@ public class PaymentDAO {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    //get particular payment entry
+    public static int getPaymentID(int tripStudentID, String paymentMode, String paymentTransaction, double paymentAmount) {
+
+        int paymentID=0;
+        String sql = "SELECT paymentID FROM payment WHERE tripStudentID=? AND paymentMode=? AND paymentTransaction=? AND paymentAmount=?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setInt(1, tripStudentID);
+            stmt.setString(2, paymentMode);
+            stmt.setString(3, paymentTransaction);
+            stmt.setDouble(4, paymentAmount);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                
+                paymentID = rs.getInt(1);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Unable to retrieve tripstudentID", ex);
+        }
+
+        return paymentID;
     }
 
 }
