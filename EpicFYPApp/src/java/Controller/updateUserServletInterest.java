@@ -45,7 +45,7 @@ public class updateUserServletInterest extends HttpServlet {
                 userInterest += ", ";
             }
         }
-            boolean insertedUser  = UserDAO.updateUserLastName(userEmail, userInterest);
+            boolean insertedUser  = UserDAO.updateUserInterest(userEmail, userInterest);
             if (insertedUser == true) {
                 User user = UserDAO.getUserByID(userEmail);
                 request.getSession().setAttribute("User", user);
