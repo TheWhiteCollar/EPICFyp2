@@ -517,7 +517,7 @@
                             </div>
                         </div>
 
-                        <div class = "row 50% uniform">
+<!--                        <div class = "row 50% uniform">
                             <div class = "12u 12u(xsmall)">
                                 <p>
                                     <input type="file" name="tripItineray" id="file-1" class="inputfile inputfile-1" style="visibility:hidden" accept=".pdf"/>
@@ -526,7 +526,7 @@
                                     </label>
                                 </p>
                             </div>
-                        </div>
+                        </div>-->
 
                         <input type="submit" value="Create a Trip!" style="width:100%">
                     </form>
