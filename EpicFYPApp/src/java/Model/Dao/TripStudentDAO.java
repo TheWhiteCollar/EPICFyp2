@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -131,6 +132,43 @@ public class TripStudentDAO {
         }
         return null;
 
+    }
+    
+    public static void setActivationStatusByTripID(int tripID){
+        String sql ="SELECT tripUserEmail FROM tripstudent WHERE tripStudentStatus='Applied interest' AND tripID=?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setInt(1, tripID);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String userEmail = rs.getString(1);
+                
+                //get current date
+                java.util.Date dt = new java.util.Date();
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String currentTime = sdf.format(dt);
+
+                //date time add 2 seconds
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(dt);
+                cal.add(Calendar.SECOND, 2);
+                java.util.Date date = cal.getTime();
+                String currentTime2seconds = sdf.format(date);
+
+                //insert status="Applied interest" into tripstudent table
+                if(TripsDAO.insertStudent(userEmail, tripID, "Trip Activated", currentTime)){
+                    //insert status="Pending desposit" into tripstudent table
+                    TripsDAO.insertStudent(userEmail, tripID, "Pending Full Payment", currentTime2seconds);
+                }
+               
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Cannot set trip activation for: " + tripID, ex);
+        }
     }
 
 }
