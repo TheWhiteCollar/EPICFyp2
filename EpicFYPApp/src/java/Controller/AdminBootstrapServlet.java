@@ -99,11 +99,9 @@ public class AdminBootstrapServlet extends HttpServlet {
                     int tripActivation = Integer.parseInt(trip[9]);
                     String tripInterest = trip[10];
                     int tripTotalSignUp = Integer.parseInt(trip[11]);
-                    String tripPromo = trip[12];
-                    Double tripPromoPercentage = Double.parseDouble(trip[13]);
 
-                    // boolean inserted = TripsDAO.addTrip(tripTitle, tripPrice, tripItinerary, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripTotalSignUp, tripPromo, tripPromoPercentage);
-                    boolean inserted = TripsDAO.addTrip(tripTitle, tripPrice, tripItinerary, tripDescription, tripCountry, tripState, tripDuration, tripActivation, tripInterest, tripTotalSignUp, tripPromo, tripPromoPercentage);
+                    // boolean inserted = TripsDAO.addTrip(tripTitle, tripPrice, tripItinerary, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripTotalSignUp);
+                    boolean inserted = TripsDAO.addTrip(tripTitle, tripPrice, null, tripDescription, tripCountry, tripState, tripDuration, tripActivation, tripInterest, tripTotalSignUp);
                 }
             } else {
                 writer.println("Not added in successfully");
