@@ -134,6 +134,7 @@ public class TripStudentDAO {
 
     }
     
+    //insert the status="Trip Activated" and status="Pending Full Payment" for all users who signed up
     public static void setActivationStatusByTripID(int tripID){
         String sql ="SELECT tripUserEmail FROM tripstudent WHERE tripStudentStatus='Applied interest' AND tripID=?";
 
@@ -162,6 +163,47 @@ public class TripStudentDAO {
                     TripsDAO.insertStudent(userEmail, tripID, "Pending Full Payment", currentTime2seconds);
                 }
                
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Cannot set trip activation for: " + tripID, ex);
+        }
+    }
+    
+    //insert the status="Trip Activated" and status="Pending Full Payment" for the most recent additional user
+    public static void setActivationStatusByUserAndTripID(String tripUserEmail, int tripID){
+        String sql ="SELECT tripUserEmail FROM tripstudent WHERE tripStudentStatus='Applied interest' AND tripID=? AND tripUserEmail=?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setInt(1, tripID);
+            stmt.setString(2, tripUserEmail);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String userEmail = rs.getString(1);
+                
+                //get current date
+                java.util.Date dt = new java.util.Date();
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                
+
+                //date time add 3 seconds and 4 seconds respectively
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(dt);
+                cal.add(Calendar.SECOND, 3);
+                java.util.Date date = cal.getTime();
+                String currentTime3seconds = sdf.format(date);
+                cal.add(Calendar.SECOND, 1);
+                java.util.Date date2 = cal.getTime();
+                String currentTime4seconds = sdf.format(date2);
+
+                //insert status="Applied interest" into tripstudent table
+                if(TripsDAO.insertStudent(userEmail, tripID, "Trip Activated", currentTime3seconds)){
+                    //insert status="Pending desposit" into tripstudent table
+                    TripsDAO.insertStudent(userEmail, tripID, "Pending Full Payment", currentTime4seconds);
+                }              
             }
             rs.close();
             stmt.close();

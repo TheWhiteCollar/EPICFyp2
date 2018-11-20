@@ -141,18 +141,15 @@ public class TripsDAO {
     public static Trip getTrip(int tripID) {
         Trip trip = null;
         String sql1 = "SELECT tripUserEmail FROM tripstudent WHERE tripID=? AND tripStudentStatus='Applied interest'";
-        String emailString = "";
+        ArrayList<String> emailList = new ArrayList<>();
+        
+        //String emailString = "";
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql1);) {
             stmt.setInt(1, tripID);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                String tripUserEmail = rs.getString(1);
-                if (emailString.equals("")) {
-                    emailString += tripUserEmail;
-                } else {
-                    emailString += "," + tripUserEmail;
-                }
+                emailList.add(rs.getString(1));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TripsDAO.class.getName()).log(Level.WARNING, "Cannot get trip with tripID: " + tripID, ex);
@@ -164,8 +161,7 @@ public class TripsDAO {
             stmt.setInt(1, tripID);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                ArrayList<String> emails = convertEmailString(emailString);
-                trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), emails);
+                trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), emailList);
             }
         } catch (SQLException ex) {
             Logger.getLogger(TripsDAO.class.getName()).log(Level.WARNING, "Cannot get trip with tripID: " + tripID, ex);
@@ -390,6 +386,25 @@ public class TripsDAO {
         }
 
         return count;
+    }
+    
+    //add 1 to the trip total sign up count
+    public static boolean incrementTripTotalSignup(int tripID) {
+
+        String sql = "UPDATE trip SET tripTotalSignUp=tripTotalSignUp+1 WHERE tripID=?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setInt(1, tripID);
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TripsDAO.class.getName()).log(Level.WARNING, "Failed to update trip: " + tripID + ".", ex);
+        }
+        return true;
     }
 
 }

@@ -49,10 +49,14 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         java.util.Date date = cal.getTime();
         String currentTime2seconds = sdf.format(date);
         
+        //add one to the current trip sign up
+        TripsDAO.incrementTripTotalSignup(tripID);
+        
         //insert status="Applied interest" into tripstudent table
         if(TripsDAO.insertStudent(tripUserEmail, tripID, tripStudentStatus, currentTime)){
             //insert status="Pending desposit" into tripstudent table
             TripsDAO.insertStudent(tripUserEmail, tripID, "Pending Deposit", currentTime2seconds);
+            
             String url = "payment.jsp?tripId=" + tripID;
             response.sendRedirect(url);
         }      
