@@ -1,3 +1,6 @@
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Dao.TripStudentDAO"%>
 <%@page import="java.sql.Date"%>
 <%@page import="Model.Entity.Admin"%>
 <%@page import="Model.Entity.User"%>
@@ -96,29 +99,28 @@
                                         <td>Duration : <%out.print(tripDuration);%> days</td>
                                     </tr>
                                     <tr>
-                                        <td><!--<a href ="downloadItinerary" class ="button">Trip Itinerary</a></td>-->
+                                        <!--<td><a href ="downloadItinerary" class ="button">Trip Itinerary</a></td>-->
                                         <%
                                             User User = (User) session.getAttribute("User");
-                                            Admin admin = (Admin) session.getAttribute("Admin");
                                             if (User != null) {
+                                                ArrayList<Integer> tripsArraylist = TripStudentDAO.getTripIDsByUser(User.getUserEmail());
+                                                int occurrences = Collections.frequency(tripsArraylist, tripID);
+                                                
+                                                if(occurrences == 0){
+                                                
                                         %>
-                                        <td>
+                                        <td colspan="3">
                                             <form action="applyForTrips" method="post">
                                                 <input style="display: none" type="text" name="tripID" value="<%out.print(tripID);%>"/>
-                                                <input style="display: none" type="text" name="email" value="<%out.print(User.getUserEmail());%>"/>                                        
-                                                <input type = "submit" value ="Apply for trip">
+                                                <input style="display: none" type="text" name="tripUserEmail" value="<%out.print(User.getUserEmail());%>"/>                                        
+                                                <input type="submit" value="Apply for trip" class="full_width">
                                             </form>
                                         </td>
                                         <%
-                                        }else if (admin != null) {
-                                        %>
-                                        
-                                       
-                     
-                                        <%
+                                            }
                                         } else {
                                         %>
-                                        <td><a href ="login.jsp" class ="button">Log in to apply</a></td>
+                                        <td colspan="3"><a href ="login.jsp" class ="button full_width">Log in to apply</a></td>
                                         <%}%>
                                     </tr>
 
