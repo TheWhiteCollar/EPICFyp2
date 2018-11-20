@@ -8,6 +8,10 @@ package Controller;
 import Model.Dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.Message;
@@ -41,6 +45,30 @@ public class signupServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    public static String encryptThisString(String input) {
+        try {
+            // getInstance() method is called with algorithm SHA-512 
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+
+            // digest() method is called 
+            // to calculate message digest of the input string 
+            // returned as array of byte 
+            byte[] messageDigest = md.digest(input.getBytes(StandardCharsets.UTF_8));
+
+            // bytes to hex
+            String sb = new String();
+            for (byte b : messageDigest) {
+                sb += (String.format("%02x", b));
+            }
+
+            // return the HashText 
+            return sb;
+        } // For specifying wrong message digest algorithms 
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -60,7 +88,7 @@ public class signupServlet extends HttpServlet {
         }
         String yob = request.getParameter("yob");
         int yearOfBirth = Integer.parseInt(yob);
-        
+
         String[] userInterestString = request.getParameterValues("interest");
         String userInterest = "";
         for (int i = 0; i < userInterestString.length; i++) {
@@ -71,7 +99,7 @@ public class signupServlet extends HttpServlet {
         }
         String userPassword = request.getParameter("password");
         String userOccupation = request.getParameter("occupation");
-        
+
         String userIsEmailConfirm = "pending"; // by right should be boolean
         String userHighestEducation = request.getParameter("highest_qualification");
 
@@ -91,7 +119,7 @@ public class signupServlet extends HttpServlet {
         if (!userFirstName.equals("") && !userLastName.equals("") && !userEmail.equals("") && !userPassword.equals("") && !userOccupation.equals("")) {
 
             // Insert into database
-            Boolean inserted = UserDAO.addUser(userEmail, userFirstName, userLastName, userPhone, userGender, userCitizenship, yearOfBirth, userInterest, userPassword, userOccupation, null, userIsEmailConfirm, userHighestEducation, userFieldOfStudy, userDescription, userSchool);
+            Boolean inserted = UserDAO.addUser(userEmail, userFirstName, userLastName, userPhone, userGender, userCitizenship, yearOfBirth, userInterest, encryptThisString(userPassword), userOccupation, null, userIsEmailConfirm, userHighestEducation, userFieldOfStudy, userDescription, userSchool);
 
             if (inserted == true) {
 

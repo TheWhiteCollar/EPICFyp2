@@ -64,6 +64,8 @@
 
         <!-- Header -->
         <jsp:include page="header.jsp" />
+        
+        <jsp:include page="AdminPortalPermission.jsp" />
 
         <!-- Main -->
         <section id="admin_graphs" class="container wrapper">

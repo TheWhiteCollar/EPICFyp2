@@ -127,6 +127,8 @@
 
         <!-- Header -->
         <jsp:include page="header.jsp" />
+        
+        <jsp:include page="AdminPortalPermission.jsp" />
 
 <!--         Main 
         <section id="main" class="wrapper">

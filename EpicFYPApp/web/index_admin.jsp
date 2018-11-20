@@ -37,6 +37,8 @@
 
         <!-- Header -->
         <jsp:include page="header.jsp" />
+        
+        <jsp:include page="AdminPortalPermission.jsp" />
 
         <!-- Main -->
         <section id="admin_dashboard" class="container wrapper">
