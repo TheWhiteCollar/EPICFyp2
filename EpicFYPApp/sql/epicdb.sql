@@ -322,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `trip` (
   `tripID` int(11) NOT NULL AUTO_INCREMENT,
   `tripTitle` varchar(100) NOT NULL,
   `tripPrice` double NOT NULL DEFAULT '0',
-  `tripItinerary` varchar(100) DEFAULT '',
+  `tripItinerary` mediumblob,
   `tripDescription` varchar(1000) NOT NULL,
   `tripCountry` varchar(100) NOT NULL,
   `tripState` varchar(100) NOT NULL,
@@ -332,8 +332,6 @@ CREATE TABLE IF NOT EXISTS `trip` (
   `tripActivation` int(3) NOT NULL DEFAULT '0',
   `tripInterest` varchar(500) NOT NULL,
   `tripTotalSignUp` int(11) DEFAULT '0',
-  `tripPromo` varchar(100) DEFAULT NULL,
-  `tripPromoPercentage` double DEFAULT '0',
   PRIMARY KEY (`tripID`),
   KEY `tripCountry` (`tripCountry`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -342,10 +340,10 @@ CREATE TABLE IF NOT EXISTS `trip` (
 -- Dumping data for table `trip`
 --
 
-INSERT INTO `trip` (`tripID`, `tripTitle`, `tripPrice`, `tripItinerary`, `tripDescription`, `tripCountry`, `tripState`, `tripStart`, `tripEnd`, `tripDuration`, `tripActivation`, `tripInterest`, `tripTotalSignUp`, `tripPromo`, `tripPromoPercentage`) VALUES
-(1, 'Trip to Myanmar Oceans', 500, '', 'The beautiful Lake Inle will wait for no one. Enjoy the beauty before global warming mars it\'s beauty forever.', 'Myanmar', 'Shan', '2018-08-20', '2018-09-20', 30, 3, 'Nature and Culture, Academic and Business', 0, '20OFF', 0.2),
-(2, ' Grad Trip', 300, '', 'Come join us at the amazing grad trip around Malaysia!', 'Malaysia', 'Johor', '2018-08-20', '2018-09-20', 30, 4, 'Academic and Business', 0, NULL, NULL),
-(3, ' Winter Study Trip Customised', 100, '', 'This Winter Study Trip in SIngapore will just be amazing! Imagine WINTER in SINGAPORE. You must not miss this once in a life time opportunity!', 'Singapore', 'Singapore', '2018-08-20', '2018-09-20', 30, 4, 'Nature and Culture', 4, NULL, NULL);
+INSERT INTO `trip` (`tripID`, `tripTitle`, `tripPrice`, `tripItinerary`, `tripDescription`, `tripCountry`, `tripState`, `tripStart`, `tripEnd`, `tripDuration`, `tripActivation`, `tripInterest`, `tripTotalSignUp`) VALUES
+(1, 'Trip to Myanmar Oceans', 500, NULL, 'The beautiful Lake Inle will wait for no one. Enjoy the beauty before global warming mars it\'s beauty forever.', 'Myanmar', 'Shan', '2018-08-20', '2018-09-20', 30, 3, 'Nature and Culture, Academic and Business', 1),
+(2, ' Grad Trip', 300, NULL, 'Come join us at the amazing grad trip around Malaysia!', 'Malaysia', 'Johor', '2018-08-20', '2018-09-20', 30, 4, 'Academic and Business', 0),
+(3, ' Winter Study Trip Customised', 100, NULL, 'This Winter Study Trip in SIngapore will just be amazing! Imagine WINTER in SINGAPORE. You must not miss this once in a life time opportunity!', 'Singapore', 'Singapore', '2018-08-20', '2018-09-20', 30, 4, 'Nature and Culture', 0);
 
 -- --------------------------------------------------------
 

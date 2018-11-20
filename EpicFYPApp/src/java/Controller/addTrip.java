@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.File;
 import java.util.List;
+import javax.servlet.http.Part;
 
 
 import org.apache.commons.fileupload.FileItem;
@@ -73,7 +74,7 @@ public class addTrip extends HttpServlet {
             throws ServletException, IOException {
         String tripTitle = request.getParameter("tripTitle");
         double tripPrice = Double.parseDouble(request.getParameter("tripPrice"));
-        String tripItinerary = null;
+        //Part filePart = request.getPart("tripItineray");
         String tripDescription = request.getParameter("tripDescription");
         String tripCountry = request.getParameter("tripCountry");
         String tripState = request.getParameter("tripState");
@@ -83,32 +84,10 @@ public class addTrip extends HttpServlet {
         int tripActivation = Integer.parseInt(request.getParameter("tripActivation"));
         String tripInterest = request.getParameter("tripInterest");
         int tripTotalSignUp = Integer.parseInt(request.getParameter("tripTotalSignUp"));
-        String tripPromo = null;
-        double tripPromoPercentage = 0;
+
         String text = "fail";
 
-        // For itinerary uploading
-        if (ServletFileUpload.isMultipartContent(request)) {
-            try {
-                List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-                for (FileItem item : multiparts) {
-                    if (!item.isFormField()) {
-                        String name = new File(item.getName()).getName();
-                        tripItinerary = name;
-                        //item.write(new File("../../../web/documents/itinerary" + File.separator + name));
-                        item.write(new File("c:/temp" + File.separator + name));
-                    }
-                }
-                //File uploaded successfully
-                request.setAttribute("gurumessage", "File Uploaded Successfully");
-            } catch (Exception ex) {
-                request.setAttribute("gurumessage", "File Upload Failed due to " + ex);
-            }
-        } else {
-            request.setAttribute("gurumessage", "No File found");
-        }
-
-        if (tripEnd.after(tripStart) && TripsDAO.insertTrip(tripTitle, tripPrice, tripItinerary, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripTotalSignUp, tripPromo, tripPromoPercentage)) {
+        if (tripEnd.after(tripStart) && TripsDAO.insertTrip(tripTitle, tripPrice, null, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripTotalSignUp)) {
             text = "success";
         }
 

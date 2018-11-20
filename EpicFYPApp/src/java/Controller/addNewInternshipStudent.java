@@ -54,8 +54,6 @@ public class addNewInternshipStudent extends HttpServlet {
         //update user
         //updateUser(String userEmail, String userFirstName, String userLastName, int userPhone, String userGender, String userCitizenship, int userDOB, String userProfilePic, String userInterest, String userPassword, String userOccupation, String userResume, String userIsEmailConfirm, String userHighestEducation, String userFieldOfStudy, String userDescription, String userSchool, Part userResume)
         //add into internshipStudent
-        //
-        // validate fields are not empty and insert into database - should do it in frontend?
         if (!userFirstName.equals("") && !userLastName.equals("") && !userCitizenship.equals("") && !userHighestEducation.equals("") && !userSchool.equals("") && !userFieldOfStudy.equals("") && filePart!=null) {
 
             // Insert into database

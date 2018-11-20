@@ -5,6 +5,8 @@
  */
 package Model.Entity;
 
+import Model.Dao.TripStudentDAO;
+import java.sql.Blob;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -12,7 +14,7 @@ import java.util.ArrayList;
     #1: tripID (int 11)
     #2: tripTitle (varchar 100)
     #3: tripPrice (double)
-    #4: tripItinerary (varchar 100)
+    #4: tripItinerary (mediumblob)
     #5: tripDescription (varchar 1000)
     #6: tripCountry (varchar 100)
     #7: tripState (varchar 100)
@@ -22,8 +24,6 @@ import java.util.ArrayList;
     #11: tripActivation (int 3)
     #12: tripInterest (varchar 500)
     #13: tripTotalSignup (int 11)
-    #14: tripPromo (varchar 100)
-    #15: tripPromoPercentage (double)
  */
 
 public class Trip {
@@ -31,7 +31,7 @@ public class Trip {
     private int tripID;
     private String tripTitle;
     private double tripPrice;
-    private String tripItinerary;
+    private Blob tripItinerary;
     private String tripDescription;
     private String tripCountry;
     private String tripState;
@@ -41,15 +41,13 @@ public class Trip {
     private int tripActivation;
     private String tripInterest;
     private int tripTotalSignup;
-    private String tripPromo;
-    private double tripPromoPercentage;
     
     /*to count signup and counter*/
     private ArrayList<String> signedUpEmails;
     private boolean activated;
     
 
-    public Trip(int tripID, String tripTitle, double tripPrice, String tripItinerary, String tripDescription, String tripCountry, String tripState, Date tripStart, Date tripEnd, int tripDuration, int tripActivation, String tripInterest, int tripTotalSignup, String tripPromo, double tripPromoPercentage, ArrayList<String> signedUpEmails) {
+    public Trip(int tripID, String tripTitle, double tripPrice, Blob tripItinerary, String tripDescription, String tripCountry, String tripState, Date tripStart, Date tripEnd, int tripDuration, int tripActivation, String tripInterest, int tripTotalSignup, ArrayList<String> signedUpEmails) {
         this.tripID = tripID;
         this.tripTitle = tripTitle;
         this.tripPrice = tripPrice;
@@ -63,14 +61,16 @@ public class Trip {
         this.tripActivation = tripActivation;
         this.tripInterest = tripInterest;
         this.tripTotalSignup = tripTotalSignup;
-        this.tripPromo = tripPromo;
-        this.tripPromoPercentage = tripPromoPercentage;
         
         this.signedUpEmails = signedUpEmails;
-        if(signedUpEmails.size()< tripActivation ){
-            this.activated = false;
-        } else {
+        if(signedUpEmails.size() == tripActivation){
             this.activated = true;
+            TripStudentDAO.setActivationStatusByTripID(tripID);
+        } else if(signedUpEmails.size()< tripActivation){
+            this.activated = false;   
+        }else {
+            this.activated = true;
+            //add the 2 status individually
         }
     }
     
@@ -109,11 +109,11 @@ public class Trip {
         this.tripPrice = tripPrice;
     }
 
-    public String getTripItinerary() {
+    public Blob getTripItinerary() {
         return tripItinerary;
     }
 
-    public void setTripItinerary(String tripItinerary) {
+    public void setTripItinerary(Blob tripItinerary) {
         this.tripItinerary = tripItinerary;
     }
 
@@ -187,22 +187,6 @@ public class Trip {
 
     public void setTripTotalSignup(int tripTotalSignup) {
         this.tripTotalSignup = tripTotalSignup;
-    }
-
-    public String getTripPromo() {
-        return tripPromo;
-    }
-
-    public void setTripPromo(String tripPromo) {
-        this.tripPromo = tripPromo;
-    }
-
-    public double getTripPromoPercentage() {
-        return tripPromoPercentage;
-    }
-
-    public void setTripPromoPercentage(double tripPromoPercentage) {
-        this.tripPromoPercentage = tripPromoPercentage;
     }
     
     public int getNumberOfStudents() {

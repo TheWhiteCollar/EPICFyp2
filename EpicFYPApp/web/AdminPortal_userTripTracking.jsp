@@ -113,15 +113,15 @@
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td class="align-right"><b>Trip ID :</b></td>
+                                                    <td class="align-right"><b>Trip ID:</b></td>
                                                     <td><%out.print(t.getTripID());%></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="align-right"><b>Trip Title :</b></td>
+                                                    <td class="align-right"><b>Title:</b></td>
                                                     <td><%out.print(t.getTripTitle());%></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="align-right"><b>Country :</b></td>
+                                                    <td class="align-right"><b>Country:</b></td>
                                                     <td><%out.print(t.getTripCountry());%>, <%out.print(t.getTripState());%></td>
                                                 </tr>
                                             </tbody>
