@@ -1,3 +1,7 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Dao.TripStudentDAO"%>
+<%@page import="Model.Entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -26,66 +30,37 @@
         <!-- Header -->
         <jsp:include page="header.jsp" />
 
-
+        <%
+            User User = (User) session.getAttribute("User");
+            String email = User.getUserEmail();
+            
+            ArrayList<Integer> tripList = TripStudentDAO.getTripIDsByUser(email);
+            int tripCount = tripList.size();
+            
+            if(tripCount == 0){
+        %>
         <section class="wrapper">
-            <div class ="container">              
+            <div class ="container align-center">      
+
+                <p>It seems you have not signed up for any trips :/</p>
+                <a href="studyTrip.jsp" class="button">Sign up for a study trip today!</a>
+            </div>
+        </section>    
+        <%
+            }else{
+        %>
+        <section class="wrapper">
+            <div class ="container align-center">              
                 <header class="major align-center">
                     <h2>Application Status</h2>
                 </header>
-            </div>
-            <div class="row 50% uniform">
-                <div class="6u">
-                    <%
-                    //get the status of a user
-                    //get how many different trips they signed up for
-                    //then populate the trip status by order
-                    //if the status equals to Pending Deposit have action to point them
-                    //if status equals to Pending Full Payment then point to ___
-                    
-
-
-                    %>
-                    
-                    <table class="alt align-center" style="font-size:14px;">
-                        <thead>
-                            <tr>
-                                <th>Status</th>
-                                <th>Timestamp</th>
-                                <th>Action</th>
-                            </tr>                           
-                        </thead>
-                        <tbody>
-                            <%                               
-                                for (int i = 0; i < approvedInternships.size(); i++) {
-                                    Internship internship = approvedInternships.get(i);
-                                    Company company = CompanyDAO.getCompanyByID(internship.getInternshipPartnerID());
-                                    counta += 1;
-                            %>
-                            
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <%
-                                }
-                            %>
-                            
-                        </tbody>
-                    </table>
-                </div>
-                <div class="6u">
-                    
-                </div>
-                
-            </div>
             
-            
+                <a href="studentPortal_studyTripStatus.jsp" class="button">Study Trip Status</a>
+                <a href="studentPortal_internshipStatus.jsp" class="button">Internship Status</a> 
+            </div>
         </section>
-        
-
-        
-
-
+        <%
+        }
+        %>
     </body>
 </html>
