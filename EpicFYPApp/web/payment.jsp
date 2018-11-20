@@ -113,7 +113,7 @@
                                     <td><%out.print(dateFormat.format(tripEnd));%></td>
                                 </tr>
                                 <tr>
-                                    <td class="align-right"><b>Amount due :</b></td>
+                                    <td class="align-right"><b>Amt due :</b></td>
                                     <%
                                     
                                     int amountIndication = TripStudentDAO.getAmountIndicationUserAndTrip(email, tripID);

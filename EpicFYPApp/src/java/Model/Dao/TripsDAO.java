@@ -406,5 +406,23 @@ public class TripsDAO {
         }
         return true;
     }
+    
+    //get corresponding trip name based off trip ID
+    public static String getTripTitleFromTripID(int tripID){
+        String title = "";
+        String sql1 = "SELECT tripTitle FROM trip WHERE tripID=?";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql1);) {
+            stmt.setInt(1, tripID);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                title += rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TripsDAO.class.getName()).log(Level.WARNING, "Cannot get trip: " + tripID, ex);
+        }
+
+        return title;
+    }
 
 }
