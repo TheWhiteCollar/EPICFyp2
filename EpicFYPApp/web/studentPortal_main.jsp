@@ -1,8 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
-//Scriplets with the boolean value for now
-%>
+
 
 <html>
     <head>
@@ -23,51 +21,70 @@
         </noscript>
         <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
     </head>
-    <!-- make a scriplet for the landing -->
-
-    <!-- If user is signed up to trips-->
-    <%
-        //need to include the trips/internship interest, shows differing sections
-        boolean userSignedUpForTrip = true;
-        if (userSignedUpForTrip) {
-    %>
-    <body >
+   
+    <body>
         <!-- Header -->
         <jsp:include page="header.jsp" />
 
 
         <section class="wrapper">
-            <div class ="container">
-                <h3>Application Status</h3>
-                insert the time line of payment here, and the view their trips?
-               
+            <div class ="container">              
+                <header class="major align-center">
+                    <h2>Application Status</h2>
+                </header>
+            </div>
+            <div class="row 50% uniform">
+                <div class="6u">
+                    <%
+                    //get the status of a user
+                    //get how many different trips they signed up for
+                    //then populate the trip status by order
+                    //if the status equals to Pending Deposit have action to point them
+                    //if status equals to Pending Full Payment then point to ___
+                    
+
+
+                    %>
+                    
+                    <table class="alt align-center" style="font-size:14px;">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Timestamp</th>
+                                <th>Action</th>
+                            </tr>                           
+                        </thead>
+                        <tbody>
+                            <%                               
+                                for (int i = 0; i < approvedInternships.size(); i++) {
+                                    Internship internship = approvedInternships.get(i);
+                                    Company company = CompanyDAO.getCompanyByID(internship.getInternshipPartnerID());
+                                    counta += 1;
+                            %>
+                            
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="6u">
+                    
+                </div>
+                
             </div>
             
             
         </section>
         
 
-        <!-- If user have not signed up -->
-        <%
-        } else {
-        %>
-    <body class = "landing">
-        <!-- Header -->
-        <jsp:include page="header.jsp" />
-
-        <section id="banner">
-            <h2>You are not signed up to any trips</span></h2>
-            <ul class="actions">
-                <li>
-                    if picked the one then do it
-                    <a href="studyTrip.jsp" class="button big"><font color="white">Look for an overseas trip</font></a>
-                    <a href="internship.jsp" class="button big"><font color="white">Look for an overseas internship</font></a>             
-                </li>
-            </ul>
-        </section>
-        <%
-            }
-        %>
+        
 
 
     </body>
