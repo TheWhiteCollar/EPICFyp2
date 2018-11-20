@@ -115,7 +115,7 @@ public class TripStudentDAO {
     
     public static ArrayList<TripStudent> getConfirmedTripsByUser(String userEmail) {
         ArrayList<TripStudent> result = new ArrayList<>();
-        String sql = "SELECT * FROM tripstudent WHERE tripUserEmail = ? AND tripStudentStatus = 'trip confirmed' ";
+        String sql = "SELECT * FROM tripstudent WHERE tripUserEmail=? AND tripStudentStatus='Remaining Amount Paid' ";// change to trip applied?
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setString(1, userEmail);
@@ -134,7 +134,7 @@ public class TripStudentDAO {
 
     }
     
-    //insert the status="Trip Activated" and status="Pending Full Payment" for all users who signed up
+    //insert the status="Trip Activated" and status="Pending Remaining Amount" for all users who signed up
     public static void setActivationStatusByTripID(int tripID){
         String sql ="SELECT tripUserEmail FROM tripstudent WHERE tripStudentStatus='Applied interest' AND tripID=?";
 
@@ -160,7 +160,7 @@ public class TripStudentDAO {
                 //insert status="Applied interest" into tripstudent table
                 if(TripsDAO.insertStudent(userEmail, tripID, "Trip Activated", currentTime)){
                     //insert status="Pending desposit" into tripstudent table
-                    TripsDAO.insertStudent(userEmail, tripID, "Pending Full Payment", currentTime2seconds);
+                    TripsDAO.insertStudent(userEmail, tripID, "Pending Remaining Amount", currentTime2seconds);
                 }
                
             }
@@ -172,7 +172,7 @@ public class TripStudentDAO {
         }
     }
     
-    //insert the status="Trip Activated" and status="Pending Full Payment" for the most recent additional user
+    //insert the status="Trip Activated" and status="Pending Remaining Amount" for the most recent additional user
     public static void setActivationStatusByUserAndTripID(String tripUserEmail, int tripID){
         String sql ="SELECT tripUserEmail FROM tripstudent WHERE tripStudentStatus='Applied interest' AND tripID=? AND tripUserEmail=?";
 
@@ -202,7 +202,7 @@ public class TripStudentDAO {
                 //insert status="Applied interest" into tripstudent table
                 if(TripsDAO.insertStudent(userEmail, tripID, "Trip Activated", currentTime3seconds)){
                     //insert status="Pending desposit" into tripstudent table
-                    TripsDAO.insertStudent(userEmail, tripID, "Pending Full Payment", currentTime4seconds);
+                    TripsDAO.insertStudent(userEmail, tripID, "Pending Remaining Amount", currentTime4seconds);
                 }              
             }
             rs.close();
@@ -212,5 +212,50 @@ public class TripStudentDAO {
             Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Cannot set trip activation for: " + tripID, ex);
         }
     }
+    
+    //return the list of tripIDs signed up for by a particular user
+    public static ArrayList<Integer> getTripIDsByUser(String userEmail) {
+        ArrayList<Integer> result = new ArrayList<>();
+        String sql = "SELECT tripID FROM tripstudent WHERE tripUserEmail=? AND tripStudentStatus='Applied interest'";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, userEmail);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.add(rs.getInt(1));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Cannot get user with userEmail: " + userEmail, ex);
+        }
+        return result;
 
+    }
+    
+    //return all the status of a particular tripID and userEmail
+    public static ArrayList<String> getTripStatusByTripID(String userEmail, int tripID){
+        ArrayList<String> statusArrayList = new ArrayList<>();
+        String sql = "SELECT tripStudentStatus,tripStudentTimestamp FROM tripstudent WHERE tripUserEmail=? AND tripID=? ORDER BY tripStudentTimestamp ASC";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, userEmail);
+            stmt.setInt(2, tripID);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                statusArrayList.add(rs.getString(1));
+                statusArrayList.add(rs.getString(2));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return statusArrayList;
+        } catch (SQLException ex) {
+            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Cannot get user with userEmail: " + userEmail, ex);
+        }
+        return statusArrayList;
+    }  
+        // this is to get the status SELECT tripStudentStatus,tripStudentTimestamp FROM tripstudent WHERE tripUserEmail='yijing.oon.2015@smu.edu.sg' AND tripID=1 ORDER BY tripStudentTimestamp ASC;
 }

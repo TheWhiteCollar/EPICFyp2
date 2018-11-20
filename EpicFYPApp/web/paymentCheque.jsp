@@ -45,6 +45,7 @@
                     
                     String tripIDS = request.getParameter("tripId");
                     int tripID = Integer.parseInt(tripIDS);
+                    String type = request.getParameter("type");
                     Trip trip = TripsDAO.getTrip(tripID);
                     double deposit = trip.getTripPrice()/2;
                     DecimalFormat df2 = new DecimalFormat("#.00");
@@ -54,6 +55,8 @@
                     <input type="hidden" name="userEmail" value="<%out.print(email);%>">
                     <input type="hidden" name="tripId" value="<%out.print(tripID);%>">
                     <input type="hidden" name="amount" value="<%out.print(deposit);%>">
+                    <input type="hidden" name="type" value="<%out.print(type);%>">
+                    
                     <h3><b>Payment Method : Cheque</b></h3>
                     <table>
                         <tbody>

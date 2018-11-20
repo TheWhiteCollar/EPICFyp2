@@ -48,6 +48,7 @@
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
                     String tripIDS = request.getParameter("tripId");
                     int tripID = Integer.parseInt(tripIDS);
+                    String type = request.getParameter("type");
 
                     Trip trip = TripsDAO.getTrip(tripID);
                     if (trip != null) {
@@ -56,7 +57,7 @@
                         Date tripStart = trip.getTripStart();
                         Date tripEnd = trip.getTripEnd();
                         double tripPrice = trip.getTripPrice();
-                        double tripDeposit = 0.2 * tripPrice;
+                        double tripDeposit = 0.5 * tripPrice;
                         boolean tripActivated = trip.getActivated();
                         int studentsToActivation = trip.getTripActivation() - trip.getNumberOfStudents();
                 %>
@@ -145,10 +146,12 @@
                                         </ul>
                                         
                                         <p>By clicking on the Proceed button, you agree to the Terms & Conditions outlined.</p>
-                                        <%
-                                        String url = "paymentOptions.jsp?tripId=" + tripID;
-                                        %>
-                                        <a href="<%out.print(url);%>" class="button">Proceed to make payment</a>
+                                   
+                                        <form action="paymentOptions.jsp" action="post">
+                                            <input style="display: none" type="text" name="tripId" value="<%out.print(tripID);%>"/>
+                                            <input style="display: none" type="text" name="type" value="<%out.print(type);%>"/>
+                                            <input type="submit" value="Proceed to make payment" class="full_width">
+                                        </form>
                                       
                                     </td>
                                 </tr>

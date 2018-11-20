@@ -36,6 +36,7 @@ public class addNewPaymentCheque extends HttpServlet {
         String userEmail = request.getParameter("userEmail");
         String tripIDS = request.getParameter("tripId");
         int tripID = Integer.parseInt(tripIDS);
+        String type = request.getParameter("type");
         
         if (!chequeNumber.equals("")){
             //get current date
@@ -43,12 +44,24 @@ public class addNewPaymentCheque extends HttpServlet {
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String currentTime = sdf.format(dt);
             
-            //insert status="Deposit Made" into tripstudent table
-            TripsDAO.insertStudent(userEmail, tripID, "Deposit Made", currentTime);
-            int tripStudentID = TripStudentDAO.getTripStudentID(userEmail, tripID, "Deposit Made", currentTime);
-            //insert payment into payment table
-            Boolean inserted = PaymentDAO.addPayment(tripStudentID, "Cheque", chequeNumber, amountI);
-            int paymentID = PaymentDAO.getPaymentID(tripStudentID, "Cheque", chequeNumber, amountI);
+            Boolean inserted = false;
+            int paymentID = 0;
+            if(type.equals("deposit")){
+                //insert status="Deposit Made" into tripstudent table
+                TripsDAO.insertStudent(userEmail, tripID, "Deposit Made", currentTime);
+                int tripStudentID = TripStudentDAO.getTripStudentID(userEmail, tripID, "Deposit Made", currentTime);
+                //insert payment into payment table
+                inserted = PaymentDAO.addPayment(tripStudentID, "Cheque", chequeNumber, amountI);
+                paymentID = PaymentDAO.getPaymentID(tripStudentID, "Cheque", chequeNumber, amountI);
+            } else if(type.equals("remainder")){           
+                //insert status="Remaining Amount Paid" into tripstudent table
+                TripsDAO.insertStudent(userEmail, tripID, "Remaining Amount Paid", currentTime);
+                int tripStudentID = TripStudentDAO.getTripStudentID(userEmail, tripID, "Remaining Amount Paid", currentTime);
+                //insert payment into payment table
+                inserted = PaymentDAO.addPayment(tripStudentID, "Cheque", chequeNumber, amountI);
+                paymentID = PaymentDAO.getPaymentID(tripStudentID, "Cheque", chequeNumber, amountI);
+            }
+            
             if (inserted==true) {
                 response.sendRedirect("paymentMade.jsp?paymentId=" + paymentID);
                 return;

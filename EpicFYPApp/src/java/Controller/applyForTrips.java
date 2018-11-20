@@ -73,7 +73,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 TripStudentDAO.setActivationStatusByUserAndTripID(signedUpEmails.get(signedUpEmails.size()-1),tripID);
             }
             
-            String url = "payment.jsp?tripId=" + tripID;
+            String url = "payment.jsp?tripId=" + tripID+"&type=deposit";
             response.sendRedirect(url);
         }      
          
