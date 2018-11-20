@@ -65,10 +65,8 @@ public class Trip {
         this.signedUpEmails = signedUpEmails;
         if(tripTotalSignup == tripActivation){
             this.activated = true;
-            TripStudentDAO.setActivationStatusByTripID(tripID);
         } else if(tripTotalSignup > tripActivation){
             this.activated = true;      
-            TripStudentDAO.setActivationStatusByUserAndTripID(signedUpEmails.get(signedUpEmails.size()-1),tripID);
         }else { 
             this.activated = false;            
         }
