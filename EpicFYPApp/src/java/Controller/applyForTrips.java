@@ -10,7 +10,6 @@ import Model.Dao.TripsDAO;
 import Model.Entity.Trip;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.servlet.annotation.WebServlet;

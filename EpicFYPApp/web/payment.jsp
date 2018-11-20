@@ -1,3 +1,5 @@
+<%@page import="Model.Entity.User"%>
+<%@page import="Model.Dao.TripStudentDAO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.time.Instant"%>
@@ -44,6 +46,9 @@
         <section id="main" class="wrapper">
             <div class="container"> 
                 <%
+                    
+                    User User = (User) session.getAttribute("User");
+                                    String email = User.getUserEmail();
                     DecimalFormat df2 = new DecimalFormat("#.00");
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
                     String tripIDS = request.getParameter("tripId");
@@ -57,7 +62,6 @@
                         Date tripStart = trip.getTripStart();
                         Date tripEnd = trip.getTripEnd();
                         double tripPrice = trip.getTripPrice();
-                        double tripDeposit = 0.5 * tripPrice;
                         boolean tripActivated = trip.getActivated();
                         int studentsToActivation = trip.getTripActivation() - trip.getNumberOfStudents();
                 %>
@@ -109,8 +113,22 @@
                                     <td><%out.print(dateFormat.format(tripEnd));%></td>
                                 </tr>
                                 <tr>
-                                    <td class="align-right"><b>Deposit Amount :</b></td>
-                                    <td>$ <%out.print(df2.format(tripDeposit));%></td>
+                                    <td class="align-right"><b>Amount due :</b></td>
+                                    <%
+                                    
+                                    int amountIndication = TripStudentDAO.getAmountIndicationUserAndTrip(email, tripID);
+                                    if(amountIndication==1){
+                                    %>
+                                    
+                                    <td>$ <%out.print(df2.format(tripPrice*0.5));%></td>
+                                    <%
+                                    } else if(amountIndication==2){
+                                    %>
+                                    <td>$ <%out.print(df2.format(tripPrice));%></td>                                    
+                                    <%                                   
+                                    } 
+                                    %>
+                                    
                                 </tr>
                                 <tr>
                                     <td class="align-right"><b>T&C :</b></td>

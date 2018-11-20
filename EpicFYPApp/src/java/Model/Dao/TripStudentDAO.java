@@ -257,5 +257,30 @@ public class TripStudentDAO {
         }
         return statusArrayList;
     }  
-        // this is to get the status SELECT tripStudentStatus,tripStudentTimestamp FROM tripstudent WHERE tripUserEmail='yijing.oon.2015@smu.edu.sg' AND tripID=1 ORDER BY tripStudentTimestamp ASC;
+   
+    //status indication of amount to be paid: 1=full amount, 2=1/2 amount
+    public static int getAmountIndicationUserAndTrip(String userEmail, int tripID){
+        int status = 0;
+        String sql = "SELECT tripStudentStatus FROM tripstudent WHERE tripUserEmail=? AND tripID=? AND (tripStudentStatus='Pending Deposit' OR tripStudentStatus='Pending Remaining Amount')";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, userEmail);
+            stmt.setInt(2,tripID);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                status += 1;
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+
+            return status;
+        } catch (SQLException ex) {
+            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Cannot get user with userEmail: " + userEmail, ex);
+        }
+        return status;
+    
+    }
+
+
 }

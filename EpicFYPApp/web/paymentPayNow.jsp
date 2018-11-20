@@ -1,4 +1,5 @@
 
+<%@page import="Model.Dao.TripStudentDAO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="Model.Entity.Trip"%>
 <%@page import="Model.Dao.TripsDAO"%>
@@ -48,8 +49,15 @@
                     String type = request.getParameter("type");
                     
                     Trip trip = TripsDAO.getTrip(tripID);
-                    double deposit = trip.getTripPrice()/2;
+                    
                     DecimalFormat df2 = new DecimalFormat("#.00");
+                    double deposit=0;
+                    int amountIndication = TripStudentDAO.getAmountIndicationUserAndTrip(email, tripID);
+                    if(amountIndication==1){
+                        deposit = trip.getTripPrice()/2;
+                    }else if(amountIndication==2){
+                        deposit = trip.getTripPrice();
+                    }
                 %>
                 <h3><b>Choose your payment options : PayNow</b></h3>
                 <form action="addNewPaymentPaynow" method="post">
