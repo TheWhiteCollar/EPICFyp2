@@ -41,13 +41,14 @@ public class Trip {
     private int tripActivation;
     private String tripInterest;
     private int tripTotalSignup;
+    private Blob tripPicture;
     
     /*to count signup and counter*/
     private ArrayList<String> signedUpEmails;
     private boolean activated;
     
 
-    public Trip(int tripID, String tripTitle, double tripPrice, Blob tripItinerary, String tripDescription, String tripCountry, String tripState, Date tripStart, Date tripEnd, int tripDuration, int tripActivation, String tripInterest, int tripTotalSignup, ArrayList<String> signedUpEmails) {
+    public Trip(int tripID, String tripTitle, double tripPrice, Blob tripItinerary, String tripDescription, String tripCountry, String tripState, Date tripStart, Date tripEnd, int tripDuration, int tripActivation, String tripInterest, int tripTotalSignup, Blob tripPicture, ArrayList<String> signedUpEmails) {
         this.tripID = tripID;
         this.tripTitle = tripTitle;
         this.tripPrice = tripPrice;
@@ -61,6 +62,7 @@ public class Trip {
         this.tripActivation = tripActivation;
         this.tripInterest = tripInterest;
         this.tripTotalSignup = tripTotalSignup;
+        this.tripPicture = tripPicture;
         
         this.signedUpEmails = signedUpEmails;
         if(tripTotalSignup == tripActivation){
@@ -205,5 +207,13 @@ public class Trip {
 
     public void setSignedUpEmails(ArrayList<String> signedUpEmails) {
         this.signedUpEmails = signedUpEmails;
-    } 
+    }
+    
+    public Blob getTripPicture() {
+        return tripPicture;
+    }
+
+    public void setTripPicture(Blob tripPicture) {
+        this.tripPicture = tripPicture;
+    }
 }

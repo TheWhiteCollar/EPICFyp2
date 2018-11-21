@@ -74,7 +74,7 @@ public class addTrip extends HttpServlet {
             throws ServletException, IOException {
         String tripTitle = request.getParameter("tripTitle");
         double tripPrice = Double.parseDouble(request.getParameter("tripPrice"));
-        //Part filePart = request.getPart("tripItineray");
+        //Part filePart = request.getPart("tripItinerary");
         String tripDescription = request.getParameter("tripDescription");
         String tripCountry = request.getParameter("tripCountry");
         String tripState = request.getParameter("tripState");
@@ -84,10 +84,10 @@ public class addTrip extends HttpServlet {
         int tripActivation = Integer.parseInt(request.getParameter("tripActivation"));
         String tripInterest = request.getParameter("tripInterest");
         int tripTotalSignUp = Integer.parseInt(request.getParameter("tripTotalSignUp"));
-
+        //Part picPart = request.getPart("tripPicture");
         String text = "fail";
 
-        if (tripEnd.after(tripStart) && TripsDAO.insertTrip(tripTitle, tripPrice, null, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripTotalSignUp)) {
+        if (tripEnd.after(tripStart) && TripsDAO.insertTrip(tripTitle, tripPrice, null, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripTotalSignUp,null)) {
             text = "success";
         }
 
