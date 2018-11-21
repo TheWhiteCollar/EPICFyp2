@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `internship` (
   `internshipSupervisorEmail` varchar(100) NOT NULL DEFAULT '',
   `internshipVacancy` int(100) NOT NULL DEFAULT '0',
   `internshipPartnerID` int(11) NOT NULL DEFAULT '1',
-  `internshipDatetime` date,
+  `internshipDatetime` datetime,
   PRIMARY KEY (`internshipID`),
   KEY `internshippartnerid` (`internshipPartnerID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `internshipstudent` (
   `internshipUserEmail` varchar(50) NOT NULL, 
   `internshipStudentContinent` varchar(15) NOT NULL,
   `internshipStudentStatus` varchar(90) NOT NULL,
-  `internshipStudentDatetime` date NOT NULL,
+  `internshipStudentDatetime` datetime NOT NULL,
   `internshipStudentStatusAction` int(1) NOT NULL,
   PRIMARY KEY (`internshipStudentID`),
   KEY `internshipUserEmail` (`internshipUserEmail`)
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `internshipstudent` (
 
 INSERT INTO `internshipstudent` (`internshipStudentID`, `internshipUserEmail`, `internshipStudentContinent`, `internshipStudentStatus`, `internshipStudentDatetime`,  `internshipStudentStatusAction`) VALUES
 (1, 'mediani.2015@sis.smu.edu.sg', 'Asia', 'User submitted application - Admin to review application','2018-04-05 12:32:21', 1),
-(2, 'mediani.2015@sis.smu.edu.sg', 'Asia', 'Application fails application review','2018-10-02 12:32:21', 0);
+(2, 'mediani.2015@sis.smu.edu.sg', 'Asia', 'Application fails application review - No further actions','2018-10-02 12:32:21', 0);
 
 -- --------------------------------------------------------
 
