@@ -77,6 +77,7 @@
                             <li><a href="AdminPortal_viewStudentProfile.jsp">View Students</a></li>
                             <li><a href="AdminPortal_viewPartnerProfile.jsp">View Partners</a></li>
                             <li><a href="AdminPortal_viewAdminProfile.jsp">View Admins</a></li>
+                            <li><a href="AdminPortal_detailedStudentInfo.jsp">Detailed Info</a></li>
                         </ul>
                         
                     </li>
