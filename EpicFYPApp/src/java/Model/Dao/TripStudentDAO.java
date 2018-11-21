@@ -21,7 +21,7 @@ import java.util.logging.Logger;
     #2: tripUserEmail (varchar 50)
     #3: tripID (int 11)
     #4: tripStudentStatus (varchar 100)
-    #5: tripStudentTimestamp (Date)
+    #5: tripStudentTimestamp (Datetime)
 */
 
 public class TripStudentDAO {

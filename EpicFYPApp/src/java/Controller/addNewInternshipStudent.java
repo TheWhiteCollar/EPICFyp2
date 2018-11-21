@@ -7,9 +7,7 @@ package Controller;
 
 import Model.Dao.InternshipStudentDAO;
 import Model.Dao.UserDAO;
-import Model.Entity.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

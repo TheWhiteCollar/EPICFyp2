@@ -165,6 +165,53 @@ public class InternshipStudentDAO {
             e.printStackTrace();
         }
         return 0;
-
     }
+    
+    //get the list of continents signed up by a user
+    public static ArrayList<String> getContinentsByUser(String userEmail){
+        ArrayList<String> result = new ArrayList<>();
+        String sql = "SELECT internshipStudentContinent FROM internshipstudent WHERE internshipUserEmail=? AND internshipStudentStatus='User submitted application - Admin to review application'";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, userEmail);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.add(rs.getString(1));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Cannot get user with userEmail: " + userEmail, ex);
+        }
+        return result;
+    }
+    
+    //get all status of a particular continent and user
+    public static ArrayList<String> getInternshipStatusByContinent(String userEmail, String continent){
+        ArrayList<String> statusArrayList = new ArrayList<>();
+        String sql = "SELECT internshipStudentStatus, internshipStudentDatetime, internshipStudentStatusAction FROM internshipstudent WHERE internshipUserEmail=? AND internshipStudentContinent=? ORDER BY internshipStudentDatetime ASC";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, userEmail);
+            stmt.setString(2, continent);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                statusArrayList.add(rs.getString(1));
+                statusArrayList.add(rs.getString(2));
+                statusArrayList.add(Integer.toString(rs.getInt(3)));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return statusArrayList;
+        } catch (SQLException ex) {
+            Logger.getLogger(InternshipStudentDAO.class.getName()).log(Level.WARNING, "Cannot get user with userEmail: " + userEmail, ex);
+        }
+        return statusArrayList;
+    } 
+    
+    
+    
 }
