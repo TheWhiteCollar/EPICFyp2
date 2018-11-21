@@ -209,7 +209,6 @@ CREATE TABLE IF NOT EXISTS `internship` (
 --
 
 INSERT INTO `internship` (`internshipID`, `internshipName`, `internshipApproval`, `internshipFieldOfStudy`, `internshipDescription`, `internshipStart`, `internshipEnd`, `internshipPay`, `internshipSupervisor`, `internshipSupervisorEmail`, `internshipVacancy`, `internshipPartnerID`, `internshipDatetime`) VALUES
-(0, 'not assigned', 'not assigned', 'not assigned', 'not assigned', '2018-11-11', '2019-01-01', '0.00', 'not assigned', 'not assigned', 0, 0, '0000-00-00 00:00:00'),
 (1, 'Data Analytics Intern', 'approved', 'Business, Accountancy', 'This intern position is within the Business Intelligence Department and will support the team with data analysis, model development, data visualizations and decision support for various departments.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 3, 1, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
 (2, 'Business and Science Intern', 'approved', 'Business, Science', 'This intern position is within the Business Science Department. Interns will have to conduct science experiments with a business angle, and acheive suitable actionable results for the company to take.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 4, 1, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
 (3, 'Music Assistant', 'approved', 'Music', 'Intern is required to have strong foundational knowledge in music. At least of Grade 5. Strong sight-reading skills is required.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 2, 1, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
@@ -231,61 +230,41 @@ INSERT INTO `internship` (`internshipID`, `internshipName`, `internshipApproval`
 
 DROP TABLE IF EXISTS `internshipstudent`;
 CREATE TABLE IF NOT EXISTS `internshipstudent` (
-  `internshipID` int(11) NOT NULL,
-  `internshipUserEmail` varchar(50) NOT NULL,
-  `internshipStudentStatus` varchar(25) NOT NULL,
+  `internshipStudentID` int(11) NOT NULL AUTO_INCREMENT,
+  `internshipUserEmail` varchar(50) NOT NULL, 
   `internshipStudentContinent` varchar(15) NOT NULL,
-  `internshipStudentDatetime` varchar(210) NOT NULL,
-  `internshipStudentDatetimeApplied` datetime NOT NULL,
-  `internshipStudentLastUpdate` datetime NOT NULL,
-  PRIMARY KEY (`internshipUserEmail`,`internshipStudentContinent`,`internshipStudentDatetimeApplied`),
-  KEY `internshipUserEmail` (`internshipUserEmail`),
-  KEY `internshipID` (`internshipID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `internshipStudentStatus` varchar(90) NOT NULL,
+  `internshipStudentDatetime` date NOT NULL,
+  `internshipStudentStatusAction` int(1) NOT NULL,
+  PRIMARY KEY (`internshipStudentID`),
+  KEY `internshipUserEmail` (`internshipUserEmail`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `internshipstudent`
 --
 
-INSERT INTO `internshipstudent` (`internshipID`, `internshipUserEmail`, `internshipStudentStatus`, `internshipStudentContinent`, `internshipStudentDatetime`, `internshipStudentDatetimeApplied`, `internshipStudentLastUpdate`) VALUES
-(0, 'mediani.2015@sis.smu.edu.sg', '1, 3, 4', 'Asia', '2018-04-05 12:32:21, 2018-04-10 08:34:54, 2018-04-15 08:34:54', '2018-04-05 12:32:21', '2018-04-15 08:34:54'),
-(0, 'rachael.low.2015@sis.smu.edu.sg', '1', 'Asia', '2018-10-02 12:32:21', '2018-10-02 12:32:21', '2018-10-02 12:32:21');
+INSERT INTO `internshipstudent` (`internshipStudentID`, `internshipUserEmail`, `internshipStudentContinent`, `internshipStudentStatus`, `internshipStudentDatetime`,  `internshipStudentStatusAction`) VALUES
+(1, 'mediani.2015@sis.smu.edu.sg', 'Asia', 'User submitted application - Admin to review application','2018-04-05 12:32:21', 1),
+(2, 'mediani.2015@sis.smu.edu.sg', 'Asia', 'Application fails application review','2018-10-02 12:32:21', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `internshipstudentstatus`
+-- Table structure for table `internshipassigned`
 --
 
-DROP TABLE IF EXISTS `internshipstudentstatus`;
-CREATE TABLE IF NOT EXISTS `internshipstudentstatus` (
-  `internshipStudentStatusID` int(2) NOT NULL,
-  `internshipStudentStatusName` varchar(100) NOT NULL,
-  `internshipStudentStatusAction` int(1) NOT NULL,
-  `internshipStudentStatusCycle` varchar(10) NOT NULL,
-  PRIMARY KEY (`internshipStudentStatusID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `internshipassigned`;
+CREATE TABLE IF NOT EXISTS `internshipassigned` (
+  `internshipAssignedID` int(11) NOT NULL,
+  `internshipID` int(11) NOT NULL,
+  `internshipStudentID` int(11) NOT NULL,
+  PRIMARY KEY (`internshipAssignedID`),
+  KEY `internshipID` (`internshipID`),
+  KEY `internshipStudentID` (`internshipStudentID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `internshipstudentstatus`
---
 
-INSERT INTO `internshipstudentstatus` (`internshipStudentStatusID`, `internshipStudentStatusName`, `internshipStudentStatusAction`, `internshipStudentStatusCycle`) VALUES
-(1, 'User submitted application - Admin to review application', 1, 'processing'),
-(2, 'Application fails application review', 0, 'done'),
-(3, 'Admin approves application - Send email with internship details for interest confirmation', 1, 'processing'),
-(4, 'Sent interest email - Waiting for user reply', 2, 'processing'),
-(5, 'Application withdrawn. No interview scheduled', 0, 'done'),
-(6, 'User accepts - Send email to schedule interview', 1, 'processing'),
-(7, 'Sent interview schedule email - Waiting for user reply', 2, 'processing'),
-(8, 'User withdraws from scheduled interview', 0, 'done'),
-(9, 'Interview scheduled - Pending interview', 2, 'processing'),
-(10, 'Interview completed - Review interview', 1, 'processing'),
-(11, 'Internship not offered', 0, 'done'),
-(12, 'Internship offered - Pending user internship acceptance', 2, 'processing'),
-(13, 'User rejects internship offer', 0, 'done'),
-(14, 'User accepted internship offer', 3, 'done'),
-(15, 'Internship Cancelled', 4, 'done');
 
 -- --------------------------------------------------------
 
@@ -424,8 +403,14 @@ ALTER TABLE `internship`
 -- Constraints for table `internshipstudent`
 --
 ALTER TABLE `internshipstudent`
-  ADD CONSTRAINT `internshipstudent_fk1` FOREIGN KEY (`internshipUserEmail`) REFERENCES `user` (`userEmail`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `internshipstudent_fk2` FOREIGN KEY (`internshipID`) REFERENCES `internship` (`internshipID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `internshipstudent_fk1` FOREIGN KEY (`internshipUserEmail`) REFERENCES `user` (`userEmail`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `internshipstudent`
+--
+ALTER TABLE `internshipassigned`
+  ADD CONSTRAINT `internshipassigned_fk1` FOREIGN KEY (`internshipID`) REFERENCES `internship` (`internshipID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `internshipassigned_fk2` FOREIGN KEY (`internshipStudentID`) REFERENCES `internshipStudent` (`internshipStudentID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `payment`
