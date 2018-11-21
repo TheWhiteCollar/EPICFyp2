@@ -1,3 +1,4 @@
+<%@page import="Model.Dao.InternshipStudentDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.Dao.TripStudentDAO"%>
@@ -36,31 +37,40 @@
             
             ArrayList<Integer> tripList = TripStudentDAO.getTripIDsByUser(email);
             int tripCount = tripList.size();
-            
-            if(tripCount == 0){
-        %>
-        <section class="wrapper">
-            <div class ="container align-center">      
-
-                <p>It seems you have not signed up for any trips :/</p>
-                <a href="studyTrip.jsp" class="button">Sign up for a study trip today!</a>
-            </div>
-        </section>    
-        <%
-            }else{
+            ArrayList<String> continentList = InternshipStudentDAO.getContinentsByUser(email);
+            int continentCount = continentList.size();
         %>
         <section class="wrapper">
             <div class ="container align-center">              
                 <header class="major align-center">
                     <h2>Application Status</h2>
                 </header>
+        
+        
+        <%
+            if(tripCount == 0){
+        %>
+                <p>It seems you have not signed up for any trips :/</p>
+                <a href="studyTrip.jsp" class="button">Sign up for a study trip today!</a>    
+        <%
+            } if(continentCount == 0){
+        %>
+                <p>It seems you have not signed up for any internships :/</p>
+                <a href="internship.jsp" class="button">Join an internship today!</a>
+        <%
+            } if(tripCount != 0){
+        %>
+                <a href="studentPortal_studyTripStatus.jsp" class="button">Study Trip Status</a>   
+        <%
+            }if(continentCount != 0){
+        %>
             
-                <a href="studentPortal_studyTripStatus.jsp" class="button">Study Trip Status</a>
                 <a href="studentPortal_internshipStatus.jsp" class="button">Internship Status</a> 
+        <%
+            }
+        %>
             </div>
         </section>
-        <%
-        }
-        %>
+
     </body>
 </html>

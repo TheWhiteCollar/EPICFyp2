@@ -55,7 +55,9 @@
                             String email = User.getUserEmail();
 
                             ArrayList<Integer> tripList = TripStudentDAO.getTripIDsByUser(email);
-
+                            
+                            SimpleDateFormat fromDB = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy , HH:mm a");
                         %>
 
                         <table class="alt align-center" style="font-size:14px;">
@@ -79,8 +81,6 @@
                                         String statusDate = tripStatusList.get(statusCount - 1);
 
                                         //format the statusDate
-                                        SimpleDateFormat fromDB = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy , HH:mm a");
                                         String reformattedDate = myFormat.format(fromDB.parse(statusDate));
                                 %>
 
@@ -120,7 +120,7 @@
         <%
             for (int i = 0; i < tripList.size(); i++) {
                 Trip trip = TripsDAO.getTrip(tripList.get(i));
-                SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
+                SimpleDateFormat myFormat1 = new SimpleDateFormat("dd MMMM yyyy");
                 
         %>
         <div class="modal fade" id="myModal<%out.print(i);%>" role="dialog" style="top:15%;">
@@ -162,16 +162,50 @@
                                         </tr>
                                         <tr>
                                             <td class="align-right">Start Date :</td>
-                                            <td class="align-left"><%out.print(myFormat.format(trip.getTripStart()));%></td>
+                                            <td class="align-left"><%out.print(myFormat1.format(trip.getTripStart()));%></td>
                                         </tr>
                                         <tr>
                                             <td class="align-right">End Date :</td>
-                                            <td class="align-left"><%out.print(myFormat.format(trip.getTripEnd()));%></td>
+                                            <td class="align-left"><%out.print(myFormat1.format(trip.getTripEnd()));%></td>
                                         </tr>  
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        
+                        <div class ="row">
+                            <div class="12u 12u(xsmall)">
+                                <h2 class="align-center">Status History</h2>
+                                <table style="font-size:14px;" class="alt">
+                                    <thead>
+                                        <tr>
+                                            <th class="align-center">Status</th>
+                                            <th class="align-center">Date and Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                        ArrayList<String> tripStatusList = TripStudentDAO.getTripStatusByTripID(email, tripList.get(i));
+                                        for(int x=0; x < tripStatusList.size(); x++){
+                                            String statusTitle = tripStatusList.get(x);
+                                            x++;
+                                            String statusDate = tripStatusList.get(x);
+
+                                            //format the statusDate
+                                            String reformattedDate = myFormat.format(fromDB.parse(statusDate));
+                                        %>
+                                      
+                                        <tr>
+                                            <td class="align-center"><%out.print(statusTitle);%></td>
+                                            <td class="align-center"><%out.print(reformattedDate);%></td>
+                                        </tr>  
+                                        <%
+                                        }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="button" data-dismiss="modal">Close</button>
