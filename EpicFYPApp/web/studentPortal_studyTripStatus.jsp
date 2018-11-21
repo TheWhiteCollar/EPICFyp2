@@ -50,7 +50,7 @@
                 <div class="row 50% uniform">
                     <div class="12u 12u">
                         <%
-                            //add in the title
+                           
                             User User = (User) session.getAttribute("User");
                             String email = User.getUserEmail();
 

@@ -1,6 +1,6 @@
+<%@page import="Model.Dao.InternshipStudentDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Model.Dao.TripStudentDAO"%>
 <%@page import="Model.Entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,6 +14,12 @@
         <meta name="description" content="Imparting life skills through overseas exposure via internships and study missions. Countries of focus: Cambodia, Laos, Myanmar, Vietnam, India, Indonesia, Thailand, Japan and China." />
         <meta name="keywords" content="overseas, study missions, internships, training, life skills, career exposure" />
         <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
         <script src="js/jquery.min.js"></script>
         <script src="js/skel.min.js"></script>
         <script src="js/skel-layers.min.js"></script>
@@ -25,7 +31,7 @@
         </noscript>
         <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
     </head>
-   
+
     <body>
         <!-- Header -->
         <jsp:include page="header.jsp" />
@@ -36,85 +42,148 @@
                 <header class="major align-center">
                     <h2>Application Status</h2>
                 </header>
-            
-            <div class="row 50% uniform">
-                <div class="6u 12u">
-                    <%
-                    //get the status of a user (below) if 0 then don't have .isEmpty();
-                    //get how many different trips they signed up for
-                    //then populate the trip status by order
-                    //if the status equals to Pending Deposit have action to point them
-                    //if status equals to Pending Remaining Amount then point to ___
-                    User User = (User) session.getAttribute("User");
-                    String email = User.getUserEmail();
-                    
-                    ArrayList<Integer> tripList= TripStudentDAO.getTripIDsByUser(email);   
 
-                    %>
-                    
-                    <table class="alt align-center" style="font-size:14px;">
-                        <thead>
-                            <tr>
-                                <th>Trip ID</th>
-                                <th>Status</th>
-                                <th>Timestamp</th>
-                                <th>Action</th>
-                            </tr>                           
-                        </thead>
-                        <tbody>
-                            <%    
-                                //loop based off tripList count
-                                for(int i = 0; i < tripList.size() ;i++){
-                                    int tripID = tripList.get(i);
-                                    ArrayList<String> tripStatusList = TripStudentDAO.getTripStatusByTripID(email, tripID);
-                                    int statusCount = tripStatusList.size();
-                                    String status = tripStatusList.get(statusCount-2);
-                                    String statusDate = tripStatusList.get(statusCount-1);
-                                    
-                                    //format the statusDate
-                                    SimpleDateFormat fromDB = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                    SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy , HH:mm a"); 
-                                    String reformattedDate = myFormat.format(fromDB.parse(statusDate));
-                            %>
+                <div class="row 50% uniform">
+                    <div class="12u 12u">
+                        <%
+
+                            //get how many different internship they signed up for
+                            //then populate the internship status by order
+                            //if the status action is 2 then populate the appropriate action? - accept decline (might need to count the status :<)
+                            //otherwise it is -
+                            User User = (User) session.getAttribute("User");
+                            String email = User.getUserEmail();
+
+                            ArrayList<String> continentList = InternshipStudentDAO.getContinentsByUser(email);
                             
-                            <tr>
-                                <td class="align-center"><%out.print(tripID);%></td>
-                                <td class="align-center"><%out.print(status);%></td>
-                                <td class="align-center"><%out.print(reformattedDate);%></td>
-                                <%
-                                    if (status.equals("Pending Deposit")){
+                            SimpleDateFormat fromDB = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy , HH:mm a");
+
+                        %>
+
+                        <table class="alt align-center" style="font-size:14px;">
+                            <thead>
+                                <tr>
+                                    <th class="align-center">Continent</th>
+                                    <th class="align-center">Status</th>
+                                    <th class="align-center">Follow Up</th>
+                                    <th class="align-center">Date and Time</th>
+                                    <th class="align-center">Action</th>
+                                    <th class="align-center">Info</th>
+                                </tr>                           
+                            </thead>
+                            <tbody>
+                                <%                               
+                                    for (int i = 0; i < continentList.size(); i++) {
+                                        String continent = continentList.get(i);
+                                        //get the status list
+                                        ArrayList<String> internshipStatusList = InternshipStudentDAO.getInternshipStatusByContinent(email, continent);
+                                        int statusCount = internshipStatusList.size();
+                                        String status = internshipStatusList.get(statusCount - 3);
+                                        String[] statusCurrentPending = status.split("\\s*-\\s*");
+                                        String currentStatus = statusCurrentPending[0];
+                                        String pendingStatus = statusCurrentPending[1];
+                                        String statusDate = internshipStatusList.get(statusCount - 2);
+                                        String statusAction = internshipStatusList.get(statusCount - 1);
+
+                                        //format the statusDate
+                                        String reformattedDate = myFormat.format(fromDB.parse(statusDate));
                                 %>
-                                <td class="align-center"><a href="payment.jsp?tripId=<%out.print(tripID);%>&type=deposit" class="button">Pay</a></td>
-                                <%        
-                                    } else if (status.equals("Pending Remaining Amount")){ 
-                                %> 
-                                <td class="align-center"><a href="payment.jsp?tripId=<%out.print(tripID);%>&type=remainder" class="button">Pay</a></td>
+
+                                <tr>
+                                    <td class="align-center"><%out.print(continent);%></td>
+                                    <td class="align-center"><%out.print(currentStatus);%></td>
+                                    <td class="align-center"><%out.print(pendingStatus);%></td>
+                                    <td class="align-center"><%out.print(reformattedDate);%></td>
+                                    <%
+                                        if (statusAction.equals("2")) {
+                                    %>
+                                    <td class="align-center"><a href="#" class="button">Accept</a></td>
+                                    <%
+                                    } else{
+                                    %> 
+                                    <td class="align-center">-</td>
+                                    <%
+                                    }
+                                    %>
+                                    <td class = "align-center"><button type="button" class="button" data-toggle="modal" data-target="#myModal<%out.print(i);%>">View</button></td>
+                                </tr>
                                 <%
                                     }
                                 %>
-                                
-                            </tr>
-                            <%
-                                }
-                            %>
-                            
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="6u 12u">
-                    
-                </div>
-                
             </div>
-                
-            </div>
-                            
-            
-            
         </section>
-        
+                            
+                            
+        <%
+            for (int i = 0; i < continentList.size(); i++) {
+                String continent = continentList.get(i); 
+        %>
+        <div class="modal fade" id="myModal<%out.print(i);%>" role="dialog" style="top:15%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center">Information on internship to<b><%out.print(continent);%></b></h4>
+                    </div>
+                    <div class="modal-body">
+ 
+                        <div class ="row">
+                            <div class="12u 12u(xsmall)">
+                                <h2 class="align-center">Status History</h2>
+                                <table style="font-size:14px;" class="alt">
+                                    <thead>
+                                        <tr>
+                                            <th class="align-center">Status</th>
+                                            <th class="align-center">Follow up</th>
+                                            <th class="align-center">Date and Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                        ArrayList<String> internshipStatusList = InternshipStudentDAO.getInternshipStatusByContinent(email, continent);
+                                        for(int x=0; x < internshipStatusList.size(); x++){
+                                            
+                                            String status = internshipStatusList.get(x);
+                                            String[] statusCurrentPending = status.split("\\s*-\\s*");
+                                            String currentStatus = statusCurrentPending[0];
+                                            String pendingStatus = statusCurrentPending[1];
+                                            x++;
+                                            String statusDate = internshipStatusList.get(x);
+                                            x++;
 
+                                            //format the statusDate
+                                            String reformattedDate = myFormat.format(fromDB.parse(statusDate));
+                                        %>
+                                      
+                                        <tr>
+                                            <td class="align-center"><%out.print(currentStatus);%></td>
+                                            <td class="align-center"><%out.print(pendingStatus);%></td>
+                                            <td class="align-center"><%out.print(reformattedDate);%></td>
+                                        </tr>  
+                                        <%
+                                        }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         
+        <%
+            }
+        %>
+
 
 
     </body>
