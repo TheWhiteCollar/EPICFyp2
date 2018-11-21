@@ -65,9 +65,7 @@ public class addPartnerInternship extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("nvjfnvjsknvlksmvs");
         String internshipName = request.getParameter("internshipName");
-        String internshipApproval = "approved";
         String internshipFieldOfStudy = request.getParameter("internshipFieldOfStudy");
         String internshipDescription = request.getParameter("internshipDescription");
         Date internshipStart = Date.valueOf(request.getParameter("internshipStart"));
@@ -83,7 +81,7 @@ public class addPartnerInternship extends HttpServlet {
         String internshipDatetime = sdf.format(dt);
         String text = "fail";
         
-        if (internshipEnd.after(internshipStart) && InternshipDAO.addInternship(internshipName, internshipApproval, internshipFieldOfStudy, internshipDescription, internshipStart, internshipEnd, internshipPay, internshipSupervisor, internshipSupervisorEmail, internshipVacancy, internshipPartnerID, internshipDatetime)) {
+        if (internshipEnd.after(internshipStart) && InternshipDAO.addInternship(internshipName, internshipFieldOfStudy, internshipDescription, internshipStart, internshipEnd, internshipPay, internshipSupervisor, internshipSupervisorEmail, internshipVacancy, internshipPartnerID, internshipDatetime)) {
             text = "success";
         }
 

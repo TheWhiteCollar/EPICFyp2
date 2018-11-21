@@ -58,7 +58,7 @@ public class addNewInternshipStudent extends HttpServlet {
 
             // Insert into database
             boolean insertedUser = UserDAO.updateUser(userEmail, userFirstName, userLastName, userPhone, userCitizenship, userHighestEducation, userFieldOfStudy, userSchool,filePart);
-            boolean insertedInternshipStudent = InternshipStudentDAO.addInternshipStudent(0, userEmail, "1", continent, currentTime,currentTime,currentTime);
+            boolean insertedInternshipStudent = InternshipStudentDAO.addInternshipStudent(userEmail, continent, "User submitted application - Admin to review application", currentTime, 1);
             if (insertedUser==true && insertedInternshipStudent==true) {
                 response.sendRedirect("applyInternshipSucceed.jsp");
                 return;
