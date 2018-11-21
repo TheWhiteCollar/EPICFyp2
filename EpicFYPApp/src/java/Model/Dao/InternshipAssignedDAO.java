@@ -6,7 +6,7 @@
 package Model.Dao;
 
 import Controller.ConnectionManager;
-import Model.Entity.InternshipStudentStatus;
+import Model.Entity.InternshipAssigned;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,29 +14,28 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/*
-methods needed:
-- getting internship status based on id
+public class InternshipAssignedDAO {
+    
+    //insert internship assigned to student
+    public static boolean addInternshipAssigned(int internshipID, int internshipStudentID) {
 
- */
-public class InternshipStudentStatusDAO {
-    // get internshipStudentStatus
-    public static InternshipStudentStatus getinternshipStudentStatusByID(String internshipStudentStatusID) {
-
-        InternshipStudentStatus internshipStudentStatus = null;
-        String sql = "SELECT * FROM internshipstudentstatus WHERE internshipStudentStatusID=?";
+        String sql = "INSERT INTO internshipassigned (internshipID, internshipStudentID) VALUES (?,?)";
 
         try (Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);) {
-            stmt.setString(1, internshipStudentStatusID);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                internshipStudentStatus = new InternshipStudentStatus(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4));
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setInt(1, internshipID);
+            stmt.setInt(2, internshipStudentID);
+
+            int result = stmt.executeUpdate();
+            if (result == 0) {
+                return false;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(InternshipStudentStatusDAO.class.getName()).log(Level.WARNING, "Unable to retrieve countries", ex);
+            Logger.getLogger(InternshipAssignedDAO.class.getName()).log(Level.WARNING, "Failed to add", ex);
         }
 
-        return internshipStudentStatus;
+        return true;
     }
+    
+
 }
