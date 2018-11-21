@@ -52,6 +52,17 @@
                             %>
                         </p>
                         
+                         <p style="text-align:center; color: red">
+
+                            <%
+                                String Admin_ErrorMsg = (String) request.getAttribute("Admin_ErrorMsg");
+
+                                if (Admin_ErrorMsg != null) {
+                                    out.print(Admin_ErrorMsg);
+                                }
+                            %>
+                        </p>
+                        
                         <p style="text-align:center; color: lime">
 
                             <%

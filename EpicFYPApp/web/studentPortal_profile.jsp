@@ -43,6 +43,7 @@
 
         <!-- Header -->
         <jsp:include page="header.jsp" />
+        <jsp:include page="StudentPortalPermission.jsp" />
 
         <!-- Main -->
         <section id="login" class="wrapper">
