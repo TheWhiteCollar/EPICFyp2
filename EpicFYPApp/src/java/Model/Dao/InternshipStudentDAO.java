@@ -145,7 +145,7 @@ public class InternshipStudentDAO {
     public static int countInternshipStudentByCont(String internshipUserEmail, String continent, int currentYear) {
 
         int count = 0;
-        String sql = "SELECT COUNT(internshipUserEmail) FROM internshipstudent WHERE internshipUserEmail=? AND internshipStudentContinent=? AND internshipStudentStatus='User submitted application - Admin to review application' AND YEAR(internshipStudentDatetimeApplied)=?";
+        String sql = "SELECT COUNT(internshipUserEmail) FROM internshipstudent WHERE internshipUserEmail=? AND internshipStudentContinent=? AND internshipStudentStatus='User submitted application - Admin to review application' AND YEAR(internshipStudentDatetime)=?";
         try {
             Connection conn = ConnectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
