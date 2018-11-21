@@ -189,7 +189,6 @@ DROP TABLE IF EXISTS `internship`;
 CREATE TABLE IF NOT EXISTS `internship` (
   `internshipID` int(11) NOT NULL AUTO_INCREMENT,
   `internshipName` varchar(100) NOT NULL,
-  `internshipApproval` varchar(100) NOT NULL DEFAULT '',
   `internshipFieldOfStudy` varchar(500) NOT NULL,
   `internshipDescription` varchar(1000) NOT NULL,
   `internshipStart` date NOT NULL,
@@ -199,28 +198,25 @@ CREATE TABLE IF NOT EXISTS `internship` (
   `internshipSupervisorEmail` varchar(100) NOT NULL DEFAULT '',
   `internshipVacancy` int(100) NOT NULL DEFAULT '0',
   `internshipPartnerID` int(11) NOT NULL DEFAULT '1',
-  `internshipDatetime` varchar(40) DEFAULT '',
+  `internshipDatetime` date,
   PRIMARY KEY (`internshipID`),
   KEY `internshippartnerid` (`internshipPartnerID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `internship`
 --
 
-INSERT INTO `internship` (`internshipID`, `internshipName`, `internshipApproval`, `internshipFieldOfStudy`, `internshipDescription`, `internshipStart`, `internshipEnd`, `internshipPay`, `internshipSupervisor`, `internshipSupervisorEmail`, `internshipVacancy`, `internshipPartnerID`, `internshipDatetime`) VALUES
-(1, 'Data Analytics Intern', 'approved', 'Business, Accountancy', 'This intern position is within the Business Intelligence Department and will support the team with data analysis, model development, data visualizations and decision support for various departments.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 3, 1, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
-(2, 'Business and Science Intern', 'approved', 'Business, Science', 'This intern position is within the Business Science Department. Interns will have to conduct science experiments with a business angle, and acheive suitable actionable results for the company to take.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 4, 1, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
-(3, 'Music Assistant', 'approved', 'Music', 'Intern is required to have strong foundational knowledge in music. At least of Grade 5. Strong sight-reading skills is required.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 2, 1, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
-(4, 'Tour Guide Intern', 'pending', 'History, Hospitality & Tourism', 'Interns are expected to have strong command of knowledge with regards to important historical sites. Interns should be able to vocalise and impart knowledge effectively and clearly.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 2, 1, '2018-08-08 12:40:30'),
-(5, 'Robotics Discovery Intern', 'pending', 'Engineering', 'Intern is expected to be self-directed and self-motivated. Intern is expected to explore the different uses of robotics, and  how it can be applied into the daily life.', '2018-11-11', '2019-11-11', '1000.00', 'Bob Ma', 'bob.ma@xwy.com', 1, 2, '2018-08-08 12:40:30'),
-(6, 'Archives Intern', 'pending', 'Law', 'Intern will be in charge of managing the Law archives. These includes retrieving appropriate texts, and opportunities to closely collaborate with full time lawyers building their cases.', '2018-11-11', '2019-11-11', '1000.00', 'Bob Ma', 'tommy.ma@xwy.com', 1, 2, '2018-08-08 12:40:30'),
-(7, 'Nurse Intern', 'rejected', 'Medicine', 'Possess strong emotional strength. It is preferrable if intern is able to speak in dialect.', '2018-11-11', '2019-11-11', '1000.00', 'Mary Tan', 'mary.tan@xwy.com', 1, 3, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
-(8, 'Machine Learning Intern', 'rejected', 'Computing', 'Intern is expected to be self-directed and motivated. Project requires strong foundational knowledge of Machine Learning concepts. ', '2018-11-11', '2019-11-11', '1000.00', 'Mary Tan', 'mary.tan@xwy.com', 2, 3, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
-(9, 'English Researcher Intern', 'rejected', 'History', 'Interns will be researching into the history of words, and curating how the language has evolved overtime. If intern has the language capabilities, he/she might have the opportunity to collaborate in a research paper.', '2018-11-11', '2019-11-11', '1000.00', 'Sally Pi', 'sally.pi@xwy.com', 3, 4, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
-(10, 'English Researcher Intern', 'rejected', 'History', 'Interns rej', '2018-11-11', '2019-11-11', '850.00', 'Emily Tan', 'emily@gmail.com', 3, 4, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
-(11, 'English Researcher Intern', 'pending', 'History', 'Interns pend', '2018-11-11', '2019-11-11', '750.00', 'Josh Lau', 'josh@gmail.com', 3, 4, '2018-08-08 12:40:30, 2018-09-08 12:40:30'),
-(12, 'English Researcher Intern', 'approved', 'History', 'Interns apprv', '2018-11-11', '2019-11-11', '900.00', 'Andy Lim', 'andy@gmail.com', 3, 4, '2018-08-08 12:40:30, 2018-09-08 12:40:30');
+INSERT INTO `internship` (`internshipID`, `internshipName`, `internshipFieldOfStudy`, `internshipDescription`, `internshipStart`, `internshipEnd`, `internshipPay`, `internshipSupervisor`, `internshipSupervisorEmail`, `internshipVacancy`, `internshipPartnerID`, `internshipDatetime`) VALUES
+(1, 'Data Analytics Intern', 'Business, Accountancy', 'This intern position is within the Business Intelligence Department and will support the team with data analysis, model development, data visualizations and decision support for various departments.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 3, 1, '2018-08-08 12:40:30'),
+(2, 'Business and Science Intern', 'Business, Science', 'This intern position is within the Business Science Department. Interns will have to conduct science experiments with a business angle, and acheive suitable actionable results for the company to take.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 4, 1, '2018-08-08 12:40:30'),
+(3, 'Music Assistant', 'Music', 'Intern is required to have strong foundational knowledge in music. At least of Grade 5. Strong sight-reading skills is required.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 2, 1, '2018-08-08 12:40:30'),
+(4, 'Tour Guide Intern', 'History, Hospitality & Tourism', 'Interns are expected to have strong command of knowledge with regards to important historical sites. Interns should be able to vocalise and impart knowledge effectively and clearly.', '2018-11-11', '2019-11-11', '1000.00', 'Tommy Lau', 'tommy.lau@xwy.com', 2, 1, '2018-08-08 12:40:30'),
+(5, 'Robotics Discovery Intern', 'Engineering', 'Intern is expected to be self-directed and self-motivated. Intern is expected to explore the different uses of robotics, and  how it can be applied into the daily life.', '2018-11-11', '2019-11-11', '1000.00', 'Bob Ma', 'bob.ma@xwy.com', 1, 2, '2018-08-08 12:40:30'),
+(6, 'Archives Intern', 'Law', 'Intern will be in charge of managing the Law archives. These includes retrieving appropriate texts, and opportunities to closely collaborate with full time lawyers building their cases.', '2018-11-11', '2019-11-11', '1000.00', 'Bob Ma', 'tommy.ma@xwy.com', 1, 2, '2018-08-08 12:40:30'),
+(7, 'Nurse Intern', 'Medicine', 'Possess strong emotional strength. It is preferrable if intern is able to speak in dialect.', '2018-11-11', '2019-11-11', '1000.00', 'Mary Tan', 'mary.tan@xwy.com', 1, 3, '2018-08-08 12:40:30'),
+(8, 'Machine Learning Intern', 'Computing', 'Intern is expected to be self-directed and motivated. Project requires strong foundational knowledge of Machine Learning concepts. ', '2018-11-11', '2019-11-11', '1000.00', 'Mary Tan', 'mary.tan@xwy.com', 2, 3, '2018-08-08 12:40:30'),
+(9, 'English Researcher Intern', 'History', 'Interns will be researching into the history of words, and curating how the language has evolved overtime. If intern has the language capabilities, he/she might have the opportunity to collaborate in a research paper.', '2018-11-11', '2019-11-11', '1000.00', 'Sally Pi', 'sally.pi@xwy.com', 3, 4, '2018-08-08 12:40:30');
 
 -- --------------------------------------------------------
 
