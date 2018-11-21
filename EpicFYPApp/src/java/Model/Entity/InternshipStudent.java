@@ -6,41 +6,38 @@
 package Model.Entity;
 
 /* Database sequence
-    #1: internshipID (int 11)
+    #1: internshipStudentID (int 11)
     #2: internshipUserEmail (varchar 50)
-    #3: internshipStudentStatus (varchar 25)
-    #4: internshipStudentContinent (varchar 15)
-    #5: internshipStudentDatetime (varchar 160)
-    #6: internshipStudentDatetimeApplied (datetime YYYY-MM-DD HH:MM:SS)
-    #7: internshipStudentLastUpdate (datetime YYYY-MM-DD HH:MM:SS)
+    #3: internshipStudentContinent (varchar 15)
+    #4: internshipStudentStatus (varchar 90)
+    #5: internshipStudentDatetime (Date)
+    #6: internshipStudentStatusAction (int 1) 0=rejected, 1=admin action, 2=user action, 3=internship confirmed, 4=cancelled
  */
 
 public class InternshipStudent {
 
-    private int internshipID;
+    private int internshipStudentID;
     private String internshipUserEmail;
-    private String internshipStudentStatus;
     private String internshipStudentContinent;
+    private String internshipStudentStatus;
     private String internshipStudentDatetime;
-    private String internshipStudentDatetimeApplied;
-    private String internshipStudentLastUpdate;
+    private int internshipStudentStatusAction;
 
-    public InternshipStudent(int internshipID, String internshipUserEmail, String internshipStudentStatus, String internshipStudentContinent, String internshipStudentDatetime, String internshipStudentDatetimeApplied, String internshipStudentLastUpdate) {
-        this.internshipID = internshipID;
+    public InternshipStudent(int internshipStudentID, String internshipUserEmail, String internshipStudentContinent, String internshipStudentStatus, String internshipStudentDatetime, int internshipStudentStatusAction) {
+        this.internshipStudentID = internshipStudentID;
         this.internshipUserEmail = internshipUserEmail;
-        this.internshipStudentStatus = internshipStudentStatus;
         this.internshipStudentContinent = internshipStudentContinent;
+        this.internshipStudentStatus = internshipStudentStatus;
         this.internshipStudentDatetime = internshipStudentDatetime;
-        this.internshipStudentDatetimeApplied = internshipStudentDatetimeApplied;
-        this.internshipStudentLastUpdate = internshipStudentLastUpdate;
+        this.internshipStudentStatusAction = internshipStudentStatusAction;
     }
 
-    public int getInternshipID() {
-        return internshipID;
+    public int getInternshipStudentID() {
+        return internshipStudentID;
     }
 
-    public void setInternshipID(int internshipID) {
-        this.internshipID = internshipID;
+    public void setInternshipStudentID(int internshipStudentID) {
+        this.internshipStudentID = internshipStudentID;
     }
 
     public String getInternshipUserEmail() {
@@ -75,22 +72,11 @@ public class InternshipStudent {
         this.internshipStudentDatetime = internshipStudentDatetime;
     }
 
-    public String getInternshipStudentDatetimeApplied() {
-        return internshipStudentDatetimeApplied;
+    public int getInternshipStudentStatusAction() {
+        return internshipStudentStatusAction;
     }
 
-    public void setInternshipStudentDatetimeApplied(String internshipStudentDatetimeApplied) {
-        this.internshipStudentDatetimeApplied = internshipStudentDatetimeApplied;
-    }
-
-    public String getInternshipStudentLastUpdate() {
-        return internshipStudentLastUpdate;
-    }
-
-    public void setInternshipStudentLastUpdate(String internshipStudentLastUpdate) {
-        this.internshipStudentLastUpdate = internshipStudentLastUpdate;
-    }
-   
-    
-    
+    public void setInternshipStudentStatusAction(int internshipStudentStatusAction) {
+        this.internshipStudentStatusAction = internshipStudentStatusAction;
+    }   
 }
