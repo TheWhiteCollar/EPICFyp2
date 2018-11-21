@@ -19,6 +19,7 @@ import java.sql.Date;
     #9: internshipSupervisorEmail (varchar 100)
     #10: internshipVacency (int 100)
     #11: internshipPartnerID (int 11)
+    #12: internshipDatetime (datetime)
  */
 
 public class Internship {
@@ -34,9 +35,9 @@ public class Internship {
     private String internshipSupervisorEmail;
     private int internshipVacancy;
     private int internshipPartnerID;
-    private Date internshipDatetime;
+    private String internshipDatetime;
 
-    public Internship(int internshipID, String internshipName, String internshipFieldOfStudy, String internshipDescription, Date internshipStart, Date internshipEnd, double internshipPay, String internshipSupervisor, String internshipSupervisorEmail, int internshipVacancy, int internshipPartnerID, Date internshipDatetime) {
+    public Internship(int internshipID, String internshipName, String internshipFieldOfStudy, String internshipDescription, Date internshipStart, Date internshipEnd, double internshipPay, String internshipSupervisor, String internshipSupervisorEmail, int internshipVacancy, int internshipPartnerID, String internshipDatetime) {
         this.internshipID = internshipID;
         this.internshipName = internshipName;
         this.internshipFieldOfStudy = internshipFieldOfStudy;
@@ -139,15 +140,13 @@ public class Internship {
         this.internshipPartnerID = internshipPartnerID;
     }
 
-    public Date getInternshipDatetime() {
+    public String getInternshipDatetime() {
         return internshipDatetime;
     }
 
-    public void setInternshipDatetime(Date internshipDatetime) {
+    public void setInternshipDatetime(String internshipDatetime) {
         this.internshipDatetime = internshipDatetime;
     }
     
-    
-
     
 }

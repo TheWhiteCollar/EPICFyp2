@@ -141,7 +141,7 @@ public class InternshipDAO {
             stmt.setInt(1, internshipID);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                internship = new Internship(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6), rs.getDouble(7),rs.getString(8),rs.getString(9),rs.getInt(10),rs.getInt(11), rs.getDate(12));
+                internship = new Internship(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6), rs.getDouble(7),rs.getString(8),rs.getString(9),rs.getInt(10),rs.getInt(11), rs.getString(12));
             }
         } catch (SQLException ex) {
             Logger.getLogger(InternshipDAO.class.getName()).log(Level.WARNING, "Cannot get internship with internshipID: " + internshipID, ex);
@@ -157,7 +157,7 @@ public class InternshipDAO {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM internship ORDER BY internshipVacancy DESC;");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                result.add(new Internship(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6), rs.getDouble(7),rs.getString(8),rs.getString(9),rs.getInt(10),rs.getInt(11), rs.getDate(12)));
+                result.add(new Internship(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6), rs.getDouble(7),rs.getString(8),rs.getString(9),rs.getInt(10),rs.getInt(11), rs.getString(12)));
             }
             rs.close();
             stmt.close();
