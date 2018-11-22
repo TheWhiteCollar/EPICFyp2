@@ -68,7 +68,7 @@
 <!--                            <li><a href="underConstruction.jsp">Collaborating Partners</a></li>
                             <li><a href="underConstruction.jsp">Interested Users</a></li>-->
                             <li><a href="AdminPortal_viewPartnerInternships.jsp">Partner Applications</a></li>
-                            <li><a href="AdminPortal_userInternshipTracking.jsp">User Applications</a></li>
+                            <li><a href="AdminPortal_userInternshipTrackingPendingAdmin.jsp">User Applications</a></li>
                             <li><a href="AdminPortal_manageInternshipCountries.jsp">Manage Countries</a></li>
                         </ul>
                     </li>

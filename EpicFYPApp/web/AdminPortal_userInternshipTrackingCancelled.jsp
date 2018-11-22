@@ -1,5 +1,4 @@
-<%@page import="Model.Entity.InternshipStudentStatus"%>
-<%@page import="Model.Dao.InternshipStudentStatusDAO"%>
+
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Model.Dao.InternshipDAO"%>
