@@ -42,11 +42,17 @@
         <jsp:include page="header.jsp" />
         <jsp:include page="AdminPortalPermission.jsp" />
         
-        <a href="javascript:window.print()" download="fullScreen.PDF">Save as PDF</a>
+        
         
         <section class="wrapper">
             <div class="container">
                 <h2 class="align-center">Detailed Information</h2>
+                <div class="align-center">
+                    <a href="javascript:window.print()" download="fullScreen.PDF" class="button">Save as PDF</a>
+                    <br>
+                    <br>
+                </div>
+                
                 <%
                 ArrayList<User> allUsers = UserDAO.getAllUsers();
                         
