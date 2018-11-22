@@ -53,7 +53,7 @@ public class InternshipStudentDAO {
 "	FROM internshipstudent \n" +
 "	GROUP BY internshipUserEmail,internshipStudentContinent) tm \n" +
 "	ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate  \n" +
-"	WHERE i.internshipStudentStatusAction=0;";
+"	WHERE i.internshipStudentStatusAction=0";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -81,7 +81,7 @@ public class InternshipStudentDAO {
 "	FROM internshipstudent \n" +
 "	GROUP BY internshipUserEmail,internshipStudentContinent) tm \n" +
 "	ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate  \n" +
-"	WHERE i.internshipStudentStatusAction=3;";
+"	WHERE i.internshipStudentStatusAction=3";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -109,7 +109,7 @@ public class InternshipStudentDAO {
 "	FROM internshipstudent \n" +
 "	GROUP BY internshipUserEmail,internshipStudentContinent) tm \n" +
 "	ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate  \n" +
-"	WHERE i.internshipStudentStatusAction=1;";
+"	WHERE i.internshipStudentStatusAction=1";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -137,7 +137,7 @@ public class InternshipStudentDAO {
 "	FROM internshipstudent \n" +
 "	GROUP BY internshipUserEmail,internshipStudentContinent) tm \n" +
 "	ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate  \n" +
-"	WHERE i.internshipStudentStatusAction=2;";
+"	WHERE i.internshipStudentStatusAction=2";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -165,7 +165,7 @@ public class InternshipStudentDAO {
 "	FROM internshipstudent \n" +
 "	GROUP BY internshipUserEmail,internshipStudentContinent) tm \n" +
 "	ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate  \n" +
-"	WHERE i.internshipStudentStatusAction=4;";
+"	WHERE i.internshipStudentStatusAction=4";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

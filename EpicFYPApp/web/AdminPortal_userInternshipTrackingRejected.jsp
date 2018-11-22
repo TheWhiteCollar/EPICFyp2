@@ -52,7 +52,8 @@
                     <a href="AdminPortal_userInternshipTrackingConfirmed.jsp" class="button">Confirmed</a>
                     <a href="AdminPortal_userInternshipTrackingPendingUser.jsp" class="button">Pending User Action</a>
                     <a href="AdminPortal_userInternshipTrackingPendingAdmin.jsp" class="button">Pending Admin Action</a>
-                    <a href="AdminPortal_userInternshipTrackingCancelled.jsp" class="button">Cancelled</a>   
+                    <a href="#" class="button">Rejected</a>
+                    <a href="AdminPortal_userInternshipTrackingCancelled.jsp" class="button">Cancelled</a>    
                     <br>
                     <br>
                 </div>
@@ -67,7 +68,6 @@
                             int countRejected = 0;
                             if (rejectedInternship.isEmpty()) {
                         %>
-                        <%out.print(rejectedInternship.size());%>
                         <p class="align-center">We have not had any rejected applications ;D</p>
                         <%
                         } else {
