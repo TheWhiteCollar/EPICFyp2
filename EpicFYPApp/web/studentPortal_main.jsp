@@ -55,7 +55,9 @@
         <%
             } if(continentCount == 0){
         %>
-                <p>It seems you have not signed up for any internships :/</p>
+        <br>  
+        <br> 
+        <p>It seems you have not signed up for any internships :/</p>
                 <a href="internship.jsp" class="button">Join an internship today!</a>
         <%
             } if(tripCount != 0){

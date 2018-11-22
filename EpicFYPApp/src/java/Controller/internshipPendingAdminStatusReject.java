@@ -1,12 +1,10 @@
-package Controller;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Controller;
 
-import Model.Dao.InternshipDAO;
 import Model.Dao.InternshipStudentDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -15,8 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "internshipConfirmToCancel", urlPatterns = {"/internshipConfirmToCancel"})
-public class internshipConfirmToCancel extends HttpServlet {
+@WebServlet(name = "internshipPendingAdminStatusReject", urlPatterns = {"/internshipPendingAdminStatusReject"})
+public class internshipPendingAdminStatusReject extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,25 +30,36 @@ public class internshipConfirmToCancel extends HttpServlet {
         
         String userEmail = request.getParameter("userEmail");
         String countryContinent = request.getParameter("continent");
-        String internshipIDs = request.getParameter("internshipID");
-        int internshipID = Integer.parseInt(internshipIDs);
-                
+        String status = request.getParameter("status");
+        
         //format date correctly
         java.util.Date dt = new java.util.Date();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(dt);
+            
+        Boolean inserted;
         
-        Boolean inserted = InternshipStudentDAO.addInternshipStudent(userEmail, countryContinent, "Internship Cancelled - No further action", currentTime, 4);
-        if(inserted){
-            InternshipDAO.updateInternshipVacancyIncrease(internshipID);
-            response.sendRedirect("AdminPortal_userInternshipTrackingConfirmed.jsp");
+        if(status.equals("User submitted application - Admin to review application")){
+            inserted = InternshipStudentDAO.addInternshipStudent(userEmail, countryContinent, "Application fails application review - No further action", currentTime, 0);
+            if(inserted){
+                response.sendRedirect("AdminPortal_userInternshipTrackingPendingAdmin.jsp");
+                return;
+            }else{
+                response.sendRedirect("failureMessage.jsp");
             return;
-       
-        } else{
-            response.sendRedirect("failureMessage.jsp");
+            }
+        } else if(status.equals("Interview completed - Review interview")){
+            inserted = InternshipStudentDAO.addInternshipStudent(userEmail, countryContinent, "Internship not offered - No further action", currentTime, 0);
+            if(inserted){
+                response.sendRedirect("AdminPortal_userInternshipTrackingPendingAdmin.jsp");
+                return;
+            }else{
+                response.sendRedirect("failureMessage.jsp");
             return;
-        }  
-       
+            }
+        } 
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -51,7 +51,7 @@
                 <div class="align-center">
                     <a href="AdminPortal_userInternshipTrackingConfirmed.jsp" class="button">Confirmed</a>
                     <a href="AdminPortal_userInternshipTrackingPendingUser.jsp" class="button">Pending User Action</a>
-                    <a href="#" class="button">Pending Admin Action</a>
+                    <a href="#" class="button" style="background-color: #FA9189;">Pending Admin Action</a>
                     <a href="AdminPortal_userInternshipTrackingRejected.jsp" class="button">Rejected</a>
                     <a href="AdminPortal_userInternshipTrackingCancelled.jsp" class="button">Cancelled</a>   
                     <br>
@@ -73,7 +73,7 @@
                         } else {
                         %>
 
-                        <table class="alt align-center" style="font-size:14px;">
+                        <table class="alt align-center" style="font-size:13px;">
                             <thead>
                                 <tr>
                                     <th class="align-center">#</th>
@@ -82,6 +82,7 @@
                                     <th class="align-center">Follow up</th>
                                     <th class="align-center">Date and Time</th>
                                     <th class="align-center">Info</th>
+                                    <th class="align-center" colspan="2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,6 +107,38 @@
                                     <td><%out.print(pendingStatus);%></td>
                                     <td><%out.print(reformattedStr);%></td>
                                     <td><button type="button" class="button" data-toggle="modal" data-target="#myModalRejected<%out.print(i);%>">View</button></td>
+                                   <%
+                                   if(!status.equals("Interview completed - Review interview")){
+                                   %>
+                                    
+                                    <td>
+                                        <form action="internshipPendingAdminStatusAccept" method="post">
+                                            <input type="hidden" name="userEmail" value="<%out.print(ci.getInternshipUserEmail());%>">
+                                            <input type="hidden" name="continent" value="<%out.print(ci.getInternshipStudentContinent());%>">
+                                            <input type="hidden" name="status" value="<%out.print(status);%>">
+                                            <input type="submit" value ="Accept" style="font-size:13px;">
+                                        </form>
+                                    </td>
+                                    <% 
+                                     }else{   
+                                    %>
+                                    <td>
+                                        <button type="button" class="button" data-toggle="modal" data-target="#myModal<%out.print(i);%>" style="font-size:13px;">Accept</button>  
+                                    </td>
+                                    <%
+                                      }  if(!(status.equals("Admin approves application - Send email with internship details for interest confirmation") || status.equals("User accepts - Send email to schedule interview"))){
+                                    %>
+                                    <td>
+                                        <form action="internshipPendingAdminStatusReject" method="post">
+                                            <input type="hidden" name="userEmail" value="<%out.print(ci.getInternshipUserEmail());%>">
+                                            <input type="hidden" name="continent" value="<%out.print(ci.getInternshipStudentContinent());%>">
+                                            <input type="hidden" name="status" value="<%out.print(status);%>">
+                                            <input type="submit" value ="Reject" style="font-size:13px;">
+                                        </form>
+                                    </td>
+                                    <%
+                                    }
+                                    %>
                                 </tr>
                                 <%
                                     }
@@ -207,7 +240,66 @@
                         }
                     }
                 %>
+                <%
+                    if (!pendingInternship.isEmpty()) {
+                        for (int i = 0; i < pendingInternship.size(); i++) {
+                            InternshipStudent ci = pendingInternship.get(i);
+                            User user = UserDAO.getUser(ci.getInternshipUserEmail());
 
+                            String userName = user.getUserFirstName() + " " + user.getUserLastName();
+                %>
+                <div class="modal fade" id="myModal<%out.print(i);%>" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title align-center"><b>Internship Assignment</b></h4>
+                            </div>
+                            <div class="modal-body">
+                               
+                                <form action="assignedInternshipToUser" method="post">
+                                    <table class="align-center">
+                                        <tr>
+                                            <td> Select the internship for <%out.print(userName);%>:</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <select name="internshipID">
+                                                    <%
+                                                        ArrayList<Internship> internshipList = InternshipDAO.getAllVacantInternships();
+                                                        for(int x=0; x < internshipList.size(); x++){
+                                                            Internship internship = internshipList.get(x);
+                                                    %>
+                                                    <option value="<%out.print(internship.getInternshipID());%>"><%out.print(internship.getInternshipName());%> - <%out.print(internship.getInternshipFieldOfStudy());%></option>
+                                                    <%
+                                                      }  
+                                                    %>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="hidden" name="userEmail" value="<%out.print(ci.getInternshipUserEmail());%>">
+                                                <input type="hidden" name="continent" value="<%out.print(ci.getInternshipStudentContinent());%>">
+                                                <input type="submit" value ="Assign internship" style="font-size:13px;">
+                                                
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                </form>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="button" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%
+                        }
+                    }
+                %>
 
             </div>
         </section>

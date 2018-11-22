@@ -52,7 +52,7 @@
                     <a href="AdminPortal_userInternshipTrackingConfirmed.jsp" class="button">Confirmed</a>
                     <a href="AdminPortal_userInternshipTrackingPendingUser.jsp" class="button">Pending User Action</a>
                     <a href="AdminPortal_userInternshipTrackingPendingAdmin.jsp" class="button">Pending Admin Action</a>
-                    <a href="#" class="button">Rejected</a>
+                    <a href="#" class="button" style="background-color: #FA9189;">Rejected</a>
                     <a href="AdminPortal_userInternshipTrackingCancelled.jsp" class="button">Cancelled</a>    
                     <br>
                     <br>
