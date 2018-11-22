@@ -58,20 +58,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         if(TripsDAO.insertStudent(tripUserEmail, tripID, tripStudentStatus, currentTime)){
             //insert status="Pending desposit" into tripstudent table
             TripsDAO.insertStudent(tripUserEmail, tripID, "Pending Deposit", currentTime2seconds);
-            
-            //do the acitvation here - get the tripTotalSignup == tripActivation
-            Trip trip = TripsDAO.getTrip(tripID);
-            int tripTotalSignup = trip.getTripTotalSignup();
-            int tripActivation = trip.getTripActivation();
-            
-            
-            if(tripTotalSignup == tripActivation){
-                TripStudentDAO.setActivationStatusByTripID(tripID);
-            } else if(tripTotalSignup > tripActivation){
-                ArrayList<String> signedUpEmails = trip.getSignedUpEmails();
-                TripStudentDAO.setActivationStatusByUserAndTripID(signedUpEmails.get(signedUpEmails.size()-1),tripID);
-            }
-            
+             
             String url = "payment.jsp?tripId=" + tripID+"&type=deposit";
             response.sendRedirect(url);
         }      

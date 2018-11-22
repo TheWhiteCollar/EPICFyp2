@@ -136,7 +136,7 @@ public class TripStudentDAO {
 
     //insert the status="Trip Activated" and status="Pending Remaining Amount" for all users who signed up
     public static void setActivationStatusByTripID(int tripID) {
-        String sql = "SELECT tripUserEmail FROM tripstudent WHERE tripStudentStatus='Applied interest' AND tripID=?";
+        String sql = "SELECT tripUserEmail FROM tripstudent WHERE tripStudentStatus='Deposit Made' AND tripID=?";
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
@@ -174,7 +174,7 @@ public class TripStudentDAO {
 
     //insert the status="Trip Activated" and status="Pending Remaining Amount" for the most recent additional user
     public static void setActivationStatusByUserAndTripID(String tripUserEmail, int tripID) {
-        String sql = "SELECT tripUserEmail FROM tripstudent WHERE tripStudentStatus='Applied interest' AND tripID=? AND tripUserEmail=?";
+        String sql = "SELECT tripUserEmail FROM tripstudent WHERE tripStudentStatus='Deposit Made' AND tripID=? AND tripUserEmail=?";
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {

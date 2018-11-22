@@ -9,9 +9,11 @@ import Model.Dao.PaymentDAO;
 import Model.Dao.TripStudentDAO;
 import Model.Dao.TripsDAO;
 import Model.Dao.UserDAO;
+import Model.Entity.Trip;
 import Model.Entity.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.Message;
@@ -53,6 +55,28 @@ public class addNewPaymentBankTransfer extends HttpServlet {
         User user = UserDAO.getUser(userEmail);
         String username = user.getUserFirstName();
 
+        //Email
+        // our email details
+        final String ourEmail = "smuis480@gmail.com";
+        final String ourPassword = "wecandothistgt";
+
+        // configuration for gmails
+        Properties props = System.getProperties();
+        props.put("mail.smtp.auth", true);
+        props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.user", ourEmail);
+        props.put("mail.smtp.password", ourPassword);
+        props.put("mail.smtp.auth", "true");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(ourEmail, ourPassword);
+            }
+        });
+
         if (!bankTransaction.equals("")) {
             //get current date
             java.util.Date dt = new java.util.Date();
@@ -65,50 +89,43 @@ public class addNewPaymentBankTransfer extends HttpServlet {
                 //insert status="Deposit Made" into tripstudent table
                 TripsDAO.insertStudent(userEmail, tripID, "Deposit Made", currentTime);
                 int tripStudentID = TripStudentDAO.getTripStudentID(userEmail, tripID, "Deposit Made", currentTime);
+
                 //insert payment into payment table
                 inserted = PaymentDAO.addPayment(tripStudentID, "Bank Transfer", bankTransaction, amountI);
                 paymentID = PaymentDAO.getPaymentID(tripStudentID, "Bank Transfer", bankTransaction, amountI);
-
-                //Email
-                // our email details
-                final String ourEmail = "smuis480@gmail.com";
-                final String ourPassword = "wecandothistgt";
-
-                // configuration for gmails
-                Properties props = System.getProperties();
-                props.put("mail.smtp.auth", true);
-                props.put("mail.smtp.starttls.enable", true);
-                props.put("mail.smtp.host", "smtp.gmail.com");
-                props.put("mail.smtp.port", "587");
-                props.put("mail.smtp.user", ourEmail);
-                props.put("mail.smtp.password", ourPassword);
-                props.put("mail.smtp.auth", "true");
-
-                Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-                    @Override
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(ourEmail, ourPassword);
-                    }
-                });
 
                 try {
                     Message message = new MimeMessage(session);
                     message.setFrom(new InternetAddress(ourEmail));
                     Address toAddress = new InternetAddress(userEmail);
                     message.setRecipient(Message.RecipientType.TO, toAddress);
-                    message.setSubject("EPIC PTE LTD - Deposit successfully received");
+                    message.setSubject("EPIC PTE LTD - Deposit successfully received via bank transfer");
                     String final_Text = "Hi " + username + ",<br><br>";
                     final_Text += "Please note that your deposit payment is successful and your placement in the study trip has been confirmed. Full payment will only be collected after the trip has been activated.<br><br>";
                     final_Text += "Rest assured, we will send you an email/give you a call within 10 working days." + "<br><br>";
                     final_Text += "Stay tuned for updates! <br><br>";
                     final_Text += "Thank you. <br><br>";
                     final_Text += "Regards, <br> EPIC <br>";
-                    final_Text += "<p style='font-size:0.67em;'>This is an automatically generated message. Please do not reply to this address. To contact us, please email to isabelle@epicjourney.sg or contact 90059601. </p><br><br>";
+                    final_Text += "<p style='font-size:0.67em;'>This is an automatically generated message. Please do not reply to this address. To contact us, please email to <a href='mailto:isabelle@epicjourney.sg' target='top'>isabelle@epicjourney.sg</a> or contact 90059601. </p><br><br>";
                     message.setContent(final_Text, "text/html");
                     Transport.send(message);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
+
+                //do the acitvation here - get the tripTotalSignup == tripActivation
+                Trip trip = TripsDAO.getTrip(tripID);
+                int tripTotalSignup = trip.getTripTotalSignup();
+                int tripActivation = trip.getTripActivation();
+
+                if (tripTotalSignup == tripActivation) {
+                    TripStudentDAO.setActivationStatusByTripID(tripID);
+                } else if (tripTotalSignup > tripActivation) {
+                    ArrayList<String> signedUpEmails = trip.getSignedUpEmails();
+                    TripStudentDAO.setActivationStatusByUserAndTripID(signedUpEmails.get(signedUpEmails.size() - 1), tripID);
+                }
+                
+                // send email here 
 
             } else if (type.equals("remainder")) {
                 //insert status="Remaining Amount Paid" into tripstudent table
@@ -117,6 +134,25 @@ public class addNewPaymentBankTransfer extends HttpServlet {
                 //insert payment into payment table
                 inserted = PaymentDAO.addPayment(tripStudentID, "Bank Transfer", bankTransaction, amountI);
                 paymentID = PaymentDAO.getPaymentID(tripStudentID, "Bank Transfer", bankTransaction, amountI);
+
+                try {
+                    Message message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress(ourEmail));
+                    Address toAddress = new InternetAddress(userEmail);
+                    message.setRecipient(Message.RecipientType.TO, toAddress);
+                    message.setSubject("EPIC PTE LTD - Trip Confirmation");
+                    String final_Text = "Hi " + username + ",<br><br>";
+                    final_Text += "Please note that your full payment is successful and your placement in the study trip has been confirmed. <br><br>";
+                    final_Text += "Please <a href='http://18.191.179.30/EpicFYPApp/login.jsp'>login</a> to your account in the EPIC Portal to view the trip details and itinerary. <br><br>";
+                    final_Text += "If you have any queries, please email to <a href='mailto:isabelle@epicjourney.sg' target='top'>isabelle@epicjourney.sg</a> or contact 90059601. <br><br>";
+                    final_Text += "Thank you. <br><br>";
+                    final_Text += "Regards, <br> EPIC <br>";
+                    message.setContent(final_Text, "text/html");
+                    Transport.send(message);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
             }
 
             if (inserted == true) {
