@@ -234,15 +234,25 @@ CREATE TABLE IF NOT EXISTS `internshipstudent` (
   `internshipStudentStatusAction` int(1) NOT NULL,
   PRIMARY KEY (`internshipStudentID`),
   KEY `internshipUserEmail` (`internshipUserEmail`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `internshipstudent`
 --
 
 INSERT INTO `internshipstudent` (`internshipStudentID`, `internshipUserEmail`, `internshipStudentContinent`, `internshipStudentStatus`, `internshipStudentDatetime`,  `internshipStudentStatusAction`) VALUES
-(1, 'mediani.2015@sis.smu.edu.sg', 'Asia', 'User submitted application - Admin to review application','2018-04-05 12:32:21', 1),
-(2, 'mediani.2015@sis.smu.edu.sg', 'Asia', 'Application fails application review - No further actions','2018-10-02 12:32:21', 0);
+(1, 'mediani.2015@sis.smu.edu.sg', 'Asia', 'User submitted application - Admin to review application', '2018-04-05 12:32:21', 1),
+(2, 'mediani.2015@sis.smu.edu.sg', 'Asia', 'Application fails application review - No further actions', '2018-10-02 12:32:21', 0),
+(3, 'mediani.2015@sis.smu.edu.sg', 'Europe', 'User submitted application - Admin to review application', '2018-11-22 14:46:00', 1),
+(4, 'mediani.2015@sis.smu.edu.sg', 'Europe', 'Admin approves application - Send email with internship details for interest confirmation', '2018-11-22 14:50:00', 1),
+(5, 'mediani.2015@sis.smu.edu.sg', 'Europe', 'Sent interest email - Waiting for user reply', '2018-11-22 15:13:00', 2),
+(6, 'mediani.2015@sis.smu.edu.sg', 'Europe', 'User accepts - Send email to schedule interview', '2018-11-22 15:15:00', 1),
+(7, 'mediani.2015@sis.smu.edu.sg', 'Europe', 'Sent interview schedule email - Waiting for user reply', '2018-11-22 15:20:00', 2),
+(8, 'mediani.2015@sis.smu.edu.sg', 'Europe', 'Interview scheduled - Pending interview', '2018-11-22 15:25:00', 2),
+(9, 'mediani.2015@sis.smu.edu.sg', 'Europe', 'Interview completed - Review interview', '2018-11-22 15:30:00', 1),
+(10, 'mediani.2015@sis.smu.edu.sg', 'Europe', 'Internship offered - Pending user internship acceptance', '2018-11-22 15:35:00', 2),
+(11, 'mediani.2015@sis.smu.edu.sg', 'Europe', 'User accepted internship offer - No further action', '2018-11-22 15:40:00', 3),
+(12, 'mediani.2015@sis.smu.edu.sg', 'Europe', 'Internship Cancelled - No further action', '2018-11-22 16:00:00', 4);
 
 -- --------------------------------------------------------
 
@@ -258,9 +268,14 @@ CREATE TABLE IF NOT EXISTS `internshipassigned` (
   PRIMARY KEY (`internshipAssignedID`),
   KEY `internshipID` (`internshipID`),
   KEY `internshipStudentID` (`internshipStudentID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `internshipassigned`
+--
 
+INSERT INTO `internshipassigned` (`internshipAssignedID`, `internshipID`, `internshipStudentID`) VALUES
+(1, 5, 11);
 
 -- --------------------------------------------------------
 
