@@ -1,20 +1,22 @@
+package Controller;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
 
 import Model.Dao.CountryInternshipDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "deleteCountryInternship", urlPatterns = {"/deleteCountryInternship"})
-public class deleteCountryInternship extends HttpServlet {
+@WebServlet(name = "addCountryInternship", urlPatterns = {"/addCountryInternship"})
+public class addCountryInternship extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,10 +29,11 @@ public class deleteCountryInternship extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String countryName = request.getParameter("countryName");
-        String countryContinent = request.getParameter("countryContinent");
-        
-        Boolean inserted = CountryInternshipDAO.deleteCountryInternship(countryName);
+            
+        String countryName = request.getParameter("country");
+        String countryContinent = request.getParameter("continent");
+
+        Boolean inserted = CountryInternshipDAO.addCountryInternship(countryName,countryContinent);
         if(inserted && countryContinent.equals("America")){
             response.sendRedirect("AdminPortal_manageInternshipAmerica.jsp");
             return;
@@ -46,8 +49,9 @@ public class deleteCountryInternship extends HttpServlet {
         } else{
             response.sendRedirect("failureMessage.jsp");
             return;
-        }  
+        } 
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -75,7 +79,6 @@ public class deleteCountryInternship extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           // Write response body.
         processRequest(request, response);
     }
 

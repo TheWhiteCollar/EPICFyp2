@@ -40,18 +40,25 @@
 
         <!-- Header -->
         <jsp:include page="header.jsp" />
-        
         <jsp:include page="AdminPortalPermission.jsp" />
-
+        
+        
+        
         <section class="wrapper">
             <div class="container">
                 <h2 class="align-center">Detailed Information</h2>
+                <div class="align-center">
+                    <a href="javascript:window.print()" download="fullScreen.PDF" class="button">Save as PDF</a>
+                    <br>
+                    <br>
+                </div>
+                
                 <%
                 ArrayList<User> allUsers = UserDAO.getAllUsers();
                         
                         if (!allUsers.isEmpty()) {
                 %>
-                <table class = "alt">
+                <table class = "alt" style="font-size:12px;">
                     <thead>
                         <tr>
                             <th>Name</th>

@@ -33,13 +33,14 @@ public class deleteUserServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String userEmail = request.getParameter("userEmail");
-        String text = "fail";
+        
         if(UserDAO.deleteUser(userEmail)){
-           text = "success";
-        }
-        response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-        response.setCharacterEncoding("UTF-8"); //
-        response.getWriter().write(text);       
+            response.sendRedirect("AdminPortal_viewStudentProfile.jsp");
+            return;
+        } else {
+            response.sendRedirect("failureMessage.jsp");
+            return;
+        }     
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

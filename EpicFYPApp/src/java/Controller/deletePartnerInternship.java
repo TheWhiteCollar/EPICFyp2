@@ -7,7 +7,6 @@ package Controller;
 
 import Model.Dao.InternshipDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,13 +32,15 @@ public class deletePartnerInternship extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int internshipID = Integer.parseInt(request.getParameter("internshipID"));
-        String text = "fail";
-        if(InternshipDAO.deleteInternship(internshipID)){
-           text = "success";
-        }
-        response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-        response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-        response.getWriter().write(text);  
+        
+        Boolean inserted = InternshipDAO.deleteInternship(internshipID);
+        if(inserted){
+            response.sendRedirect("AdminPortal_viewPartnerInternships.jsp");
+            return;
+        } else{
+            response.sendRedirect("failureMessage.jsp");
+            return;
+        } 
     }
     
 

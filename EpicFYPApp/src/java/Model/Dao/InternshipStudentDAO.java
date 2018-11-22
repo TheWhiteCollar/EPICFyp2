@@ -46,7 +46,15 @@ public class InternshipStudentDAO {
         ArrayList<InternshipStudent> result = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentStatus, i.internshipStudentDatetime , i.internshipStudentStatusAction FROM internshipstudent i INNER JOIN (SELECT internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) as MaxDate FROM internshipstudent GROUP BY internshipUserEmail,internshipStudentContinent) tm ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate WHERE i.internshipStudentStatusAction=0");
+            String sql = "SELECT i.internshipStudentID, i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentStatus, i.internshipStudentDatetime , i.internshipStudentStatusAction \n" +
+"FROM internshipstudent i \n" +
+"INNER JOIN (\n" +
+"	SELECT internshipStudentID, internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) as MaxDate \n" +
+"	FROM internshipstudent \n" +
+"	GROUP BY internshipUserEmail,internshipStudentContinent) tm \n" +
+"	ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate  \n" +
+"	WHERE i.internshipStudentStatusAction=0";
+            PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 result.add(new InternshipStudent(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)));
@@ -66,7 +74,15 @@ public class InternshipStudentDAO {
         ArrayList<InternshipStudent> result = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentStatus, i.internshipStudentDatetime , i.internshipStudentStatusAction FROM internshipstudent i INNER JOIN (SELECT internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) as MaxDate FROM internshipstudent GROUP BY internshipUserEmail,internshipStudentContinent) tm ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate WHERE i.internshipStudentStatusAction=3");
+            String sql = "SELECT i.internshipStudentID, i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentStatus, i.internshipStudentDatetime , i.internshipStudentStatusAction \n" +
+"FROM internshipstudent i \n" +
+"INNER JOIN (\n" +
+"	SELECT internshipStudentID, internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) as MaxDate \n" +
+"	FROM internshipstudent \n" +
+"	GROUP BY internshipUserEmail,internshipStudentContinent) tm \n" +
+"	ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate  \n" +
+"	WHERE i.internshipStudentStatusAction=3";
+            PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 result.add(new InternshipStudent(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)));
@@ -86,7 +102,15 @@ public class InternshipStudentDAO {
         ArrayList<InternshipStudent> result = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentStatus, i.internshipStudentDatetime , i.internshipStudentStatusAction FROM internshipstudent i INNER JOIN (SELECT internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) as MaxDate FROM internshipstudent GROUP BY internshipUserEmail,internshipStudentContinent) tm ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate WHERE i.internshipStudentStatusAction=1");
+            String sql = "SELECT i.internshipStudentID, i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentStatus, i.internshipStudentDatetime , i.internshipStudentStatusAction \n" +
+"FROM internshipstudent i \n" +
+"INNER JOIN (\n" +
+"	SELECT internshipStudentID, internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) as MaxDate \n" +
+"	FROM internshipstudent \n" +
+"	GROUP BY internshipUserEmail,internshipStudentContinent) tm \n" +
+"	ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate  \n" +
+"	WHERE i.internshipStudentStatusAction=1";
+            PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 result.add(new InternshipStudent(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)));
@@ -106,7 +130,15 @@ public class InternshipStudentDAO {
         ArrayList<InternshipStudent> result = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentStatus, i.internshipStudentDatetime , i.internshipStudentStatusAction FROM internshipstudent i INNER JOIN (SELECT internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) as MaxDate FROM internshipstudent GROUP BY internshipUserEmail,internshipStudentContinent) tm ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate WHERE i.internshipStudentStatusAction=2");
+                        String sql = "SELECT i.internshipStudentID, i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentStatus, i.internshipStudentDatetime , i.internshipStudentStatusAction \n" +
+"FROM internshipstudent i \n" +
+"INNER JOIN (\n" +
+"	SELECT internshipStudentID, internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) as MaxDate \n" +
+"	FROM internshipstudent \n" +
+"	GROUP BY internshipUserEmail,internshipStudentContinent) tm \n" +
+"	ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate  \n" +
+"	WHERE i.internshipStudentStatusAction=2";
+            PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 result.add(new InternshipStudent(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)));
@@ -126,7 +158,15 @@ public class InternshipStudentDAO {
         ArrayList<InternshipStudent> result = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentStatus, i.internshipStudentDatetime , i.internshipStudentStatusAction FROM internshipstudent i INNER JOIN (SELECT internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) as MaxDate FROM internshipstudent GROUP BY internshipUserEmail,internshipStudentContinent) tm ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate WHERE i.internshipStudentStatusAction=4");
+            String sql = "SELECT i.internshipStudentID, i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentStatus, i.internshipStudentDatetime , i.internshipStudentStatusAction \n" +
+"FROM internshipstudent i \n" +
+"INNER JOIN (\n" +
+"	SELECT internshipStudentID, internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) as MaxDate \n" +
+"	FROM internshipstudent \n" +
+"	GROUP BY internshipUserEmail,internshipStudentContinent) tm \n" +
+"	ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent AND i.internshipStudentDatetime = tm.MaxDate  \n" +
+"	WHERE i.internshipStudentStatusAction=4";
+            PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 result.add(new InternshipStudent(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6)));
@@ -261,7 +301,7 @@ public class InternshipStudentDAO {
             conn.close();
             return result;
         } catch (SQLException ex) {
-            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Cannot get user with userFieldOfStudy ", ex);
+            Logger.getLogger(InternshipStudentDAO.class.getName()).log(Level.WARNING, "Cannot get user with userFieldOfStudy ", ex);
         }
         return null;
 
