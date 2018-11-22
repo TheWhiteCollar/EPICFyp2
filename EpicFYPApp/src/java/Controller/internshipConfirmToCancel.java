@@ -1,10 +1,12 @@
+package Controller;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import Model.Dao.CountryInternshipDAO;
+import Model.Dao.InternshipStudentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,8 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "addCountryInternship", urlPatterns = {"/addCountryInternship"})
-public class addCountryInternship extends HttpServlet {
+@WebServlet(name = "internshipConfirmToCancel", urlPatterns = {"/internshipConfirmToCancel"})
+public class internshipConfirmToCancel extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,29 +29,26 @@ public class addCountryInternship extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            
-        String countryName = request.getParameter("country");
+        
+        String userEmail = request.getParameter("userEmail");
         String countryContinent = request.getParameter("continent");
-
-        Boolean inserted = CountryInternshipDAO.addCountryInternship(countryName,countryContinent);
-        if(inserted && countryContinent.equals("America")){
-            response.sendRedirect("AdminPortal_manageInternshipAmerica.jsp");
+        
+        //format date correctly
+        java.util.Date dt = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = sdf.format(dt);
+        
+        Boolean inserted = InternshipStudentDAO.addInternshipStudent(userEmail, countryContinent, "Internship Cancelled - No further action", currentTime, 4);
+        if(inserted){
+            response.sendRedirect("AdminPortal_userInternshipTrackingConfirmed.jsp");
             return;
-        } else if(inserted && countryContinent.equals("Asia")){
-            response.sendRedirect("AdminPortal_manageInternshipAsia.jsp");
-            return;
-        } else if(inserted && countryContinent.equals("Australia")){
-            response.sendRedirect("AdminPortal_manageInternshipAustralia.jsp");
-            return;
-        } else if(inserted && countryContinent.equals("Europe")){
-            response.sendRedirect("AdminPortal_manageInternshipEurope.jsp");
-            return;
+       
         } else{
             response.sendRedirect("failureMessage.jsp");
             return;
-        } 
+        }  
+       
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

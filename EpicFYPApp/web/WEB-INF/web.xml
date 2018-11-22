@@ -118,11 +118,11 @@
     </servlet>
     <servlet>
         <servlet-name>addCountryInternship</servlet-name>
-        <servlet-class>addCountryInternship</servlet-class>
+        <servlet-class>Controller.addCountryInternship</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>internshipConfirmToCancel</servlet-name>
-        <servlet-class>internshipConfirmToCancel</servlet-class>
+        <servlet-class>Controller.internshipConfirmToCancel</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TripsDAO</servlet-name>
