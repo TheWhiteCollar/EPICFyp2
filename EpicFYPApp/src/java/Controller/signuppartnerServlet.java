@@ -49,22 +49,22 @@ public class signuppartnerServlet extends HttpServlet {
 
         // retrieve user input
         String companyEmail = request.getParameter("companyEmail");
-        int companyTermsAndConditions = Integer.parseInt("companyTermsAndConditions");
         String companyName = request.getParameter("companyName");
-        int companyContact = Integer.parseInt("companyContact");
+        String contact = request.getParameter("companyContact");
+        int companyContact = Integer.parseInt(contact);
         String companyContinent = request.getParameter("companyContinent");
         String companyCountry = request.getParameter("companyCountry");
         String companyState = request.getParameter("companyState");
         String companyDescription = request.getParameter("companyDescription");
         String companyPassword = request.getParameter("companyPassword");
-        
+
         // validate fields are not empty and insert into database - should do it in frontend?
         //should add in companyTermsAndConditions?
         if (!companyEmail.equals("") && !companyName.equals("") && !companyPassword.equals("")) {
 
             // Insert into database
             //set companyLogo as null (cause unsolved),set companyID as 1 as incremeted automatically, set companyTermsAndConditions as 1 cause unsure about the checkbox
-            Boolean inserted = CompanyDAO.addCompany(1, companyEmail, 1, companyName, companyContact, companyContinent, companyCountry, companyState, companyDescription, companyPassword, null);
+            Boolean inserted = CompanyDAO.addCompany(companyEmail, 1, companyName, companyContact, companyContinent, companyCountry, companyState, companyDescription, companyPassword);
 
             if (inserted == true) {
 
@@ -97,7 +97,7 @@ public class signuppartnerServlet extends HttpServlet {
                     message.setRecipient(Message.RecipientType.TO, toAddress);
                     MimeBodyPart textPart = new MimeBodyPart();
                     Multipart multipart = new MimeMultipart();
-                    String final_Text = "Hello, please verify your account: http://18.191.179.30/EpicFYPApp/accountConfirmationServlet?companyEmail=" + companyEmail;
+                    String final_Text = "Hello partner, please verify your account: http://18.191.179.30/EpicFYPApp/accountConfirmationServlet?companyEmail=" + companyEmail;
                     textPart.setText(final_Text);
                     multipart.addBodyPart(textPart);
                     message.setContent(multipart);

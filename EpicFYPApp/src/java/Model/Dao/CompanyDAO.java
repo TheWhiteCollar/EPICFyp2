@@ -71,23 +71,23 @@ public class CompanyDAO {
     }
 
     // Add existing Company/bulk new Companies
-    public static boolean addCompany(int companyID, String companyEmail, int companyTermsAndConditions, String companyName, int companyContact, String companyContinent, String companyCountry, String companyState, String companyDescription, String companyPassword, Part companyLogo) {
+    public static boolean addCompany(String companyEmail, int companyTermsAndConditions, String companyName, int companyContact, String companyContinent, String companyCountry, String companyState, String companyDescription, String companyPassword) {
 
-        String sql = "INSERT INTO company (int companyID, String companyEmail, int companyTermsAndConditions, String companyName, int companyContact, String companyContinent, String companyCountry, String companyState, String companyDescription, String companyPassword, Part companyLogo) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-
+        String sql = "INSERT INTO company (companyEmail, companyTermsAndConditions, companyName, companyContact, companyContinent, companyCountry, companyState, companyDescription, companyPassword) VALUES (?,?,?,?,?,?,?,?,?)";
+        
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
-            stmt.setInt (1, companyID);
-            stmt.setString(2, companyEmail);
-            stmt.setInt(3, companyTermsAndConditions);
-            stmt.setString(4, companyName);
-            stmt.setInt(5, companyContact);
-            stmt.setString(6, companyContinent);
-            stmt.setString(7, companyCountry);
-            stmt.setString(8, companyState);
-            stmt.setString(9, companyDescription);
-            stmt.setString(10, companyPassword);
+            stmt.setString(1, companyEmail);
+            stmt.setInt(2, companyTermsAndConditions);
+            stmt.setString(3, companyName);
+            stmt.setInt(4, companyContact);
+            stmt.setString(5, companyContinent);
+            stmt.setString(6, companyCountry);
+            stmt.setString(7, companyState);
+            stmt.setString(8, companyDescription);
+            stmt.setString(9, companyPassword);
 
+            /*
             //picture update
             InputStream picInputStream = null;
             if (companyLogo != null){
@@ -107,6 +107,7 @@ public class CompanyDAO {
             }else{
                 stmt.setNull(11, java.sql.Types.BLOB);
             }
+            */
             
             int result = stmt.executeUpdate();
             if (result == 0) {

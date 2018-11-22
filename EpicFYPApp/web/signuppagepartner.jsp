@@ -57,25 +57,26 @@
                         <!-- One "tab" for each step in the form: -->
 
                         <div class="signup-tab">
-                            <input type="checkbox" name="companyTermsAndConditions" value="Agree" checked> I agree to the<a href="termsandconditions.jsp" style="color:#ffe6e6; font-size:18px"> terms and conditions</a><br>
-                            
-                            <h2 class = "align-center">Account Information</h2>
-                            <div class="row uniform 50%">
-                                <div class="6u 12u(xsmall)">
-                                    <input type ="text" name ="companyName" placeholder ="Company name *"/>
+
+                            By signing up, you agree to the<a href="termsandconditions.jsp" style="color:red; font-size:18px">terms and conditions</a>
+
+                                <h2 class = "align-center">Account Information</h2>
+                                <div class="row uniform 50%">
+                                    <div class="6u 12u(xsmall)">
+                                        <input type ="text" name ="companyName" placeholder ="Company name *"/>
+                                    </div>
+                                    <div class="6u 12u(xsmall)">
+                                        <input type ="number" name ="companyContact" placeholder = "Company contact *"/>
+                                    </div>
+                                    <div class="12u">
+                                        <input type ="text" name ="companyEmail" placeholder ="Company Email*"/>
+                                    </div>
+                                    <div class="12u">
+                                        <input type ="password" name ="companyPassword" placeholder ="Company Password *"/>
+                                    </div>
                                 </div>
-                                <div class="6u 12u(xsmall)">
-                                    <input type ="text" name ="companyContact " placeholder = "Company contact *"/>
-                                </div>
-                                <div class="12u">
-                                    <input type ="text" name ="companyEmail" placeholder ="Company Email*"/>
-                                </div>
-                                <div class="12u">
-                                    <input type ="password" name ="companyPassword" placeholder ="Company Password *"/>
-                                </div>
-                            </div>
                         </div>
-                        
+
                         <div class="signup-tab">
                             <h2 class = "align-center">Service Partner Information</h2> 
                             <div class="row uniform 50%">              
@@ -99,7 +100,7 @@
                                 -->
                             </div>
                         </div>    
-                            
+
                         <div class="signup-tab">
                             <h2 class = "align-center">Getting to know your company</h2>
                             <div class ="row">
@@ -109,24 +110,24 @@
                             </div>
                         </div>
                         </br>
-                
-                <div style="overflow:auto;">
-                    <div style="float:left;">
-                        <button type="button" id="prevBtn" class = "button" onclick="nextPrev(-1)">Previous</button>
-                    </div>
 
-                    <div style="float:right;">
-                        <button type="button" id="nextBtn" class = "button" onclick="nextPrev(1)">Next</button>
-                    </div>
+                        <div style="overflow:auto;">
+                            <div style="float:left;">
+                                <button type="button" id="prevBtn" class = "button" onclick="nextPrev(-1)">Previous</button>
+                            </div>
+
+                            <div style="float:right;">
+                                <button type="button" id="nextBtn" class = "button" onclick="nextPrev(1)">Next</button>
+                            </div>
+                        </div>
+                        <!-- Circles which indicates the steps of the form: -->
+                        <div style="text-align:center;">
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                        </div>
+                    </form> 
                 </div>
-                <!-- Circles which indicates the steps of the form: -->
-                <div style="text-align:center;">
-                    <span class="step"></span>
-                    <span class="step"></span>
-                    <span class="step"></span>
-                </div>
-                </form> 
-            </div>
 
         </section>
 
