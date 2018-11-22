@@ -37,7 +37,12 @@
         <section id="main" class="wrapper">
             <div class="container">
                 <h2 class="align-center">Manage America internship countries</h2>
-
+                <div class="align-center">
+                    <a href="#" class="button" style="background-color: #FA9189;">America</a> 
+                    <a href="AdminPortal_manageInternshipAsia.jsp" class="button">Asia</a> 
+                    <a href="AdminPortal_manageInternshipAustralia.jsp" class="button">Australia</a> 
+                    <a href="AdminPortal_manageInternshipEurope.jsp" class="button">Europe</a> 
+                </div>
 
                 <div>
                     <div class="row">
