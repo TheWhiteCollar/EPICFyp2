@@ -128,6 +128,15 @@
                                                 <tr>
                                                     <td><% out.print(u.getUserPhone()); %></td>
                                                 </tr>
+                                                <%
+                                                if(u.getUserResume() != null){
+                                                %>
+                                                <tr>
+                                                    <td><a href="viewResume.jsp?userEmail=<%out.println(u.getUserEmail());%>" class="button">View Resume</a></td>
+                                                </tr>
+                                                <%
+                                                }
+                                                %>
                                             </tbody>
                                         </table>
 

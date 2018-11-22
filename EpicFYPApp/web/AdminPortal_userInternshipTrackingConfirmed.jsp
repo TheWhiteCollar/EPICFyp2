@@ -164,6 +164,16 @@
                                                     <td class="align-right"><b>Phone </b></td>
                                                     <td><% out.print(user.getUserPhone()); %></td>
                                                 </tr>
+                                                <%
+                                                if(user.getUserResume() != null){
+                                                %>
+                                                <tr>
+                                                    <td class="align-right">Resume</td>
+                                                    <td><a href="viewResume.jsp?userEmail=<%out.println(user.getUserEmail());%>" class="button">View Resume</a></td>
+                                                </tr>
+                                                <%
+                                                }
+                                                %>
                                             </tbody>
                                         </table> 
                                     </div>                             
