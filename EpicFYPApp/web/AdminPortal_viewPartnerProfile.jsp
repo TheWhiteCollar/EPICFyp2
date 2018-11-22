@@ -36,36 +36,6 @@
         
         <jsp:include page="AdminPortalPermission.jsp" />
 
-<!--         Main 
-        <section id="main" class="wrapper">
-            <div class="container">
-
-                <header class="major">
-                    <h2>Partners' Profiles</h2>
-                </header>
-
-                 To add filter button 
-
-                <div class ="row uniform 50%">
-                    <div class ="6u 12u(xsmall)">
-                        <input id="searchBar" type="text" name="searchbar" placeholder="Search for partner:"/>
-                    </div>
-                    <div class ="2u 12u(xsmall)">
-                        <input type="submit">
-                    </div>
-
-                    <div class ="4u 12u(xsmall)">
-                        <% //LocalDate todayDate = java.time.LocalDate.now(); %>
-                        <form method="get" action="#">
-                            <button type="submit" class="button">Download!</button>
-                        </form>
-                        <a href="/Users/xiuwenhime/NetBeansProjects/JavaApplication5/NewExcelFile.xls" download="<% //out.print(todayDate); %>_all_student_profile" class="button full_width">Download all student profiles</a>
-                    </div>
-
-
-                </div>
-            </div>
-        </section>-->
         <section class="wrapper">
             <div class="container" >
                 
@@ -117,48 +87,31 @@
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title align-center"><b><%out.print(p.getCompanyName()); %></b></h4>
                             </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="4u 12u">
-                                        <div align="center"><img src="https://www.freelogodesign.org/Content/img/logo-ex-7.png" alt ="partner-logo" height="80%" width="80%"></div>
-                                        <table class="align-center">
-                                            <tbody>
-                                                <tr>
-                                                    <td><b><%out.print(p.getCompanyName()); %></b></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>                                          
-                                    </div>
-                                    <div class="8u 12u">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="align-right"><b>Country </b></td>
-                                                    <td><%out.print(p.getCompanyCountry()); %></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-right"><b>State </b></td>
-                                                    <td><%out.print(p.getCompanyState()); %></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-right"><b>Description </b></td>
-                                                    <td><% out.print(p.getCompanyDescription()); %></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-right"><b>Email </b></td>
-                                                    <td><% out.print(p.getCompanyEmail()); %></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-right"><b>Contact No </b></td>
-                                                    <td><% out.print(p.getCompanyContact()); %></td>
-                                                </tr>
-                                            </tbody>
-
-                                        </table>
-                                                                             
-                                    </div>                             
-                                </div>
+                            <div class="modal-body">                         
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-right"><b>Country: </b></td>
+                                            <td><%out.print(p.getCompanyCountry()); %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-right"><b>State: </b></td>
+                                            <td><%out.print(p.getCompanyState()); %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-right"><b>Description: </b></td>
+                                            <td><% out.print(p.getCompanyDescription()); %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-right"><b>Email: </b></td>
+                                            <td><% out.print(p.getCompanyEmail()); %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-right"><b>Contact No: </b></td>
+                                            <td><% out.print(p.getCompanyContact()); %></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                           
 
                             </div>
                             <div class="modal-footer">
