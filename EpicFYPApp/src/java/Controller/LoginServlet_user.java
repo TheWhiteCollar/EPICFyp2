@@ -74,7 +74,7 @@ public class LoginServlet_user extends HttpServlet {
             
                 if (admin != null){
                     session.setAttribute("Admin", admin);
-                    response.sendRedirect("index_admin.jsp");
+                    response.sendRedirect("AdminPortal_trips.jsp");
                     return;
                     }
                 }
