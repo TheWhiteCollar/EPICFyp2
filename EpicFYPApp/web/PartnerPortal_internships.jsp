@@ -47,6 +47,7 @@
                 <div class="row">
                     <div class="12u 12u(xsmall)">
                         <%
+                            DecimalFormat df2 = new DecimalFormat("#.00");
                             Company companySession = (Company) session.getAttribute("Company");
                             int currentPartnerID = companySession.getCompanyID();
                             ArrayList<Internship> internshipList = InternshipDAO.getCompanyInternships(currentPartnerID);
@@ -57,7 +58,7 @@
                         <%
                         } else {
                         %>
-                        <table class="alt align-center" style="font-size:14px;">
+                        <table class="alt align-center" style="font-size:13px;">
                             <thead>
                                 <tr>
                                     <th class="align-center">#</th>
@@ -81,16 +82,16 @@
                                 <tr>
                                     <td class = "align-center"><%out.print(counta);%></td>
                                     <td><%out.print(internship.getInternshipName());%></td>
-                                    <td><%out.print("$ "+internship.getInternshipPay());%></td>
+                                    <td>$ <%out.print(df2.format(internship.getInternshipPay()));%></td>
                                     <td><%out.print(internship.getInternshipFieldOfStudy());%></td>
                                     <td><%out.print(internship.getInternshipStart() + " to " + internship.getInternshipEnd());%></td>
                                     <td><%out.print(internship.getInternshipVacancy());%></td>
                                     <td><%out.print(internship.getInternshipSupervisor());%></td>
                                     
                                     <td>
-                                        <form action="deletePartnerInternship" method="post">
+                                        <form action="deletePartnerInternshipFromPartner" method="post">
                                             <input type="hidden" name="internshipID" value="<%out.print(internship.getInternshipID());%>">
-                                            <input type="submit" value ="Delete" style="font-size:14px;">
+                                            <input type="submit" value ="Delete" style="font-size:13px;">
                                         </form>
 
                                     </td>
@@ -104,61 +105,8 @@
                             }
                         %>
                     </div>
-
                 </div>
             </div>
-
-
-            <%
-                SimpleDateFormat fromDB = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy , HH:mm a");
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
-                DecimalFormat df2 = new DecimalFormat("#.00");
-                if (!internshipList.isEmpty()) {
-                    for (int x = 0; x < internshipList.size(); x++) {
-                        Internship internship = internshipList.get(x);
-                        Company company = CompanyDAO.getCompanyByID(internship.getInternshipPartnerID());
-                        
-                        String dateTime = internship.getInternshipDatetime(); 
-                        String reformattedStr1 = myFormat.format(fromDB.parse(dateTime));
-            %>
-            <div class="modal fade" id="myModal<%out.print(x);%>" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title align-center"><b><%out.print(company.getCompanyName()); %></b> internship application for <b><%out.print(internship.getInternshipName());%></b></h4>
-                        </div>
-                        <div class="modal-body">           
-                            
-                                <table style="font-size:14px;">
-                                    <tbody>
-                                        <tr>
-                                            <td class="align-right"><b>Time Period:</b></td>
-                                            <td><%out.print(dateFormat.format(internship.getInternshipStart())); %> <b>to</b> <%out.print(dateFormat.format(internship.getInternshipEnd())); %></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Supervisor:</b></td>
-                                            <td><%out.print(internship.getInternshipSupervisor()); %> (<%out.print(internship.getInternshipSupervisorEmail()); %>)</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-right"><b>Description:</b></td>
-                                            <td><%out.print(internship.getInternshipDescription()); %></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                           
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="button" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <%
-            }}
-            %>            
-
         </section>
     </body>
 </html>

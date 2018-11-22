@@ -126,7 +126,7 @@
         <section id="main" class="wrapper">
             <div class ="container">
                 <div class="tab">
-                    <button class="tablinks" onclick="openUser(event, 'addInternshipTab')">Add a new Internship</button>
+                    <button class="tablinks" onclick="openUser(event, 'addInternshipTab')" id="defaultOpen">Add a new Internship</button>
                 </div>
 
                 <div id="addInternshipTab" class="tabcontent">
@@ -158,6 +158,11 @@
                                 </select>
                                 </p>
                             </div>
+                            <div class = "4u 12u(xsmall)">
+                                <p>
+                                    Salary ($): <input name="internshipPay" required type="number" min="1" placeholder="E.g: 900">
+                                </p>
+                            </div>
                         </div>
 
                         <div class = "row 50% uniform">
@@ -173,19 +178,13 @@
                                     End Date (dd-mm-yyyy): <input name="internshipEnd" id="internshipEnd" required type="date" min = "<% out.print(todayDate); %>">
                                 </p>
                             </div>
-                        </div>
-                        <div class = "row 50% uniform">
-                            <div class = "4u 12u(xsmall)">
-                                <p>
-                                    Salary ($): <input name="internshipPay" required type="number" min="1" placeholder="E.g: 900">
-                                </p>
-                            </div>
                             <div class = "4u 12u(xsmall)">
                                 <p>
                                     Vacancy: <input name="internshipVacancy" required type="number" min="1" placeholder="E.g: 3">
                                 </p>
                             </div>
                         </div>
+                 
 
                         <div class ="row 50% uniform">
                             <div class = "4u 12u(xsmall)">
@@ -199,25 +198,18 @@
                                     Supervisor Email: <input name="internshipSupervisorEmail" required type="text" placeholder="E.g: tommy.tan@psa.com.sg">
                                 </p>
                             </div>
-                        </div>
-                        <div class ="row 50% uniform">
                             <div class = "4u 12u(xsmall)">
                                 <p>
                                     Description: <textarea rows="4" cols="50" name="internshipDescription" required placeholder="E.g: Interns are expected to have strong command of knowledge with regards to important historical sites."></textarea>
                                 </p>
                             </div>
-                        </div>        
-                                <p></p> 
+                        </div>
+                                <br>
                         <input type="submit" value="Create an Internship!" style="width:100%">
                     </form>
                 </div>
             </div>
 
-<!--            <div class ="container">
-                <br>
-                <h2>All Listed Internships</h2>
-                <div id="internships" class ="container"></div>
-            </div>-->
         </section>
     <script src="js/custom-file-input.js"></script>
     <script src="js/tabs.js"></script>

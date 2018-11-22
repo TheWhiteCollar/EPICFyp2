@@ -41,10 +41,13 @@
                         String Username = company.getCompanyName();
                         if (Username != null && !Username.isEmpty()) {
                     %>
-                    <li><a href="PartnerPortal_addInternship.jsp">Add New Internship</a>
                     <li><a href="PartnerPortal_internships.jsp">Manage Internship</a>
+                        <ul>
+                            <li><a href="PartnerPortal_addInternship.jsp">Add New Internship</a></li>
+                        </ul>
+                    </li>
                     <li><a href="termsandconditions.jsp">Terms & Conditions</a>
-                    <li><a href="index_partner.jsp">Hello, <% out.println(Username); %></a>
+                    <li><a href="PartnerPortal_internships.jsp">Hello, <% out.println(Username); %></a>
                         <ul>
                             <li><a href="logout.jsp">Logout</a></li>
                         </ul>

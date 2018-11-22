@@ -29,7 +29,7 @@
         <jsp:include page="header.jsp" />
         
          <!-- Main -->
-        <section id="login">
+        <section id="login" class="wrapper">
             <div class = "container">
                 <div class = "container">
 
@@ -39,12 +39,9 @@
                             out.println(ErrorMsg);
                         }
                     %>
-                    
-        <header class="major">
-            <h2>Terms and Conditions</h2>
-        </header> 
+        <h2 class="align-center">Terms and Conditions</h2>   
        
-        <h2 class = "align-center">Internship Application Fees</h2>
+        <h3 class = "align-center">(Internship Application Fees)</h3>
      
         <table style="font-size:14px;">
             <tbody>
@@ -120,17 +117,11 @@
             </tbody>
         </table>
         <br>
-        <i><b>*Service Partners are required to agree with terms and conditions before signing up</b></i>
+        <p><i><b>*Service Partners are required to agree with terms and conditions before signing up</b></i></p>
+        <p class="align-center"><a href="signuppagepartner.jsp" class="button big">Partner with us now</a></p>
+        
         </section>
-        <section id="corporate" class="wrapper align-center">
-            <div class="container">
-                <ul class="actions">
-                    <li>
-                        <a href="signuppagepartner.jsp" class="button big">Partner with us now</a>
-                    </li>
-                </ul>
-            </div>
-        </section>
+      
         <!-- Footer -->
         <jsp:include page="footer.jsp" />
     </body>    

@@ -84,7 +84,7 @@ public class LoginServlet_user extends HttpServlet {
 
                 if (company != null){
                     session.setAttribute("Company", company);
-                    response.sendRedirect("index_partner.jsp");
+                    response.sendRedirect("PartnerPortal_internships.jsp");
                     return;
                     }
                 

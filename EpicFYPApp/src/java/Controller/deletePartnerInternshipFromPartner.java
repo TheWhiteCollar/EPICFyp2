@@ -5,22 +5,16 @@
  */
 package Controller;
 
-import Model.Dao.AdminDAO;
-import Model.Entity.Admin;
+import Model.Dao.InternshipDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author User
- */
-@WebServlet(name = "LoginServlet_admin", urlPatterns = {"/LoginServlet_admin"})
-public class LoginServlet_admin extends HttpServlet {
+@WebServlet(name = "deletePartnerInternshipFromPartner", urlPatterns = {"/deletePartnerInternshipFromPartner"})
+public class deletePartnerInternshipFromPartner extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,32 +27,18 @@ public class LoginServlet_admin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // retrieve userid and password
-        String userid = request.getParameter("userid");
-        String password = request.getParameter("password");
-
-        // Create user
-        Admin admin = null;
+        int internshipID = Integer.parseInt(request.getParameter("internshipID"));
         
-        // Create session
-        HttpSession session = request.getSession(true);
-
-        // send user back to login.jsp if they try to access servlet directly
-        if (!userid.equals("") || !password.equals("")) {
-            // Validate login
-            admin = AdminDAO.getAdminByLogin(userid, password);
-            if (admin != null) {
-                session.setAttribute("Admin", admin);
-                response.sendRedirect("AdminPortal_trips.jsp");
-                return;
-            }
-        }
-
-        request.setAttribute("Admin_ErrorMsg", "Invalid userid/password");
-        request.getRequestDispatcher("login.jsp").forward(request, response);
-
+        Boolean inserted = InternshipDAO.deleteInternship(internshipID);
+        if(inserted){
+            response.sendRedirect("PartnerPortal_internships.jsp");
+            return;
+        } else{
+            response.sendRedirect("failureMessage.jsp");
+            return;
+        } 
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
