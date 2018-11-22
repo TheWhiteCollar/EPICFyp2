@@ -34,8 +34,6 @@ public class deleteUserServlet extends HttpServlet {
             throws ServletException, IOException {
         String userEmail = request.getParameter("userEmail");
         
-        
-        String text = "fail";
         if(UserDAO.deleteUser(userEmail)){
             response.sendRedirect("AdminPortal_viewStudentProfile.jsp");
             return;

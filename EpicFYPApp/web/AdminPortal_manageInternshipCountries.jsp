@@ -29,119 +29,6 @@
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/style-xlarge.css" />
         </noscript>
-        
-            <script>
-            $(function() {
-                $.get('/EpicFYPApp/getAllCountryInternship', function (countryJson) {
-                    //parse string into JSON object
-                    var countries = JSON.parse(countryJson);
-                    console.log(countries);
-                    var countryHTML = '<div class="table-wrapper"><table>';
-                   
-                    $.each(countries, function (index, countryinternship) {
-                        countryHTML += '<thead><tr><th>Country Name : ' + countryinternship.countryName + '</th><th colspan="3">'
-                                +  'Continent : '+ countryinternship.countryContinent + "</th></tr></thead>";
-                        countryHTML += "<tr><td><form class=\"deleteCountryInternship\">";
-                        countryHTML += "<input style=\"display: none\" type=\"text\" name=\"countryName\" value=\"" + countryinternship.countryName + "\"/>";
-                        countryHTML += "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Delete Country</button></form></td>";                    
-                    });
-                    
-                    countryHTML += '</table></div>';
-                    
-                    $("#countries").append(countryHTML);
-
-                    //wait for delete country form to be submited
-                    $(".deleteCountryInternship").submit(function (event) {
-                        //store the countryname from the form
-                        var countryName = "" + $(this).children("input").val();
-                        var deleteData = {
-                            'countryName': countryName
-                        };
-                        console.log(deleteData);
-                        //send an ajax post request to the delete country servlet with delete data
-                        $.post('/EpicFYPApp/deleteCountryInternship', deleteData, function (response) {
-                            if (response === "success") {
-                                $.notify({
-                                    // options
-                                    message: 'Successfully deleted country'
-                                }, {
-                                    // settings
-                                    type: 'success'
-                                });
-                            } else {
-                                $.notify({
-                                    // options
-                                    message: 'Fail to delete country'
-                                }, {
-                                    // settings
-                                    type: 'danger'
-                                });
-                            }
-                            reloadTable();
-                        })
-                        //prevents form from being submitted
-                        event.preventDefault();
-                        // validate and process form here
-                    });
-                });
-            });
-
-            function reloadTable() {
-                $.get('/EpicFYPApp/getAllCountryInternship', function (countryJson) {
-                    //parse string into JSON object
-                    var countries = JSON.parse(countryJson);
-                    console.log(countries);
-                    var countryHTML = '<div class="table-wrapper"><table>';
-                   
-                    $.each(countries, function (index, countryinternship) {
-                        countryHTML += '<thead><tr><th>Country Name : ' + countryinternship.countryName + '</th><th colspan="3">'
-                                +  'Continent : '+ countryinternship.countryContinent + "</th></tr></thead>";
-                        countryHTML += "<tr><td><form class=\"deleteCountryInternship\">";
-                        countryHTML += "<input style=\"display: none\" type=\"text\" name=\"countryName\" value=\"" + countryinternship.countryName + "\"/>";
-                        countryHTML += "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Delete Country</button></form></td>";                    
-                    });
-                    
-                    countryHTML += '</table></div>';
-                    
-                    $("#countries").empty();
-                    $("#countries").append(countryHTML);
-
-                    //wait for delete country form to be submited
-                    $(".deleteCountryInternship").submit(function (event) {
-                        //store the countryname from the form
-                        var countryName = "" + $(this).children("input").val();
-                        var deleteData = {
-                            'countryName': countryName
-                        };
-                        console.log(deleteData);
-                        //send an ajax post request to the delete country servlet with delete data
-                        $.post('/EpicFYPApp/deleteCountryInternship', deleteData, function (response) {
-                            if (response === "success") {
-                                $.notify({
-                                    // options
-                                    message: 'Successfully deleted country'
-                                }, {
-                                    // settings
-                                    type: 'success'
-                                });
-                            } else {
-                                $.notify({
-                                    // options
-                                    message: 'Fail to delete country'
-                                }, {
-                                    // settings
-                                    type: 'danger'
-                                });
-                            }
-                            reloadTable();
-                        })
-                        //prevents form from being submitted
-                        event.preventDefault();
-                        // validate and process form here
-                    });
-                });
-            }
-        </script>
 
     </head>
     <body>
@@ -155,393 +42,71 @@
             <div class="container">
                 <h2 class="align-center">Manage Internship Countries</h2>
 
-                <!--tabs-->
-                <div class="tab align-center">
-                    <button class="tablinks" onclick="openUser(event, 'america')">America</button>
-                    <button class="tablinks" onclick="openUser(event, 'asia')" id="defaultOpen">Asia</button>
-                    <button class="tablinks" onclick="openUser(event, 'australia')">Australia</button>
-                    <button class="tablinks" onclick="openUser(event, 'europe')">Europe</button>
-<!--                    <button class="tablinks" onclick="openUser(event, 'addCountry')">Add a country</button>-->
-                </div>
-
-                <!--tabs' content 1.america 2.asia 3.australia 4.europe 5.addCountry-->
-                <div id="america" class="tabcontent">
-                    <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
-                    <div class="row">
-                        <div class="12u 12u(xsmall)">
-                            <%
-                            ArrayList<CountryInternship> allAmericaCountries = CountryInternshipDAO.getAllCountryInternship("America");
-                                        int countAmerica = 0;
-                                        if (!allAmericaCountries.isEmpty()) {
-                            %>
-                            <table class="alt align-center">
-                                <thead>
-                                    <tr>
-                                        <td>#</td>
-                                        <td>Country</td>
-                                        <td>Continent</td>
-<!--                                        <td>More Actions</td>-->
-                                    </tr>
-                                </thead>
-                                
-                                    <%
-                                        
-                                            for (int i = 0; i < allAmericaCountries.size(); i++) {
-                                                CountryInternship ci = allAmericaCountries.get(i);
-                                                countAmerica += 1;
-                                    %>
-                                <tbody>    
-                                    <tr>
-                                        <td class = "align-center"><%out.print(countAmerica);%></td>
-                                        <td><%out.print(ci.getCountryName());%></td>
-                                        <td><%out.print(ci.getCountryContinent());%></td>
-<!--                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalAmericaDelete<%out.print(i);%>">Delete</button></td>-->
-                                    </tr>
-                                    <%
-                                            }
-
-                                    %>
-
-                                </tbody>
-                            </table>
-                                    <%
-                                            
-                                        } else{
-
-                                    %>
-                                    <p class="align-center">There is no countries for America</p>
-                                    <%
-                                        }
-                                    %>
-                                
-                        </div>
-
-                    </div>
-                </div>
-
-                <div id="asia" class="tabcontent">
-                    <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
-                    <div class="row">
-                        <div class="12u 12u(xsmall)">
-                            
-                            <%
-                            ArrayList<CountryInternship> allAsiaCountries = CountryInternshipDAO.getAllCountryInternship("Asia");
-                                        int countAsia = 0;
-                                        if (!allAsiaCountries.isEmpty()) {
-                            
-                            %>
-                            <table class="alt align-center">
-                                <thead>
-                                    <tr>
-                                        <td>#</td>
-                                        <td>Country</td>
-                                        <td>Continent</td>
-<!--                                        <td>More Actions</td>-->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <%
-                                        
-                                            for (int i = 0; i < allAsiaCountries.size(); i++) {
-                                                CountryInternship ci = allAsiaCountries.get(i);
-                                                countAsia += 1;
-                                    %>
-                                    <tr>
-                                        <td class = "align-center"><%out.print(countAsia);%></td>
-                                        <td><%out.print(ci.getCountryName());%></td>
-                                        <td><%out.print(ci.getCountryContinent());%></td>
-<!--                                        <td><button type="button" class="button" data-toggle="modal" data-target="#myModalAsiaDelete<%out.print(i);%>">Delete</button></td>-->
-                                    </tr>
-
-                                    <%
-                                            }
-                                        
-                                    %>
-                                </tbody>
-                            </table>
-                                <%
-                                            
-                                        } else{
-
-                                    %>
-                                    <p class="align-center">There is no countries for Asia</p>
-                                    <%
-                                        }
-                                    %>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="australia" class="tabcontent">
-                    <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
-                    <div class="row">
-                        <div class="12u 12u(xsmall)">
-                            
-                            <%
-                            ArrayList<CountryInternship> allAustraliaCountries = CountryInternshipDAO.getAllCountryInternship("Australia");
-                                        int countAustralia = 0;
-                                        if (!allAustraliaCountries.isEmpty()) {
-                            %>
-                            <table class="alt align-center">
-                                <thead>
-                                    <tr>
-                                        <td>#</td>
-                                        <td>Country</td>
-                                        <td>Continent</td>
-<!--                                        <td>More Actions</td>-->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <%
-                                        
-                                            for (int i = 0; i < allAustraliaCountries.size(); i++) {
-                                                CountryInternship ci = allAustraliaCountries.get(i);
-                                                countAustralia += 1;
-                                    %>
-                                    <tr>
-                                        <td class = "align-center"><%out.print(countAustralia);%></td>
-                                        <td><%out.print(ci.getCountryName());%></td>
-                                        <td><%out.print(ci.getCountryContinent());%></td>
- <!--                                       <td><button type="button" class="button" data-toggle="modal" data-target="#myModalAustraliaDelete<%out.print(i);%>">Delete</button></td>-->
-                                    </tr>
-
-                                    <%
-                                            }
-                                        
-                                    %>
-                                </tbody>
-                            </table>
-                                <%
-                                            
-                                        } else{
-
-                                    %>
-                                    <p class="align-center">There is no countries for Australia</p>
-                                    <%
-                                        }
-                                    %>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="europe" class="tabcontent">
-                    <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
-                    <div class="row">
-                        <div class="12u 12u(xsmall)">
-                            
-                            <%
-                            ArrayList<CountryInternship> allEuropeCountries = CountryInternshipDAO.getAllCountryInternship("Europe");
-                                        int countEurope = 0;
-                                        if (!allEuropeCountries.isEmpty()) {
-                            %>
-                            <table class="alt align-center">
-                                <thead>
-                                    <tr>
-                                        <td>#</td>
-                                        <td>Country</td>
-                                        <td>Continent</td>
-<!--                                        <td>More Actions</td>-->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <%
-                                        
-                                            for (int i = 0; i < allEuropeCountries.size(); i++) {
-                                                CountryInternship ci = allEuropeCountries.get(i);
-                                                countEurope += 1;
-                                    %>
-                                    <tr>
-                                        <td class = "align-center"><%out.print(countEurope);%></td>
-                                        <td><%out.print(ci.getCountryName());%></td>
-                                        <td><%out.print(ci.getCountryContinent());%></td>
- <!--                                       <td><button type="button" class="button" data-toggle="modal" data-target="#myModalEuropeDelete<%out.print(i);%>">Delete</button></td>-->
-                                    </tr>
-
-                                    <%
-                                            }
-                                        
-                                    %>
-                                </tbody>
-                            </table>
-                                <%
-                                            
-                                        } else{
-
-                                    %>
-                                    <p class="align-center">There is no countries for Europe</p>
-                                    <%
-                                        }
-                                    %>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="addCountry" class="tabcontent">
-                    <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
-                    <div class="row">
-                        <div class="12u 12u(xsmall)">
-                            <table>
-                                <tr>
-                                    <td class="align-right">Country Name</td>
-                                    <td><input type ="text" name ="countryName" placeholder ="Country Name *" style="width:200px;"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="align-right">Country Continent</td>
-                                    <td><input type ="text" name ="countryContinent" placeholder ="Country Continent *" style="width:200px;"/></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="align-center"><input type="submit" value="Submit" ></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div> 
-
-
-                <!--modal box content: 1.america 2.asia 3.australia 4.europe-->
-                <%
-                    if (!allAmericaCountries.isEmpty()) {
-                        for (int i = 0; i < allAmericaCountries.size(); i++) {
-                            CountryInternship ci = allAmericaCountries.get(i);
-
-                %>
-                <div class="modal fade" id="myModalAmericaDelete<%out.print(i);%>" role="dialog" style="top:20%;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title align-center"><b>Delete Confirmation</b></h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="12u 12u">
-                                        <p class="align-center">Are you sure you want to delete <b><%out.print(ci.getCountryName());%>, <%out.print(ci.getCountryContinent());%></b></p>                                        
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="button" >Confirm Delete</button>
-                                    <button type="button" class="button" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%
-                        }
-                    }
-                %>
-
-                <%
-                    if (!allAsiaCountries.isEmpty()) {
-                        for (int i = 0; i < allAsiaCountries.size(); i++) {
-                            CountryInternship ci = allAsiaCountries.get(i);
-
-                %>
-                <div class="modal fade" id="myModalAsiaDelete<%out.print(i);%>" role="dialog" style="top:20%;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title align-center"><b>Delete Confirmation</b></h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="12u 12u">
-                                        <p class="align-center">Are you sure you want to delete <b><%out.print(ci.getCountryName());%>, <%out.print(ci.getCountryContinent());%></b></p>                                        
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="button" >Confirm Delete</button>
-                                    <button type="button" class="button" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%
-                        }
-                    }
-                %>
-
-                <%
-                    if (!allAustraliaCountries.isEmpty()) {
-                        for (int i = 0; i < allAustraliaCountries.size(); i++) {
-                            CountryInternship ci = allAustraliaCountries.get(i);
-
-                %>
-                <div class="modal fade" id="myModalAustraliaDelete<%out.print(i);%>" role="dialog" style="top:20%;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title align-center"><b>Delete Confirmation</b></h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="12u 12u">
-                                        <p class="align-center">Are you sure you want to delete <b><%out.print(ci.getCountryName());%>, <%out.print(ci.getCountryContinent());%></b></p>                                        
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="button" >Confirm Delete</button>
-                                    <button type="button" class="button" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%
-                        }
-                    }
-                %>
-
-                <%
-                    if (!allEuropeCountries.isEmpty()) {
-                        for (int i = 0; i < allEuropeCountries.size(); i++) {
-                            CountryInternship ci = allEuropeCountries.get(i);
-
-                %>
-                <div class="modal fade" id="myModalEuropeDelete<%out.print(i);%>" role="dialog" style="top:20%;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title align-center"><b>Delete Confirmation</b></h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="12u 12u">
-                                        <p class="align-center">Are you sure you want to delete <b><%out.print(ci.getCountryName());%>, <%out.print(ci.getCountryContinent());%></b></p>                                        
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="button" >Confirm Delete</button>
-                                    <button type="button" class="button" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%
-                        }
-                    }
-                %>
-
-            </div>
-                
-            <div class ="container">
-                <br>
-                <h2 class="align-center">Delete Countries</h2>
-                <div id="countries" class ="container"></div>
-            </div>  
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="align-right">Add:</td>
+                            <td>
+                                <button type="button" class="button" data-toggle="modal" data-target="#myModalAdd">Add a new internship country</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-right">View / Delete</td>
+                            <td>
+                                <a href="AdminPortal_manageInternshipAmerica.jsp" class="button">America</a> 
+                                <a href="AdminPortal_manageInternshipAsia.jsp" class="button">Asia</a> 
+                                <a href="AdminPortal_manageInternshipAustralia.jsp" class="button">Australia</a> 
+                                <a href="AdminPortal_manageInternshipEurope.jsp" class="button">Europe</a> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 
         </section>
-                
-        <script src="js/custom-file-input.js"></script>
-        <script src="js/tabs.js"></script>
+    
+        <div class="modal fade" id="myModalAdd" role="dialog" style="top:20%;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title align-center"><b>New internship country details</b></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="12u 12u">
+                                <form action="addCountryInternship" method="post">
+                                    <table>
+                                        <tr>
+                                            <td class="align-right">Country:</td>
+                                            <td><input type="text" name="country" placeholder="Enter country name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-right">Continent:</td>
+                                            <td>
+                                                <select name="continent">
+                                                    <option value="America">America</option>
+                                                    <option value="Asia">Asia</option>
+                                                    <option value="Australia">Australia</option>
+                                                    <option value="Europe">Europe</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="align-right"><input type="submit" value="Add new country"></td>
+                                        </tr>
+                                    </table>
+                                    
+                                </form>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="button" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </body>
 </html>

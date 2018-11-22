@@ -116,6 +116,10 @@
         <servlet-name>deletePartnerInternship</servlet-name>
         <servlet-class>Controller.deletePartnerInternship</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addCountryInternship</servlet-name>
+        <servlet-class>addCountryInternship</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TripsDAO</servlet-name>
         <url-pattern>/TripsDAO</url-pattern>
@@ -231,6 +235,10 @@
     <servlet-mapping>
         <servlet-name>deletePartnerInternship</servlet-name>
         <url-pattern>/deletePartnerInternship</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addCountryInternship</servlet-name>
+        <url-pattern>/addCountryInternship</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
