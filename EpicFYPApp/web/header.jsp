@@ -65,8 +65,6 @@
                     </li>
                     <li><a href="#">Manage Internships</a>
                         <ul>
-<!--                            <li><a href="underConstruction.jsp">Collaborating Partners</a></li>
-                            <li><a href="underConstruction.jsp">Interested Users</a></li>-->
                             <li><a href="AdminPortal_viewPartnerInternships.jsp">Partner Applications</a></li>
                             <li><a href="AdminPortal_userInternshipTrackingPendingAdmin.jsp">User Applications</a></li>
                             <li><a href="AdminPortal_manageInternshipCountries.jsp">Manage Countries</a></li>
@@ -85,7 +83,6 @@
                     <li><a href="index_admin.jsp">Hello, <% out.println(Username); %></a>
                         <ul>
 
-                            <!-- <li><a href="#">Manage Admins</a></li> -->
                             <li><a href="logout.jsp">Logout</a></li>
                         </ul>
                     </li>
