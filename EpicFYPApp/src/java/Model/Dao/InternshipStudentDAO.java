@@ -183,7 +183,7 @@ public class InternshipStudentDAO {
             conn.close();
             return result;
         } catch (SQLException ex) {
-            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Cannot get user with userEmail: " + userEmail, ex);
+            Logger.getLogger(InternshipStudentDAO.class.getName()).log(Level.WARNING, "Cannot get user with userEmail: " + userEmail, ex);
         }
         return result;
     }
@@ -212,6 +212,36 @@ public class InternshipStudentDAO {
         return statusArrayList;
     } 
     
-    
-    
+    public static int getInternshipStudentIDforAcceptedTrips(String userEmail, String continent){
+        int internshipStudentID = 0;
+        
+        String sql = "SELECT i.internshipStudentID, i.internshipUserEmail, i.internshipStudentContinent, i.internshipStudentDatetime , i.internshipStudentStatusAction \n" +
+                    "FROM internshipstudent i \n" +
+                    "INNER JOIN (\n" +
+"	SELECT internshipUserEmail,internshipStudentContinent, max(internshipStudentDatetime) AS MaxDate \n" +
+"	FROM internshipstudent \n" +
+"	GROUP BY internshipUserEmail,internshipStudentContinent) \n" +
+"	tm ON i.internshipUserEmail=tm.internshipUserEmail AND i.internshipStudentContinent=tm.internshipStudentContinent 	AND i.internshipStudentDatetime = tm.MaxDate\n" +
+"	WHERE i.internshipUserEmail=? AND i.internshipStudentContinent=? AND i.internshipStudentStatusAction=3";
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, userEmail);
+            stmt.setString(2, continent);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if(rs.getInt(5)==3){
+                    internshipStudentID = rs.getInt(1);
+                }
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return internshipStudentID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return internshipStudentID;
+    }
 }

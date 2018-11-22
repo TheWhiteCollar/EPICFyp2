@@ -1,3 +1,7 @@
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="Model.Dao.InternshipDAO"%>
+<%@page import="Model.Dao.InternshipAssignedDAO"%>
+<%@page import="Model.Entity.Internship"%>
 <%@page import="Model.Dao.InternshipStudentDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
@@ -75,8 +79,9 @@
                             <tbody>
                                 <%                               
                                     for (int i = 0; i < continentList.size(); i++) {
+                                        
                                         String continent = continentList.get(i);
-                                        //get the status list
+                                        
                                         ArrayList<String> internshipStatusList = InternshipStudentDAO.getInternshipStatusByContinent(email, continent);
                                         int statusCount = internshipStatusList.size();
                                         String status = internshipStatusList.get(statusCount - 3);
@@ -120,18 +125,70 @@
                             
                             
         <%
-            for (int i = 0; i < continentList.size(); i++) {
-                String continent = continentList.get(i); 
+            for (int y = 0; y < continentList.size(); y++) {
+                String continent = continentList.get(y); 
         %>
-        <div class="modal fade" id="myModal<%out.print(i);%>" role="dialog" style="top:15%;">
+        <div class="modal fade" id="myModal<%out.print(y);%>" role="dialog" style="top:15%;">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title align-center">Information on internship to<b><%out.print(continent);%></b></h4>
+                        <h4 class="modal-title align-center">Information on internship to <b><%out.print(continent);%></b></h4>
                     </div>
                     <div class="modal-body">
- 
+                        <%
+                            int internshipStudentID = InternshipStudentDAO.getInternshipStudentIDforAcceptedTrips(email, continent);
+                          
+                            if(internshipStudentID != 0){
+                                int internshipID = InternshipAssignedDAO.getInternshipIDbyInternshipStudentID(internshipStudentID);
+                                if(internshipID != 0){
+                                    Internship internship = InternshipDAO.getInternshipByID(internshipID);
+                                    SimpleDateFormat myFormat1 = new SimpleDateFormat("dd MMMM yyyy");
+                                    DecimalFormat df2 = new DecimalFormat("#.00");
+
+                                    if(internship != null){
+                        %>
+                        <div class ="row">
+                            <div class="12u 12u(xsmall)">
+                                <h2 class="align-center">Internship Details</h2>
+                                <table style="font-size:14px;">
+                                    <tbody>
+                                        <tr>
+                                            <td>Job Title:</td>
+                                            <td><%out.print(internship.getInternshipName());%></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Field of Study:</td>
+                                            <td><%out.print(internship.getInternshipFieldOfStudy());%></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Description:</td>
+                                            <td><%out.print(internship.getInternshipDescription());%></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Start Date:</td>
+                                            <td><%out.print(myFormat1.format(internship.getInternshipStart()));%></td>
+                                        </tr>
+                                        <tr>
+                                            <td>End Date:</td>
+                                            <td><%out.print(myFormat1.format(internship.getInternshipEnd()));%></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Monthly Salary:</td>
+                                            <td>$ <%out.print(df2.format(internship.getInternshipPay()));%></td>
+                                        </tr>
+                                        <tr>
+                                            <td> Supervisor:</td>
+                                            <td><%out.print(internship.getInternshipSupervisor());%> (<%out.print(internship.getInternshipSupervisorEmail());%>)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                
+                        <%
+                        }}}
+                        %>
+                        
                         <div class ="row">
                             <div class="12u 12u(xsmall)">
                                 <h2 class="align-center">Status History</h2>

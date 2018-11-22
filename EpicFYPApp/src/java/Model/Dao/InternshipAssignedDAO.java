@@ -6,7 +6,6 @@
 package Model.Dao;
 
 import Controller.ConnectionManager;
-import Model.Entity.InternshipAssigned;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,6 +34,26 @@ public class InternshipAssignedDAO {
         }
 
         return true;
+    }
+    
+    public static int getInternshipIDbyInternshipStudentID(int internshipStudentID){
+        int internshipID = 0;
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT internshipID FROM internshipassigned WHERE internshipStudentID=?");
+            stmt.setInt(1, internshipStudentID);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                internshipID = rs.getInt(1); 
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return internshipID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return internshipID;
     }
     
 
