@@ -139,7 +139,7 @@ public class addTrip extends HttpServlet {
                     textPart.setText(final_Text);
                     multipart.addBodyPart(textPart);
                     message.setContent(multipart);
-                    message.setSubject("New Trip Match");
+                    message.setSubject("Its a match!!");
                     Transport.send(message);
                 } catch (Exception e) {
                     System.out.println(e);

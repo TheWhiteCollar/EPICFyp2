@@ -120,7 +120,7 @@
 
         <jsp:include page="header.jsp" />
         
-        <jsp:include page="AdminPortalPermission.jsp" />
+        <jsp:include page="PartnerPortalPermission.jsp" />
 
         <!-- Main -->
         <section id="main" class="wrapper">

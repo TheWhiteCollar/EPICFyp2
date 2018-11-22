@@ -51,8 +51,8 @@
                                 String cont = (String) request.getParameter("cont");
                             %>
                         </p>
-                        
-                         <p style="text-align:center; color: red">
+
+                        <p style="text-align:center; color: red">
 
                             <%
                                 String Admin_ErrorMsg = (String) request.getAttribute("Admin_ErrorMsg");
@@ -62,7 +62,18 @@
                                 }
                             %>
                         </p>
-                        
+
+                        <p style="text-align:center; color: red">
+
+                            <%
+                                String Company_ErrorMsg = (String) request.getAttribute("Company_ErrorMsg");
+
+                                if (Company_ErrorMsg != null) {
+                                    out.print(Company_ErrorMsg);
+                                }
+                            %>
+                        </p>
+
                         <p style="text-align:center; color: lime">
 
                             <%
