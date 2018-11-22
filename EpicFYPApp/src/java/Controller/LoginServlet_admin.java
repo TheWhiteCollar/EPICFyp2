@@ -6,12 +6,8 @@
 package Controller;
 
 import Model.Dao.AdminDAO;
-import Model.Dao.UserDAO;
 import Model.Entity.Admin;
-import Model.Entity.User;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,7 +50,7 @@ public class LoginServlet_admin extends HttpServlet {
             admin = AdminDAO.getAdminByLogin(userid, password);
             if (admin != null) {
                 session.setAttribute("Admin", admin);
-                response.sendRedirect("index_admin.jsp");
+                response.sendRedirect("AdminPortal_trips.jsp");
                 return;
             }
         }
