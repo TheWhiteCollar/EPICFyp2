@@ -530,6 +530,7 @@
                         <input type="submit" value="Create a Trip!" style="width:100%">
                     </form>
                 </div>
+            </div>
 
                 <div id="addCountry" class="tabcontent">
                     <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>              
