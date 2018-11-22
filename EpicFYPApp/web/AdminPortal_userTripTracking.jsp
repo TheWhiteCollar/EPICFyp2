@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Model.Dao.TripsDAO"%>
 <%@page import="Model.Entity.Trip"%>
 <%@page import="Model.Dao.UserDAO"%>
@@ -39,32 +40,27 @@
         
         <jsp:include page="AdminPortalPermission.jsp" />
 
-        <!-- Main -->
-        <section id="main" class="wrapper">
+      
+        <section class="wrapper">
+            
             <div class="container">
-
                 <header class="major">
-                    <h2>Tracking Users' Applications</h2>
+                    <h3>Tracking Users' Applications</h3>
                 </header>
-
-
-        </section>
-        <section>
-            <div class="container">
-                <table class = "alt">
+                <table class = "alt" style="font-size:14px;">
                     <thead>
                         <tr>
-                            <th class = "align-center">#</th>
-                            <th>Trip Title</th>
-                            <th>User name</th>
-                            <th class = "align-center">Current Status</th>
-                            <th class = "align-center">More information</th>
+                            <th class="align-center">#</th>
+                            <th class="align-center">Trip Title</th>
+                            <th class="align-center">User name</th>
+                            <th class="align-center">Current Status</th>
+                            <th class="align-center">More information</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <%
-                            ArrayList<TripStudent> allTripStudent = TripStudentDAO.getAllTripStudents();
+                            ArrayList<TripStudent> allTripStudent = TripStudentDAO.getLastStatusOfUserAndTripID();
                             int count = 0;
                             if (!allTripStudent.isEmpty()) {
                                 for (int i = 0; i < allTripStudent.size(); i++) {
@@ -78,11 +74,11 @@
                                     String tripName = trip.getTripTitle();
                         %>
                         <tr>
-                            <td class = "align-center"><%out.print(count);%></td>
-                            <td><% out.print(tripName); %></td>                      
-                            <td><% out.print(name); %></td>
-                            <td class = "align-center"><% out.print(ts.getTripStudentStatus()); %></td>
-                            <td class = "align-center"><button type="button" class="button" data-toggle="modal" data-target="#myModal<%out.print(i);%>">View</button></td>
+                            <td class="align-center"><%out.print(count);%></td>
+                            <td class="align-center"><% out.print(tripName); %></td>                      
+                            <td class="align-center"><% out.print(name); %></td>
+                            <td class="align-center"><% out.print(ts.getTripStudentStatus()); %></td>
+                            <td class="align-center"><button type="button" class="button" data-toggle="modal" data-target="#myModal<%out.print(i);%>">View</button></td>
                         </tr>
                         <%
                                 }
@@ -162,22 +158,33 @@
                                 <div class ="row">
                                     <div class ="12u 12u">
                                         <h2 class="align-center">Status History</h2>
-                                        <table>
+                                        <table class="alt">
                                             <thead>
                                                 <tr>
-                                                    <td class="align-center">#</td>
-                                                    <td class="align-center">Transaction</td>
-                                                    <td class="align-center">Amount</td>
+                                                    <td class="align-center">Status</td>
                                                     <td class="align-center">Date & Time</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <%
+                                                ArrayList<String> tripstudentStatusList = TripStudentDAO.getTripStatusByTripID(u.getUserEmail(), t.getTripID());
+                                                for(int x=0; x < tripstudentStatusList.size(); x++){
+                                                String statusTitle = tripstudentStatusList.get(x);
+                                                x++;
+                                                String statusDate = tripstudentStatusList.get(x);
+
+                                                //format the statusDate
+                                                SimpleDateFormat fromDB = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                                SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy , HH:mm a");
+                                                String reformattedDate = myFormat.format(fromDB.parse(statusDate));
+                                                %>
                                                 <tr>
-                                                    <td class="align-center"></td>
-                                                    <td class="align-center"></td>
-                                                    <td class="align-center"></td>
-                                                    <td class="align-center"></td>
+                                                    <td class="align-center"><%out.print(statusTitle);%></td>
+                                                    <td class="align-center"><%out.print(reformattedDate);%></td>
                                                 </tr>
+                                                <%
+                                                }
+                                                %>
                                             </tbody>
                                         </table>                                         
                                     </div>                            
