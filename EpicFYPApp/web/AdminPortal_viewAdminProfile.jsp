@@ -38,14 +38,21 @@
                     //parse string into JSON object
                     var admins = JSON.parse(adminJson);
                     console.log(admins);
-                    var adminHTML = '<div class="table-wrapper"><table>';
+                    var adminHTML = '<div class="table-wrapper"><table class="alt">';
+                    adminHTML +='<thead><tr><th class="align-center">Admin Username</th><th class="align-center">Level</th><th class="align-center">Action</th></tr></thead>';
+                    adminHTML +='<tbody>';
                     //loop through each admin and print out as rows in a table
                     $.each(admins, function (index, admin) {
-                          adminHTML += '<thead><tr><th>Admin Name : ' + admin.adminName + '</th><th colspan="3">'
-                                +  'Admin Level : '+ admin.adminLevel + "</th></tr></thead>";
-                        adminHTML += "<tr><td><form class=\"deleteAdmin\">";
-                        adminHTML += "<input style=\"display: none\" type=\"text\" name=\"adminName\" value=\"" + admin.adminName + "\"/>";
-                        adminHTML += "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Delete Admin</button></form></td>";                    
+                        adminHTML += '<tr><td class="align-center">' + admin.adminName + '</td>';
+                        adminHTML += '<td class="align-center">' + admin.adminLevel + '</td>';  
+                        if(admin.adminLevel =="admin"){
+                            adminHTML += "<td class=\"align-center\"><form class=\"deleteAdmin\">";
+                            adminHTML += "<input style=\"display: none\" type=\"text\" name=\"adminName\" value=\"" + admin.adminName + "\"/>";
+                            adminHTML += "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Delete</button></form></td></tr>"; 
+                        } else{
+                            adminHTML += '<td class="align-center">-</td></tr>';     
+                        }    
+                                           
                     });
                     
                     adminHTML += '</table></div>';
@@ -92,7 +99,7 @@
             function addingAdmin() {
                 let adminName = $('input[name="adminName"]').val();
                 let adminPassword = $('input[name="adminPassword"]').val();
-                let adminLevel = $('input[name="adminLevel"]').val();
+                let adminLevel = $("#adminLevel option:selected").val();
 
                 let adminData = {
                     "adminName": adminName,
@@ -132,14 +139,21 @@
                     //parse string into JSON object
                     var admins = JSON.parse(adminJson);
                     console.log(admins);
-                    var adminHTML = '<div class="table-wrapper"><table>';
+                    var adminHTML = '<div class="table-wrapper"><table class="alt">';
+                    adminHTML +='<thead><tr><th class="align-center">Admin Username</th><th class="align-center">Level</th><th class="align-center">Action</th></tr></thead>';
+                    adminHTML +='<tbody>';
                     //loop through each admin and print out as rows in a table
                     $.each(admins, function (index, admin) {
-                          adminHTML += '<thead><tr><th>Admin Name : ' + admin.adminName + '</th><th colspan="3">'
-                                +  'Admin Level : '+ admin.adminLevel + "</th></tr></thead>";
-                        adminHTML += "<tr><td><form class=\"deleteAdmin\">";
-                        adminHTML += "<input style=\"display: none\" type=\"text\" name=\"adminName\" value=\"" + admin.adminName + "\"/>";
-                        adminHTML += "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Delete Admin</button></form></td>";                    
+                        adminHTML += '<tr><td class="align-center">' + admin.adminName + '</td>';
+                        adminHTML += '<td class="align-center">' + admin.adminLevel + '</td>';  
+                             
+                        if(admin.adminLevel =="admin"){
+                            adminHTML += "<td class=\"align-center\"><form class=\"deleteAdmin\">";
+                            adminHTML += "<input style=\"display: none\" type=\"text\" name=\"adminName\" value=\"" + admin.adminName + "\"/>";
+                            adminHTML += "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Delete</button></form></td></tr>"; 
+                        } else{
+                            adminHTML += '<td class="align-center">-</td></tr>';     
+                        }                    
                     });
                     
                     adminHTML += '</table></div>';
@@ -200,28 +214,42 @@
                 </div>
                 </br>
                 
-                <div id="addAdmin" class="tabcontent">
+                <div id="addAdmin" class="tabcontentFade">
                     <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>              
-                    <div class = "row 50% uniform">
-                        <div class = "5u 12u(xsmall) table-wrapper" id="allAdmins"></div>
-                        <div class="11u 10u(xsmall)">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="2"><h4 class="align-center">Admin Name <input type="text" name="adminName" placeholder="E.g. Emily" /></h4></td>
-                                        <td colspan="2"><h4 class="align-center">Admin Password <input type="password" name="adminPassword"/></h4></td>
-                                        <td colspan="2"><h4 class="align-center">Admin Level <input type="text" name="adminLevel" placeholder="E.g. superuser" /></h4></td>
-                                        <td><button onclick="addingAdmin()">Add Admin</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>                
-                        </div>
+                    
+                    <div id="allAdmins">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="align-right">Admin Name</td>
+                                    <td><input type="text" name="adminName" placeholder="E.g. Emily" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-right">Admin Password</td>
+                                    <td><input type="password" name="adminPassword"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-right">Admin Level</td>
+                                    <td>    
+                                        <select id="adminLevel" name="adminLevel">
+                                            <option value="superadmin">superadmin</option>
+                                            <option value="admin">admin</option>
+                                        </select>
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="align-right"><button onclick="addingAdmin()" class="button">Add Admin</button></td>
+                                </tr>             
+                            </tbody>
+                        </table>                
+
                     </div>
                 </div>
                 
                 <div class ="container">
                 <br>
-                <h2>All Listed Admins</h2>
+                <h3 class="align-center">View all Admins</h3>
                 <div id="admins" class ="container"></div>
                 </div>
                 
