@@ -149,12 +149,32 @@ public class InternshipDAO {
         return internship;
     }
     
-    // get all existing partners
+    // get all existing internships
     public static ArrayList<Internship> getAllInternships() {
         ArrayList<Internship> result = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM internship ORDER BY internshipVacancy DESC;");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM internship ORDER BY internshipVacancy DESC");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.add(new Internship(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6), rs.getDouble(7),rs.getString(8),rs.getString(9),rs.getInt(10),rs.getInt(11), rs.getString(12)));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    // get all existing internships with vacant slots
+    public static ArrayList<Internship> getAllVacantInternships() {
+        ArrayList<Internship> result = new ArrayList<>();
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM internship WHERE internshipVacancy!=0 ORDER BY internshipVacancy DESC");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 result.add(new Internship(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6), rs.getDouble(7),rs.getString(8),rs.getString(9),rs.getInt(10),rs.getInt(11), rs.getString(12)));
