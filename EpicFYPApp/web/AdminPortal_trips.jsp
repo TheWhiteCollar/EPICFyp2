@@ -46,6 +46,20 @@
                 $.get('/EpicFYPApp/getAllTripsServlet', function (tripJson) {
                     //parse string into JSON object
                     var trips = JSON.parse(tripJson);
+                    
+                    
+//                    var file = document.getElementById('tripPicture').files[0];
+//                    var ajax = new XMLHttpRequest;
+//
+//                    var formData = new FormData;
+//                    formData.append('tripPicture', file);
+//
+//                    ajax.upload.addEventListener("progress", myProgressHandler, false);
+//                    ajax.addEventListener('load', myOnLoadHandler, false);
+//                    ajax.open('POST', 'upload.php', true);
+//                    ajax.send(formData);
+                    
+                    
                     console.log(trips);
                     var tripHTML = '<div class="table-wrapper"><table>';
                     //loop through each trip and print out as rows in a table
@@ -162,6 +176,19 @@
                     $.get('/EpicFYPApp/getAllTripsServlet', function (tripJson) {
                         //parse string into JSON object
                         var trips = JSON.parse(tripJson);
+                        
+                        
+//                        var file = document.getElementById('tripPicture').files[0];
+//                        var ajax = new XMLHttpRequest;
+//
+//                        var formData = new FormData;
+//                        formData.append('tripPicture', file);
+//
+//                        ajax.upload.addEventListener("progress", myProgressHandler, false);
+//                        ajax.addEventListener('load', myOnLoadHandler, false);
+//                        ajax.open('POST', 'upload.php', true);
+//                        ajax.send(formData);
+                        
                         console.log(trips);
                         $("#trips").empty();
                         var tripHTML = '<div class="table-wrapper"><table>';
@@ -529,7 +556,7 @@
                                 </p>
                             </div>
                             
-                        <form method="post" enctype="multipart/form-data">
+<!--                        <form method="post" enctype="multipart/form-data">
                             <div class = "12u 12u(xsmall)">
                                 <p>
                                     <input type="file" name="tripPicture" id="avatar" class="inputfile inputfile-1" style="visibility:hidden" accept="image/gif,image/jpeg,image/jpg,image/png,"/>
@@ -538,7 +565,7 @@
                                     </label>
                                 </p>
                             </div>
-                        </form>
+                        </form>-->
                                                     
 
                         <input type="submit" value="Create a Trip!" style="width:100%">
