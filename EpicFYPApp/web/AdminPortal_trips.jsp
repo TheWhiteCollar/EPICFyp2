@@ -514,11 +514,7 @@
                                     State: <input name="tripState" required type="text" placeholder="E.g: Johor">
                                 </p>
                             </div>
-                            <div class = "4u 12u(xsmall)">
-                                <p>
-                                    Max number of Sign ups: <input name="tripTotalSignUp" required type="number" min="1" placeholder="E.g: 24">
-                                </p>
-                            </div>
+                            
                         </div>
 
                         <div class = "row 50% uniform">
