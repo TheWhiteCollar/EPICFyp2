@@ -62,7 +62,8 @@
                                 tripHTML += '<div class = "4u 12u(xsmall)"><table  style="border:1px solid; border-radius: 10px;">';
                                 break;
                         }
-                        tripHTML += '<tr><td class = "align-center"><img src="' + 'images/Belgium.jpg' + '" width =100% height =auto></td></tr>';
+                       // tripHTML += '<tr><td class = "align-center"><img src="' + 'images/Belgium.jpg' + '" width =100% height =auto></td></tr>';
+                        tripHTML += '<tr><td class = "align-center"><img src="' + 'images/' + trip.tripCountry + '.jpg' + '" width =100% height =auto></td></tr>';
                         tripHTML += '<tr><td>' + trip.tripTitle + ' | ' + trip.tripCountry + ' | ' + trip.tripStart + ' - ' + trip.tripEnd + ' | SGD$' + trip.tripPrice + ' (Prices are inclusive of air fares)| ';
                         if (trip.activated) {
                             tripHTML += 'Activated</td></tr>';

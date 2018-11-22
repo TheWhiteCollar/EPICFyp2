@@ -322,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `trip` (
   `tripActivation` int(3) NOT NULL DEFAULT '0',
   `tripInterest` varchar(500) NOT NULL,
   `tripTotalSignUp` int(11) DEFAULT '0',
-  `tripPicture` mediumblob,
+  `tripPicture` varchar(100) NOT NULL,
   PRIMARY KEY (`tripID`),
   KEY `tripCountry` (`tripCountry`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;

@@ -85,7 +85,7 @@ public class TripsDAO {
                 }
 
                 ArrayList<String> emails = convertEmailString(tripUserEmail);
-                Trip trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getBlob(14),emails);
+                Trip trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getString(14),emails);
                 allTrips.add(trip);
             }
         } catch (SQLException ex) {
@@ -128,7 +128,7 @@ public class TripsDAO {
                 }
 
                 ArrayList<String> emails = convertEmailString(tripUserEmail);
-                Trip trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getBlob(14),emails);
+                Trip trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getString(14),emails);
                 allTrips.add(trip);
             }
         } catch (SQLException ex) {
@@ -161,7 +161,7 @@ public class TripsDAO {
             stmt.setInt(1, tripID);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getBlob(14), emailList);
+                trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getString(14), emailList);
             }
         } catch (SQLException ex) {
             Logger.getLogger(TripsDAO.class.getName()).log(Level.WARNING, "Cannot get trip with tripID: " + tripID, ex);
@@ -198,7 +198,7 @@ public class TripsDAO {
         return true;
     }
 
-    public static boolean insertTrip(String tripTitle, double tripPrice, Part tripItinerary, String tripDescription, String tripCountry, String tripState, Date tripStart, Date tripEnd, int tripDuration, int tripActivation, String tripInterest, int tripTotalSignUp,Part tripPicture) {
+    public static boolean insertTrip(String tripTitle, double tripPrice, Part tripItinerary, String tripDescription, String tripCountry, String tripState, Date tripStart, Date tripEnd, int tripDuration, int tripActivation, String tripInterest, int tripTotalSignUp,String tripPicture) {
         //get max tripID
         String sql1 = "SELECT CONVERT(MAX(CONVERT(tripID,UNSIGNED INTEGER)),CHAR(200)) FROM trip ";
 
@@ -233,6 +233,7 @@ public class TripsDAO {
             stmt.setInt(11, tripActivation);
             stmt.setString(12, tripInterest);
             stmt.setInt(13, tripTotalSignUp);
+            stmt.setString(14, tripPicture);
             
             //trip itinerary
             InputStream tripInputStream = null;
@@ -254,25 +255,25 @@ public class TripsDAO {
                 stmt.setNull(4, java.sql.Types.BLOB);
             }
             
-            //trip picture
-            InputStream tripPic = null;
-            if (tripPicture != null){
-                System.out.println(tripPicture.getName());
-                System.out.println(tripPicture.getSize());
-                System.out.println(tripPicture.getContentType());
-
-                try{
-                    tripPic = tripPicture.getInputStream();
-                }catch(IOException e){
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to upload picture into database", e);
-                }
-            }
-            
-            if(tripPic!= null){
-                stmt.setBinaryStream(14, tripPic, (int) tripPicture.getSize());
-            }else{
-                stmt.setNull(14, java.sql.Types.BLOB);
-            }
+//            //trip picture
+//            InputStream tripPic = null;
+//            if (tripPicture != null){
+//                System.out.println(tripPicture.getName());
+//                System.out.println(tripPicture.getSize());
+//                System.out.println(tripPicture.getContentType());
+//
+//                try{
+//                    tripPic = tripPicture.getInputStream();
+//                }catch(IOException e){
+//                    Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to upload picture into database", e);
+//                }
+//            }
+//            
+//            if(tripPic!= null){
+//                stmt.setBinaryStream(14, tripPic, (int) tripPicture.getSize());
+//            }else{
+//                stmt.setNull(14, java.sql.Types.BLOB);
+//            }
             
             stmt.executeUpdate();
         } catch (SQLException ex) {
@@ -334,25 +335,25 @@ public class TripsDAO {
                 stmt.setNull(3, java.sql.Types.BLOB);
             }
             
-            //trip picture
-            InputStream tripPic = null;
-            if (tripPicture != null){
-                System.out.println(tripPicture.getName());
-                System.out.println(tripPicture.getSize());
-                System.out.println(tripPicture.getContentType());
-
-                try{
-                    tripPic = tripPicture.getInputStream();
-                }catch(IOException e){
-                    Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to upload picture into database", e);
-                }
-            }
-            
-            if(tripPic!= null){
-                stmt.setBinaryStream(13, tripPic, (int) tripPicture.getSize());
-            }else{
-                stmt.setNull(13, java.sql.Types.BLOB);
-            }
+//            //trip picture
+//            InputStream tripPic = null;
+//            if (tripPicture != null){
+//                System.out.println(tripPicture.getName());
+//                System.out.println(tripPicture.getSize());
+//                System.out.println(tripPicture.getContentType());
+//
+//                try{
+//                    tripPic = tripPicture.getInputStream();
+//                }catch(IOException e){
+//                    Logger.getLogger(UserDAO.class.getName()).log(Level.WARNING, "Failed to upload picture into database", e);
+//                }
+//            }
+//            
+//            if(tripPic!= null){
+//                stmt.setBinaryStream(13, tripPic, (int) tripPicture.getSize());
+//            }else{
+//                stmt.setNull(13, java.sql.Types.BLOB);
+//            }
             
             int result = stmt.executeUpdate();
             if (result == 0) {
