@@ -50,7 +50,7 @@
                 <h3 class="align-center">Pending User Action</h3>
                 <div class="align-center">
                     <a href="AdminPortal_userInternshipTrackingConfirmed.jsp" class="button">Confirmed</a>
-                    <a href="#" class="button">Pending User Action</a>
+                    <a href="#" class="button" style="background-color: #FA9189;">Pending User Action</a>
                     <a href="AdminPortal_userInternshipTrackingPendingAdmin.jsp" class="button">Pending Admin Action</a>
                     <a href="AdminPortal_userInternshipTrackingRejected.jsp" class="button">Rejected</a>
                     <a href="AdminPortal_userInternshipTrackingCancelled.jsp" class="button">Cancelled</a>   
@@ -73,7 +73,7 @@
                         } else {
                         %>
 
-                        <table class="alt align-center" style="font-size:14px;">
+                        <table class="alt align-center" style="font-size:13px;">
                             <thead>
                                 <tr>
                                     <th class="align-center">#</th>
@@ -82,6 +82,7 @@
                                     <th class="align-center">Follow up</th>
                                     <th class="align-center">Date and Time</th>
                                     <th class="align-center">Info</th>
+                                    <th class="align-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,6 +107,30 @@
                                     <td><%out.print(pendingStatus);%></td>
                                     <td><%out.print(reformattedStr);%></td>
                                     <td><button type="button" class="button" data-toggle="modal" data-target="#myModalRejected<%out.print(i);%>">View</button></td>
+                                    
+                                    <td>
+                                        <form action="internshipPendingUserStatusAccept" method="post">
+                                            <input type="hidden" name="userEmail" value="<%out.print(ci.getInternshipUserEmail());%>">
+                                            <input type="hidden" name="continent" value="<%out.print(ci.getInternshipStudentContinent());%>">
+                                            <input type="hidden" name="status" value="<%out.print(status);%>">
+                                            <input type="submit" value ="Accept" style="font-size:13px;">
+                                        </form>                                  
+                                    </td>
+                                    <%
+                                    if(!status.equals("Interview scheduled - Pending interview")){
+                                   
+                                    %>
+                                    <td>
+                                        <form action="internshipPendingUserStatusReject" method="post">
+                                            <input type="hidden" name="userEmail" value="<%out.print(ci.getInternshipUserEmail());%>">
+                                            <input type="hidden" name="continent" value="<%out.print(ci.getInternshipStudentContinent());%>">
+                                            <input type="hidden" name="status" value="<%out.print(status);%>">
+                                            <input type="submit" value ="Reject" style="font-size:13px;">
+                                        </form>
+                                    </td>
+                                    <%
+                                        }
+                                    %>
                                 </tr>
                                 <%
                                     }
@@ -208,8 +233,11 @@
                     }
                 %>
 
-
+                
+                
             </div>
         </section>
+                
+         
     </body>
 </html>

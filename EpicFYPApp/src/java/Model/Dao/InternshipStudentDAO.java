@@ -307,4 +307,32 @@ public class InternshipStudentDAO {
 
     }
     
+    public static int getInternshipStudentIDfromUserContinetStatus(String userEmail, String continent){
+        
+        int internshipStudentID = 0;
+        
+        String sql = "SELECT * FROM internshipstudent WHERE internshipUserEmail=? AND internshipStudentContinent=? AND internshipStudentStatus='Internship offered - Pending user internship acceptance'";
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, userEmail);
+            stmt.setString(2, continent);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                internshipStudentID = rs.getInt(1);
+               
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return internshipStudentID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return internshipStudentID;
+    }
+    
+    
+    
 }

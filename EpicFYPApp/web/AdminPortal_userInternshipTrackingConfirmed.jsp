@@ -1,4 +1,5 @@
 
+<%@page import="Model.Dao.InternshipAssignedDAO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Model.Dao.InternshipDAO"%>
@@ -49,7 +50,7 @@
             <div class="container">
                 <h3 class="align-center">Pending User Action</h3>
                 <div class="align-center">
-                    <a href="#" class="button">Confirmed</a>
+                    <a href="#" class="button" style="background-color: #FA9189;">Confirmed</a>
                     <a href="AdminPortal_userInternshipTrackingPendingUser.jsp" class="button">Pending User Action</a>
                     <a href="AdminPortal_userInternshipTrackingPendingAdmin.jsp" class="button">Pending Admin Action</a>
                     <a href="AdminPortal_userInternshipTrackingRejected.jsp" class="button">Rejected</a>
@@ -99,6 +100,8 @@
                                         String[] statusCurrentPending = status.split("\\s*-\\s*");
                                         String currentStatus = statusCurrentPending[0];
                                         String pendingStatus = statusCurrentPending[1];
+                                        
+                                        int internshipID = InternshipAssignedDAO.getInternshipIDbyInternshipStudentID(ci.getInternshipStudentID());
                                 %>
                                 <tr>
                                     <td><%out.print(countpending);%></td>
@@ -110,7 +113,8 @@
                                     <td>
                                         <form action="internshipConfirmToCancel" method="post">
                                             <input type="hidden" name="userEmail" value="<%out.print(ci.getInternshipUserEmail());%>">
-                                            <input type="hidden" name="continent" value="<%out.print(ci.getInternshipStudentContinent());%>">
+                                            <input type="hidden" name="continent" value="<%out.print(ci.getInternshipStudentContinent());%>">                                         
+                                            <input type="hidden" name="internshipID" value="<%out.print(internshipID);%>">
                                             <input type="submit" value ="Cancel" style="font-size:14px;">
                                         </form>
                                     </td>

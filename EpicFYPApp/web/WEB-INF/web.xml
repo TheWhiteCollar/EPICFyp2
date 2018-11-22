@@ -124,6 +124,14 @@
         <servlet-name>internshipConfirmToCancel</servlet-name>
         <servlet-class>Controller.internshipConfirmToCancel</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>internshipPendingStatus</servlet-name>
+        <servlet-class>Controller.internshipPendingStatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>assignedInternshipToUser</servlet-name>
+        <servlet-class>Controller.assignedInternshipToUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TripsDAO</servlet-name>
         <url-pattern>/TripsDAO</url-pattern>
@@ -247,6 +255,14 @@
     <servlet-mapping>
         <servlet-name>internshipConfirmToCancel</servlet-name>
         <url-pattern>/internshipConfirmToCancel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>internshipPendingStatus</servlet-name>
+        <url-pattern>/internshipPendingStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>assignedInternshipToUser</servlet-name>
+        <url-pattern>/assignedInternshipToUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

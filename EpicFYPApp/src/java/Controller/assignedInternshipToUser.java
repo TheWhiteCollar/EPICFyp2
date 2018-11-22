@@ -1,11 +1,11 @@
-package Controller;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Controller;
 
+import Model.Dao.InternshipAssignedDAO;
 import Model.Dao.InternshipDAO;
 import Model.Dao.InternshipStudentDAO;
 import java.io.IOException;
@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "internshipConfirmToCancel", urlPatterns = {"/internshipConfirmToCancel"})
-public class internshipConfirmToCancel extends HttpServlet {
+@WebServlet(name = "assignedInternshipToUser", urlPatterns = {"/assignedInternshipToUser"})
+public class assignedInternshipToUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,28 +29,35 @@ public class internshipConfirmToCancel extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+      
         String userEmail = request.getParameter("userEmail");
         String countryContinent = request.getParameter("continent");
-        String internshipIDs = request.getParameter("internshipID");
-        int internshipID = Integer.parseInt(internshipIDs);
-                
+        String internshipIDS = request.getParameter("internshipID");
+        int internshipID = Integer.parseInt(internshipIDS);
+        
         //format date correctly
         java.util.Date dt = new java.util.Date();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(dt);
         
-        Boolean inserted = InternshipStudentDAO.addInternshipStudent(userEmail, countryContinent, "Internship Cancelled - No further action", currentTime, 4);
-        if(inserted){
-            InternshipDAO.updateInternshipVacancyIncrease(internshipID);
-            response.sendRedirect("AdminPortal_userInternshipTrackingConfirmed.jsp");
+        //14 supp 12 from 10
+        Boolean inserted1 = InternshipStudentDAO.addInternshipStudent(userEmail, countryContinent, "Internship offered - Pending user internship acceptance", currentTime, 2);
+        int internshipStudentID = InternshipStudentDAO.getInternshipStudentIDfromUserContinetStatus(userEmail, countryContinent);
+         
+        InternshipDAO.updateInternshipVacancyIncrease(internshipID);
+        
+        Boolean inserted2 = InternshipAssignedDAO.addInternshipAssigned(internshipID, internshipStudentID);
+        if(inserted1 && inserted2){
+            InternshipDAO.updateInternshipVacancyDecrease(internshipID);
+            response.sendRedirect("AdminPortal_userInternshipTrackingPendingAdmin.jsp");
             return;
-       
-        } else{
+        }else{
             response.sendRedirect("failureMessage.jsp");
-            return;
-        }  
-       
+        return;
+        }
+        
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
