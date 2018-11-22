@@ -5,13 +5,10 @@
  */
 package Controller;
 
-import Model.Dao.CompanyDAO;
 import Model.Dao.InternshipDAO;
 import Model.Dao.InternshipStudentDAO;
-import Model.Dao.TripStudentDAO;
 import Model.Entity.Company;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -88,7 +85,12 @@ public class addPartnerInternship extends HttpServlet {
         String internshipSupervisor = request.getParameter("internshipSupervisor");
         String internshipSupervisorEmail = request.getParameter("internshipSupervisorEmail");
         int internshipVacancy = Integer.parseInt(request.getParameter("internshipVacancy"));
-        int internshipPartnerID = Integer.parseInt(request.getParameter("internshipPartnerID"));
+        
+        Company company = null;
+        HttpSession sessionCom = request.getSession(true);
+        company = (Company) sessionCom.getAttribute("Company");
+        
+        int internshipPartnerID = company.getCompanyID();
 
         java.util.Date dt = new java.util.Date();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

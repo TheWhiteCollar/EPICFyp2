@@ -134,13 +134,6 @@
                     <form id="addPartnerInternship" enctype="multipart/form-data">
                         
                         <div class = "row 50% uniform">
-                            <div class = "1u 12u(xsmall)">
-                                <p>
-                                    Your ID: <input name="internshipPartnerID" required type="text" placeholder="E.g: 1">
-                                </p>
-                            </div>
-                        </div>
-                        <div class = "row 50% uniform">
                             <div class = "4u 12u(xsmall)">
                                 <p>
                                     Internship Position: <input required type="text" name="internshipName" placeholder="E.g: Data Analytics Intern">
