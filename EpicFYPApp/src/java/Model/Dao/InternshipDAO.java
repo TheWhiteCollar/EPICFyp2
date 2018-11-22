@@ -188,6 +188,27 @@ public class InternshipDAO {
         }
         return null;
     }
+    
+    public static ArrayList<Internship> getCompanyInternships(int partnerID) {
+        ArrayList<Internship> result = new ArrayList<>();
+        String sql = "SELECT * FROM internship WHERE internshipPartnerID=?";
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, partnerID);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.add(new Internship(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6), rs.getDouble(7),rs.getString(8),rs.getString(9),rs.getInt(10),rs.getInt(11), rs.getString(12)));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     //delete a particular partner row
     public static boolean deleteInternship(int internshipID) {
