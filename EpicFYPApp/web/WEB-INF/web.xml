@@ -120,6 +120,10 @@
         <servlet-name>addCountryInternship</servlet-name>
         <servlet-class>addCountryInternship</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>internshipConfirmToCancel</servlet-name>
+        <servlet-class>internshipConfirmToCancel</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TripsDAO</servlet-name>
         <url-pattern>/TripsDAO</url-pattern>
@@ -239,6 +243,10 @@
     <servlet-mapping>
         <servlet-name>addCountryInternship</servlet-name>
         <url-pattern>/addCountryInternship</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>internshipConfirmToCancel</servlet-name>
+        <url-pattern>/internshipConfirmToCancel</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

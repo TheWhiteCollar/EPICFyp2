@@ -82,6 +82,7 @@
                                     <th class="align-center">Follow up</th>
                                     <th class="align-center">Date and Time</th>
                                     <th class="align-center">Info</th>
+                                    <th class="align-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,6 +107,13 @@
                                     <td><%out.print(pendingStatus);%></td>
                                     <td><%out.print(reformattedStr);%></td>
                                     <td><button type="button" class="button" data-toggle="modal" data-target="#myModalRejected<%out.print(i);%>">View</button></td>
+                                    <td>
+                                        <form action="internshipConfirmToCancel" method="post">
+                                            <input type="hidden" name="userEmail" value="<%out.print(ci.getInternshipUserEmail());%>">
+                                            <input type="hidden" name="continent" value="<%out.print(ci.getInternshipStudentContinent());%>">
+                                            <input type="submit" value ="Cancel" style="font-size:14px;">
+                                        </form>
+                                    </td>
                                 </tr>
                                 <%
                                     }
