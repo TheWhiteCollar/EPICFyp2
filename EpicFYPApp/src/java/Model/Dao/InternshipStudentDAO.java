@@ -244,4 +244,27 @@ public class InternshipStudentDAO {
         }
         return internshipStudentID;
     }
+    
+    public static ArrayList<String> getInternshipsByUserFieldOfStudy(String userFieldOfStudy) {
+        ArrayList<String> result = new ArrayList<>();
+        String sql = "SELECT * FROM user";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getString(14).contains(userFieldOfStudy)) {
+                    result.add(rs.getString(1));
+                }
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(TripStudentDAO.class.getName()).log(Level.WARNING, "Cannot get user with userFieldOfStudy ", ex);
+        }
+        return null;
+
+    }
+    
 }

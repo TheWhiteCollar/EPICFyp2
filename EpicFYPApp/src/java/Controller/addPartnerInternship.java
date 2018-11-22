@@ -7,10 +7,24 @@ package Controller;
 
 import Model.Dao.CompanyDAO;
 import Model.Dao.InternshipDAO;
+import Model.Dao.InternshipStudentDAO;
+import Model.Dao.TripStudentDAO;
 import Model.Entity.Company;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Properties;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -75,14 +89,59 @@ public class addPartnerInternship extends HttpServlet {
         String internshipSupervisorEmail = request.getParameter("internshipSupervisorEmail");
         int internshipVacancy = Integer.parseInt(request.getParameter("internshipVacancy"));
         int internshipPartnerID = Integer.parseInt(request.getParameter("internshipPartnerID"));
-        
+
         java.util.Date dt = new java.util.Date();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String internshipDatetime = sdf.format(dt);
         String text = "fail";
-        
+
         if (internshipEnd.after(internshipStart) && InternshipDAO.addInternship(internshipName, internshipFieldOfStudy, internshipDescription, internshipStart, internshipEnd, internshipPay, internshipSupervisor, internshipSupervisorEmail, internshipVacancy, internshipPartnerID, internshipDatetime)) {
             text = "success";
+
+            // Retrieve all student email with interest related to this trip interest
+            ArrayList<String> result = new ArrayList<>();
+            result = InternshipStudentDAO.getInternshipsByUserFieldOfStudy(internshipFieldOfStudy);
+
+            // Send email
+            final String ourEmail = "smuis480@gmail.com";
+            final String ourPassword = "wecandothistgt";
+
+            // configuration for gmails
+            Properties props = System.getProperties();
+            props.put("mail.smtp.auth", true);
+            props.put("mail.smtp.starttls.enable", true);
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.user", ourEmail);
+            props.put("mail.smtp.password", ourPassword);
+            props.put("mail.smtp.auth", "true");
+
+            Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(ourEmail, ourPassword);
+                }
+            });
+
+            for (int i = 0; i < result.size(); i++) {
+                try {
+                    Message message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress(ourEmail));
+                    Address toAddress = new InternetAddress(result.get(i));
+                    message.setRecipient(Message.RecipientType.TO, toAddress);
+                    MimeBodyPart textPart = new MimeBodyPart();
+                    Multipart multipart = new MimeMultipart();
+                    String final_Text = "Hello, a new internship have been added and it seems to match your interest. ";
+                    textPart.setText(final_Text);
+                    multipart.addBodyPart(textPart);
+                    message.setContent(multipart);
+                    message.setSubject("Its a match!!");
+                    Transport.send(message);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
         }
 
         response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
