@@ -36,92 +36,6 @@
         <link rel="stylesheet" href="css/style-xlarge.css" />
         </noscript>
         
-        <script>
-            $(function() {
-                $.get('/EpicFYPApp/getAllUsersServlet', function(userJson){
-                    var users = JSON.parse(userJson);
-                     console.log(users);
-                    var userHTML = '<div class="table-wrapper"><table>';
-                    $.each(users, function(index, user) {
-                        userHTML += "<tr><td><form class=\"deleteUserServlet\">";
-                        userHTML += "<input style=\"display: none\" type=\"text\" name=\"userEmail\" value=\"" + user.userEmail + "\"/>";
-                        userHTML += 'User Name : ' + user.userFirstName + " " + user.userLastName + '\t' + "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Delete</button></form></td>";
-                    });
-                    userHTML += '</table></div>';
-                    $("#users").append(userHTML);
-                    
-                    $(".deleteUserServlet").submit(function(event) {
-                        var userEmail = "" + $(this).children("input").val();
-                        var deleteData = {
-                            'userEmail': userEmail
-                        };
-                        console.log(deleteData);
-                        
-                        $.post('/EpicFYPApp/deleteUserServlet', deleteData, function (response){
-                            if(response === "success") {
-                                $.notify({
-                                    message: 'Successfully deleted user'
-                                }, {
-                                    type: 'success'
-                                });
-                            } else {
-                                $.notify({
-                                    message: 'Fail to delete user'
-                                }, {
-                                    type: 'danger'
-                                });
-                            }
-                            reloadTable();
-                        })
-                        event.preventDefault();
-                    });
-                });
-            });
-                function reloadTable(){
-                    $.get('/EpicFYPApp/getAllUsersServlet', function(userJson){
-                        var users = JSON.parse(userJson);
-                        console.log(admins);
-                        
-                        var userHTML = '<div class="table-wrapper"><table>';
-                        $.each(users, function(index, user) {
-                        userHTML += "<tr><td><form class=\"deleteUserServlet\">";
-                        userHTML += "<input style=\"display: none\" type=\"text\" name=\"userEmail\" value=\"" + user.userEmail + "\"/>";
-                        userHTML += 'User Name : ' + user.userFirstName + " " + user.userLastName + '\t' + "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Delete</button></form></td>";
-                        });
-                        userHTML += '</table></div>';
-                        
-                        $("#users").empty();
-                        $("#users").append(userHTML);
-                    
-                        $(".deleteUserServlet").submit(function(event) {
-                            var userEmail = "" + $(this).children("input").val();
-                            var deleteData = {
-                                'userEmail': userEmail
-                            };
-                            console.log("userEmail: " + userEmail);
-
-                            $.post('/EpicFYPApp/deleteUserServlet', deleteData, function (response){
-                                if(response === "success") {
-                                    $.notify({
-                                        message: 'Successfully deleted user'
-                                    }, {
-                                        type: 'success'
-                                    });
-                                } else {
-                                    $.notify({
-                                        message: 'Fail to delete user'
-                                    }, {
-                                        type: 'danger'
-                                    });
-                                }
-                                reloadTable();
-                            })
-                            event.preventDefault();
-                        });
-                    });
-                }
-            
-        </script>
     </head>
     <body>
 
@@ -130,43 +44,24 @@
         
         <jsp:include page="AdminPortalPermission.jsp" />
 
-<!--         Main 
-        <section id="main" class="wrapper">
-            <div class="container">
-                 To add filter button 
-                <div class ="row uniform 50%">
-                    <div class ="6u 12u(xsmall)">
-                        <input id="searchBar" type="text" name="searchbar" placeholder="Search for student:"/>
-                    </div>
-                    <div class ="2u 12u(xsmall)">
-                        <input type="submit">
-                    </div>
-                    <div class ="4u 12u(xsmall)">
-                        <% //LocalDate todayDate = java.time.LocalDate.now(); %>
-                        <form method="get" action="#">
-                            <button type="submit" class="button">Download!</button>
-                        </form>
-                        <a href="/Users/xiuwenhime/NetBeansProjects/JavaApplication5/NewExcelFile.xls" download="<%// out.print(todayDate); %>_all_student_profile" class="button full_width">Download all student profiles</a>
-                    </div>
-                </div>
-            </div>
-        </section>-->
         <section class="wrapper">
             <div class="container">
                 <h2 class="align-center">Students' Profiles</h2>
+                
                 <%
                 ArrayList<User> allUsers = UserDAO.getAllUsers();
                         int count = 0;
                         if (!allUsers.isEmpty()) {
                 %>
-                <table class = "alt">
+                <table class="alt" style="font-size:14px;">
                     <thead>
                         <tr>
                             <th class = "align-center">#</th>
-                            <th>Name</th>
-                            <th>Email</th>
+                            <th class = "align-center">Name</th>
+                            <th class = "align-center">Email</th>
                             <th class = "align-center">Contact</th>
-                            <th class = "align-center">More information</th>
+                            <th class = "align-center">Info</th>
+                            <th class = "align-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -177,11 +72,17 @@
                                     count += 1;
                         %>
                         <tr>
-                            <td class = "align-center"><%out.print(count);%></td>
-                            <td><% out.print(u.getUserFirstName() + " " + u.getUserLastName()); %></td>                      
-                            <td><% out.print(u.getUserEmail()); %></td>
-                            <td class = "align-center"><% out.print(u.getUserPhone()); %></td>
-                            <td class = "align-center"><button type="button" class="button" data-toggle="modal" data-target="#myModal<%out.print(i);%>">View</button></td>
+                            <td class="align-center"><%out.print(count);%></td>
+                            <td class="align-center"><% out.print(u.getUserFirstName() + " " + u.getUserLastName()); %></td>                      
+                            <td class="align-center"><% out.print(u.getUserEmail()); %></td>
+                            <td class="align-center"><% out.print(u.getUserPhone()); %></td>
+                            <td class="align-center"><button type="button" class="button" data-toggle="modal" data-target="#myModal<%out.print(i);%>">View</button></td>
+                            <td class="align-center">
+                                <form action="deleteUserServlet" method="post">
+                                    <input type="hidden" name="userEmail" value="<%out.print(u.getUserEmail());%>">
+                                    <input type="submit" value ="Delete" style="font-size:14px;">
+                                </form>
+                            </td>
                             
                         </tr>
                         <%
@@ -340,11 +241,7 @@
                     }
                 %>
                 
-            <div class ="container">
-                <br>
-                <h2 class="align-center">Delete Students</h2>
-                <div id="users" class ="container"></div>
-            </div>  
+        
         </section>
         <script src="js/custom-file-input.js"></script>
         <script src="js/tabs.js"></script>
