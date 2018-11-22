@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.Dao.TripStudentDAO;
 import Model.Dao.TripsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,9 +17,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.Part;
-
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -43,7 +55,7 @@ public class addTrip extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -86,11 +98,56 @@ public class addTrip extends HttpServlet {
         int tripTotalSignUp = Integer.parseInt(request.getParameter("tripTotalSignUp"));
         //Part picPart = request.getPart("tripPicture");
         String text = "fail";
-
-        if (tripEnd.after(tripStart) && TripsDAO.insertTrip(tripTitle, tripPrice, null, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripTotalSignUp,null)) {
+        
+        if (tripEnd.after(tripStart) && TripsDAO.insertTrip(tripTitle, tripPrice, null, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripTotalSignUp, null)) {
             text = "success";
-        }
 
+            // Retrieve all student email with interest related to this trip interest
+            ArrayList<String> result = new ArrayList<>();
+            result = TripStudentDAO.getTripsByUserInterest(tripInterest);
+
+            // Send email
+            final String ourEmail = "smuis480@gmail.com";
+            final String ourPassword = "wecandothistgt";
+
+            // configuration for gmails
+            Properties props = System.getProperties();
+            props.put("mail.smtp.auth", true);
+            props.put("mail.smtp.starttls.enable", true);
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.user", ourEmail);
+            props.put("mail.smtp.password", ourPassword);
+            props.put("mail.smtp.auth", "true");
+            
+            Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(ourEmail, ourPassword);
+                }
+            });
+            
+            for (int i = 0; i < result.size(); i++) {
+                try {
+                    Message message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress(ourEmail));
+                    Address toAddress = new InternetAddress(result.get(i));
+                    message.setRecipient(Message.RecipientType.TO, toAddress);
+                    MimeBodyPart textPart = new MimeBodyPart();
+                    Multipart multipart = new MimeMultipart();
+                    String final_Text = "Hello, a new trip have been added and it seems to match your interest. ";
+                    textPart.setText(final_Text);
+                    multipart.addBodyPart(textPart);
+                    message.setContent(multipart);
+                    message.setSubject("New Trip Match");
+                    Transport.send(message);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+            
+        }
+        
         response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
         response.getWriter().write(text);       // Write response body.
