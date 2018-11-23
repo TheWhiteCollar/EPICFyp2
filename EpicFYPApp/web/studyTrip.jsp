@@ -53,13 +53,13 @@
                         var number = trip.tripActivation - trip.signedUpEmails.length;
                         switch (count % 3) {
                             case (1):
-                                tripHTML += '<div class ="row"><div class = "4u 12u(xsmall)"><table  style="border:1px solid; border-radius: 10px;">';
+                                tripHTML += '<div class ="row"><div class = "4u 12u(xsmall)"><table  style="border:1px solid; border-radius: 10px; font-size:12px;">';
                                 break;
                             case (2):
-                                tripHTML += '<div class = "4u 12u(xsmall)"><table  style="border:1px solid; border-radius: 10px;">';
+                                tripHTML += '<div class = "4u 12u(xsmall)"><table  style="border:1px solid; border-radius: 10px; font-size:12px;">';
                                 break;
                             case (0):
-                                tripHTML += '<div class = "4u 12u(xsmall)"><table  style="border:1px solid; border-radius: 10px;">';
+                                tripHTML += '<div class = "4u 12u(xsmall)"><table  style="border:1px solid; border-radius: 10px; font-size:12px;">';
                                 break;
                         }
                        // tripHTML += '<tr><td class = "align-center"><img src="' + 'images/Belgium.jpg' + '" width =100% height =auto></td></tr>';
@@ -85,7 +85,7 @@
                         if (trip.signedUpEmails.includes(user)) {
                             tripHTML += '<p><input disabled type="submit" value="Applied" class="full_width"/></form></p>';
                         } else {
-                            tripHTML += '<p><input type="submit" value="Apply" class="full_width"/></form></p>';
+                            tripHTML += '<p><input type="submit" value="Apply" class="full_width" style="font-size:13px;"/></form></p>';
                             
                         }
             <%
@@ -94,7 +94,7 @@
                         tripHTML += '<p><a href = "login.jsp?comefrom=studyTrip" class = "button full_width">Log in to apply</a></p>';
 
             <%}%>
-                        tripHTML += '<form action="tripDetails.jsp" method="post"><input type="text" name="tripID" style="display: none" value="' + trip.tripID + '"><input type = "submit" class="full_width" value = "More Details"></form>';
+                        tripHTML += '<form action="tripDetails.jsp" method="post"><input type="text" name="tripID" style="display: none" value="' + trip.tripID + '"><input type = "submit" class="full_width" value = "More Details" style="font-size:13px;"></form>';
                         tripHTML += '</td></tr>';
                         switch (count % 3) {
                             case (1):
@@ -126,77 +126,6 @@
                     <p>Let's Explore! Apply for your study trip here!</p>
                 </header>
 
-                <div class="tab">
-                    <button class="tablinks icon fa-filter" onclick="openUser(event, 'filter')"> Filtering Options</button>      
-                </div>
-
-                <div id="filter" class="tabcontentFade">
-                    <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
-                    
-                    <form action="storedAllFilteredVariables" method="post" onsubmit="showLoader()">
-                        <p>
-                        <div class = "row">
-                            <div class="3u 12u(small)">
-                                <% LocalDate todayDate = java.time.LocalDate.now(); %>
-                                Date (min):                                                                       
-                                <input name = "startDate" type="date" min = "<% out.print(todayDate); %>" >
-                            </div>
-                            <div class="3u 12u(small)">
-                                Date (max):                              
-                                <input name = "endDate" type="date" min = "<% out.print(todayDate);%>" >
-                            </div> 
-                        </div>
-                        </p>
-
-                        <p>
-                        <div class = "row">
-                            <div class="2u 12u(small)">
-                                Price (min):
-                                <input type="number" name ="price_min" placeholder = "0" min = "0">
-                            </div>
-                            <div class="2u 12u(small)">
-                                Price (max):
-                                <input type="number" name ="price_max" placeholder = "0" min = "0"> 
-                            </div>
-                            
-                            <div class="4u 12u(small)">
-                                Programmes:
-                                <select name="programmes" >
-                                    <option disabled selected value style="display:none"> - select a programme - </option>
-                                    <%
-                                        ArrayList<String> allInterests = InterestDAO.getInterests();
-
-                                        if (!allInterests.isEmpty()) {
-                                            for (int i = 0; i < allInterests.size(); i++) {
-                                                String interests = allInterests.get(i);
-                                    %>
-                                    <option value="<%out.print(interests);%>"><%out.print(interests);%></option>
-                                    <%    }
-                                        }
-                                    %>
-                                </select>
-                            </div>
-                            <div  class="4u 12u(small)">
-                                Country:
-                                <select name="country">
-                                    <option disabled selected value style="display:none"> - Select a Country - </option>
-                                    <%                                    
-                                        ArrayList<String> allCountryTrip = CountryTripDAO.getAllCountryTrip();
-                                        if (!allCountryTrip.isEmpty()) {
-                                            for (int i = 0; i < allCountryTrip.size(); i++) {
-                                                String country = allCountryTrip.get(i);
-                                    %>
-                                    <option value="<%out.print(country);%>"><%out.print(country);%></option>
-                                    <%    }
-                                        }
-                                    %>
-                                </select> 
-                            </div>
-                        </div>
-                        </p>
-                        <input type="submit" value="Apply" class="full_width"> 
-                    </form> 
-                </div>
 
                 <!-- Overseas trip populates -->
                 </br>

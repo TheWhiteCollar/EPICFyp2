@@ -5,15 +5,6 @@
 <%@page import="java.time.LocalDate"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
-    /*
-    Things undone:
-    - Edit button
-    - neaten up the javascript files
-    -
-    
-     */
-%>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -65,7 +56,7 @@
                         tripHTML += "<tr><td><form class=\"deleteTrip\">";
                         tripHTML += "<input style=\"display: none\" type=\"text\" name=\"tripID\" value=\"" + trip.tripID + "\"/>";
                         tripHTML += "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Delete Trip</button></form></td>";
-                        tripHTML += '<td><button type="button" class="button" data-toggle="" data-target="">Edit Button</button></td>' + '<td><button type="button" class="button" data-toggle="modal" data-target="#myModal">View users signed up</button></td>' + "</tr>";
+                        tripHTML += "</tr>";
                     });
                     tripHTML += '</table></div>';
                     //adding table html tag into div which has the id "trips"
@@ -183,7 +174,7 @@
                             tripHTML += "<tr><td><form class=\"deleteTrip\">";
                             tripHTML += "<input style=\"display: none\" type=\"text\" name=\"tripID\" value=\"" + trip.tripID + "\"/>";
                             tripHTML += "<button class = \"button\" type=\"submit\" id=\"asd" + index + "\">Delete Trip</button></form></td>";
-                            tripHTML += '<td><button type="button" class="button" data-toggle="" data-target="">Edit Button</button></td>' + '<td><button type="button" class="button" data-toggle="modal" data-target="#myModal">View users signed up</button></td>' + "</tr>";
+                            tripHTML += "</tr>";
                         });
                         tripHTML += '</table></div>';
                         $("#trips").append(tripHTML);
@@ -375,7 +366,7 @@
         <section id="main" class="wrapper">
 
             <!-- Tab for: filter, add trip form -->
-            <div class ="container">
+<!--            <div class ="container">
                 <div class="tab">
                     <button class="tablinks icon fa-filter" onclick="openUser(event, 'filterTab')"> Filtering Options</button>
                     <button class="tablinks" onclick="openUser(event, 'addTripTab')">Add a new Trip</button>
@@ -383,7 +374,7 @@
                     <button class="tablinks" onclick="openUser(event, 'addInterest')">Manage Interest tags</button>
                 </div>
 
-                <!-- For user to choose if they want to login as student or admin -->
+                 For user to choose if they want to login as student or admin 
                 <div id="filterTab" class="tabcontent">
 
                     <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
@@ -392,13 +383,13 @@
                         <div class = "row">
                             <div class="3u 12u(small)">
                                 <% LocalDate todayDate = java.time.LocalDate.now(); %>
-                                
+
                                 Date (min):                                                                       
-                                <input name = "startDate" type="date" min = "<% out.print(todayDate); %>" >
+                                <input name = "startDate" type="date" min = "<% //out.print(todayDate); %>" >
                             </div>
                             <div class="3u 12u(small)">
                                 Date (max):                              
-                                <input name = "endDate" type="date" min = "<% out.print(todayDate);%>" >
+                                <input name = "endDate" type="date" min = "<% //out.print(todayDate);%>" >
                             </div> 
                             <div class="3u 12u(small)">
                                 Price (min):
@@ -413,7 +404,7 @@
 
                         <input type="submit" value="Apply" style="width:100%"> 
                     </form> 
-                </div>
+                </div>-->
                             
 <!--                <form id="myDownloadServlet" action="AdminExcelFileDownload" method="post">
                     <input type="text" id="fileName" name="fileName" />
@@ -576,7 +567,7 @@
             <!-- this contains all the trips -->
             <div class ="container">
                 <br>
-                <h2>All Listed Trips</h2>
+                <h2 class="align-center">All Listed Trips</h2>
                 <div id="trips" class ="container"></div>
             </div>
 
