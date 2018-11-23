@@ -56,7 +56,6 @@ DROP TABLE IF EXISTS `company`;
 CREATE TABLE IF NOT EXISTS `company` (
   `companyID` int(11) NOT NULL AUTO_INCREMENT,
   `companyEmail` varchar(50) NOT NULL,
-  `companyTermsAndConditions` int(1) NOT NULL,
   `companyName` varchar(100) NOT NULL,
   `companyContact` int(15) NOT NULL,
   `companyContinent` varchar(100) NOT NULL,
@@ -65,7 +64,6 @@ CREATE TABLE IF NOT EXISTS `company` (
   `companyDescription` varchar(500) NOT NULL,
   `companyPassword` blob NOT NULL,
   `companySalt` varchar(6) NOT NULL,
-  `companyLogo` mediumblob,
   PRIMARY KEY (`companyID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -73,13 +71,13 @@ CREATE TABLE IF NOT EXISTS `company` (
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`companyID`, `companyEmail`, `companyTermsAndConditions`, `companyName`, `companyContact`, `companyContinent`, `companyCountry`, `companyState`, `companyDescription`, `companyPassword`,`companySalt`, `companyLogo`) VALUES
-(1, 'universtar.bt21sg@gmail.com', 0, 'Universtar BT21 Pte Ltd', 63483001, 'Asia', 'South Korea', 'Seoul', 'Universtar Pte Ltd is one of the top recruitment firm in  the region. It provides youths with the opportunity to step out of their comfort zone and experience the working life in another country.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', ''),
-(2, 'recruitments@daijob.com.jp', 0, 'Daijob Globals', 62211734, 'Asia', 'Japan', 'Tokyo', 'Daijob Globals Japan is one of the largest bilingual recruitment companies in Tokyo, that recruit mainly in IT, Sales & Marketing and Back Office.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', ''),
-(3, 'find@randstad.com.cn', 0, 'Randstad Canada', 61122335, 'America', 'Canada', 'Toronto', 'Here at Randstad Canada, we believes that the greatest job opportunities lie all around the world. The opportunities out there are endless.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', ''),
-(4, 'ask@goimr.com', 0, 'International Market Recruiters', 67531443, 'America', 'USA', 'Newark', 'International Market Recruiters is a financial services executive search firm that is home to some of the finest recruiters in the United States.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', ''),
-(5, 'wideRecruitment@ aliawide.com.au', 0, 'Australia Wide Engineering Recruitment', 92348343, 'Australia', 'Gold Coast', 'Queensland', 'As one of Australia\'s leading technical recruitment firms, we are increasingly being approached by foreign companies to source engineers and other technical staff for international opportunities. We are an attractive source of Australian engineers for international companies because of our long established engineering contacts and databases. Demand for our services has been particularly strong from the Middle East and Asia.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', ''),
-(6, 'applications@zip.com.ny', 0, 'Zip Recruiter Pte Ltd', 62213458, 'Europe', 'United Kingdom', 'York', 'Being the best in the region, Zip Recruiter believes in delivering a promise to youths that the world is filled with endless internship opportunities.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', '');
+INSERT INTO `company` (`companyID`, `companyEmail`, `companyName`, `companyContact`, `companyContinent`, `companyCountry`, `companyState`, `companyDescription`, `companyPassword`,`companySalt`) VALUES
+(1, 'universtar.bt21sg@gmail.com', 'Universtar BT21 Pte Ltd', 63483001, 'Asia', 'South Korea', 'Seoul', 'Universtar Pte Ltd is one of the top recruitment firm in  the region. It provides youths with the opportunity to step out of their comfort zone and experience the working life in another country.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564'),
+(2, 'recruitments@daijob.com.jp', 'Daijob Globals', 62211734, 'Asia', 'Japan', 'Tokyo', 'Daijob Globals Japan is one of the largest bilingual recruitment companies in Tokyo, that recruit mainly in IT, Sales & Marketing and Back Office.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564'),
+(3, 'find@randstad.com.cn', 'Randstad Canada', 61122335, 'America', 'Canada', 'Toronto', 'Here at Randstad Canada, we believes that the greatest job opportunities lie all around the world. The opportunities out there are endless.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564'),
+(4, 'ask@goimr.com', 'International Market Recruiters', 67531443, 'America', 'USA', 'Newark', 'International Market Recruiters is a financial services executive search firm that is home to some of the finest recruiters in the United States.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564'),
+(5, 'wideRecruitment@ aliawide.com.au', 'Australia Wide Engineering Recruitment', 92348343, 'Australia', 'Gold Coast', 'Queensland', 'As one of Australia\'s leading technical recruitment firms, we are increasingly being approached by foreign companies to source engineers and other technical staff for international opportunities. We are an attractive source of Australian engineers for international companies because of our long established engineering contacts and databases. Demand for our services has been particularly strong from the Middle East and Asia.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564'),
+(6, 'applications@zip.com.ny', 'Zip Recruiter Pte Ltd', 62213458, 'Europe', 'United Kingdom', 'York', 'Being the best in the region, Zip Recruiter believes in delivering a promise to youths that the world is filled with endless internship opportunities.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564');
 
 -- --------------------------------------------------------
 
