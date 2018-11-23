@@ -17,14 +17,15 @@ import java.sql.Blob;
     #6: userCitizenship (varchar 100)
     #7: userDOB (year 4)
     #8: userInterest (varchar 1000)
-    #9: userPassword (varchar 50)
-    #10: userOccupation (varchar 100)
-    #11: userResume (mediumblob)
-    #12: userIsEmailConfirm (varchar 10)
-    #13: userHighestEducation (varchar 100)
-    #14: userFieldOfStudy (varchar 100)
-    #15: userDescription (varchar 500)
-    #16: userSchool (varchar 50)
+    #9: userPassword (blob) - not in entity
+    #10: userSalt (varchar 6) - not in entity
+    #11: userOccupation (varchar 100)
+    #12: userResume (mediumblob)
+    #13: userIsEmailConfirm (varchar 10)
+    #14: userHighestEducation (varchar 100)
+    #15: userFieldOfStudy (varchar 100)
+    #16: userDescription (varchar 500)
+    #17: userSchool (varchar 50)
 
  */
 
@@ -38,7 +39,6 @@ public class User {
     private String userCitizenship;
     private int userDOB;
     private String userInterest;
-    private String userPassword;
     private String userOccupation;
     private Blob userResume;
     private String userIsEmailConfirm;
@@ -47,7 +47,7 @@ public class User {
     private String userDescription;
     private String userSchool;
 
-    public User(String userEmail, String userFirstName, String userLastName, int userPhone, String userGender, String userCitizenship, int userDOB, String userInterest, String userPassword, String userOccupation, Blob userResume, String userIsEmailConfirm, String userHighestEducation, String userFieldOfStudy, String userDescription, String userSchool) {
+    public User(String userEmail, String userFirstName, String userLastName, int userPhone, String userGender, String userCitizenship, int userDOB, String userInterest, String userOccupation, Blob userResume, String userIsEmailConfirm, String userHighestEducation, String userFieldOfStudy, String userDescription, String userSchool) {
         this.userEmail = userEmail;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
@@ -56,7 +56,6 @@ public class User {
         this.userCitizenship = userCitizenship;
         this.userDOB = userDOB;
         this.userInterest = userInterest;
-        this.userPassword = userPassword;
         this.userOccupation = userOccupation;
         this.userResume = userResume;
         this.userIsEmailConfirm = userIsEmailConfirm;
@@ -128,14 +127,6 @@ public class User {
 
     public void setUserInterest(String userInterest) {
         this.userInterest = userInterest;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
     }
 
     public String getUserOccupation() {
