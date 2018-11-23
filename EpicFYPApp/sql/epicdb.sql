@@ -126,7 +126,12 @@ INSERT INTO `countrytrip` (`countryTripName`) VALUES
 ('China'),
 ('India'),
 ('Myanmar'),
-('Singapore');
+('Singapore'),
+('South Korea'),
+('Australia'),
+('Indonesia'),
+('Malaysia'),
+('Greece');
 
 -- --------------------------------------------------------
 
@@ -348,21 +353,19 @@ CREATE TABLE IF NOT EXISTS `trip` (
   `tripPicture` varchar(100) NOT NULL,
   PRIMARY KEY (`tripID`),
   KEY `tripCountry` (`tripCountry`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `trip`
 --
 
 INSERT INTO `trip` (`tripID`, `tripTitle`, `tripPrice`, `tripItinerary`, `tripDescription`, `tripCountry`, `tripState`, `tripStart`, `tripEnd`, `tripDuration`, `tripActivation`, `tripInterest`, `tripTotalSignUp`, `tripPicture`) VALUES
-(1, 'EPIC Journey to China - Yunnan', 2500, NULL, 'The top 3 highlights of the trip is being able to witness social innovations throughout the city, taking part in community service and being part with Nature & Culture.', 'China', 'Yunnan', '2018-12-12', '2018-12-18', 6, 3, 'Nature and Culture, Academic and Business', 1, ''),
-(2, 'EPIC Journey to China - Shenzhen', 2100, NULL, 'You will be able to visit Nanshan Startup Hub together with a couple of Industry Company visits and partake in Business Networking.', 'China', 'Shenzhen', '2018-12-14', '2018-12-18', 4, 4, 'Academic and Business', 0, ''),
-(3, 'EPIC Journey to China - Xiamen', 2200, NULL, 'The main highlights of the trip is to have a deeper understanding of the heritage & culture of Xiamen, You will also have an opportunity to partake in the community services organized by a local voluntary group to reach out to the people who are in needs. Additionally, you will also be a chance to join a Design Thinking Workshop. ', 'China', 'Xiamen', '2018-12-24', '2018-09-29', 5, 4, 'Nature and Culture', 0, ''),
-(4, 'EPIC Journey to Myanmar - Yongon', 1800, NULL, 'The top 3 highlights of the trip is being able to witness social innovations throughout the city, taking part in community service and being part with Nature & Culture.', 'Myanmar', 'Yangon', '2018-11-27', '2018-12-04', 7, 4, 'Nature and Culture, Academic and Business', 10, ''),
-(5, 'EPIC Journey to Myanmar - Mandalay', 2000, NULL, 'The main highlights of the trip is to have a deeper understanding of the heritage & culture of Xiamen, You will also have an opportunity to partake in the nature exploration and admire the beauty that nature provides.', 'Myanmar', 'Mandalay', '2018-12-03', '2018-12-08', 5, 6, 'Nature and Culture', 10, ''),
-(6, 'EPIC Journey to Myanmar - Inle', 2300, NULL, 'Highlights of the trip would include nature exploration around the caves of Inle and also to understand the problems revolving around sustainable tourism. Heritage & Culture of Inle will also be shared with the students.', 'Myanmar', 'Inle', '2018-11-30', '2018-12-05', 5, 5, 'Nature and Culture', 15, ''),
-(7, 'EPIC Journey to India - Mumbai', 2800, NULL, 'Highlights of the trip would include nature exploration around the mountains and also to understand the problems revolving around sustainable tourism. Heritage & Culture of Inle will also be shared with the students.', 'India', 'Mumbai', '2018-12-27', '2018-12-31', 4, 5, 'Nature and Culture', 10, ''),
-(8, 'EPIC Journey to India - New Delhi', 3000, NULL, 'The main highlights of the trip is to have a deeper understanding of the heritage & culture of Xiamen, You will also have an opportunity to partake in the nature exploration and admire the beauty that nature provides. Also, there will be Entrepreneurship information system for you to learn more about the enterprises in New Delhi.', 'India', 'New Delhi', '2018-12-19', '2018-11-24', 5, 5, 'Nature and Culture, Academic and Business', 15, '');
+(1, 'EPIC Journey to South Korea - Seoul', 2500, NULL, 'The top 3 highlights of the trip is being able to witness social innovations throughout the city, taking part in community service and being part with Nature & Culture.', 'South Korea', 'Seoul', '2018-12-12', '2018-12-18', 6, 3, 'Nature and Culture, Academic and Business', 1, ''),
+(2, 'EPIC Journey to Australia - Sydney', 2200, NULL, 'The main highlights of the trip is to have a deeper understanding of the heritage & culture of Australia, You will also have an opportunity to partake in the community services organized by a local voluntary group to reach out to the people who are in needs. Additionally, you will also be a chance to join a Design Thinking Workshop. ', 'Australia', 'Sydney', '2018-12-24', '2018-09-29', 5, 4, 'Nature and Culture', 0, ''),
+(3, 'EPIC Journey to Myanmar - Yongon', 1800, NULL, 'The top 3 highlights of the trip is being able to witness social innovations throughout the city, taking part in community service and being part with Nature & Culture.', 'Myanmar', 'Yangon', '2018-11-27', '2018-12-04', 7, 4, 'Nature and Culture, Academic and Business', 10, ''),
+(4, 'EPIC Journey to Indonesia - Jakarta', 2000, NULL, 'The main highlights of the trip is to have a deeper understanding of the heritage & culture of Indonesia, You will also have an opportunity to partake in the nature exploration and admire the beauty that nature provides.', 'Indonesia', 'Jakarta', '2018-12-03', '2018-12-08', 5, 6, 'Nature and Culture', 10, ''),
+(5, 'EPIC Journey to Greece - Athens', 2300, NULL, 'Highlights of the trip would include nature exploration around the caves of Athens and also to understand the problems revolving around sustainable tourism. Heritage & Culture of Athens will also be shared with the students.', 'Greece', 'Athens', '2018-11-30', '2018-12-05', 5, 5, 'Nature and Culture', 15, ''),
+(6, 'EPIC Journey to India - Mumbai', 2800, NULL, 'Highlights of the trip would include nature exploration around the mountains and also to understand the problems revolving around sustainable tourism. Heritage & Culture of Inle will also be shared with the students.', 'India', 'Mumbai', '2018-12-27', '2018-12-31', 4, 5, 'Nature and Culture', 10, '');
 
 -- --------------------------------------------------------
 
