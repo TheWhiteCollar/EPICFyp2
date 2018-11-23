@@ -71,6 +71,7 @@
                             tripHTML += 'Not Activated (' + number + " more)</td></tr>";
                         }
                         tripHTML += '<tr><td>' + '<tr><td>';
+                        
 
             <%
                 User User = (User) session.getAttribute("User");
