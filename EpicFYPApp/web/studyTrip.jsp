@@ -68,7 +68,8 @@
                         if (trip.activated) {
                             tripHTML += 'Activated</td></tr>';
                         } else {
-                            tripHTML += 'Not Activated (' + number + " more)</td></tr>";
+                            //tripHTML += 'Not Activated (' + number + " more)</td></tr>";
+                            tripHTML += 'Not Activated ' + "</td></tr>";
                         }
                         tripHTML += '<tr><td>' + '<tr><td>';
                         
