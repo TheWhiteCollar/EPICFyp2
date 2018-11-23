@@ -83,7 +83,7 @@
 
                         var user = '${User.getUserEmail()}';
                         if (trip.signedUpEmails.includes(user)) {
-                            tripHTML += '<p><input disabled type="submit" value="Applied" class="full_width"/></form></p>';
+                            tripHTML += '<p><input disabled type="submit" value="Applied" class="full_width" style="font-size:13px;"/></form></p>';
                         } else {
                             tripHTML += '<p><input type="submit" value="Apply" class="full_width" style="font-size:13px;"/></form></p>';
                             

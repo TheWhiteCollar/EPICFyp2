@@ -57,7 +57,6 @@
                         User User = (User) session.getAttribute("User");
                         if (User != null) {
                             String email = User.getUserEmail();
-                            String password = User.getUserPassword();
                             String firstName = User.getUserFirstName();
                             String lastName = User.getUserLastName();
                             String occupation = User.getUserOccupation();
