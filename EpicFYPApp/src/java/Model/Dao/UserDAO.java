@@ -588,7 +588,7 @@ public class UserDAO {
             
             stmt.setString(1, userPassword);
             stmt.setString(2, resultStr);
-            stmt.setString(3, userPassword);
+            stmt.setString(3, resultStr);
             stmt.setString(4, userEmail);
             int result = stmt.executeUpdate();
             if (result == 0) {

@@ -64,7 +64,7 @@ public class signuppartnerServlet extends HttpServlet {
 
             // Insert into database
             //set companyLogo as null (cause unsolved),set companyID as 1 as incremeted automatically, set companyTermsAndConditions as 1 cause unsure about the checkbox
-            Boolean inserted = CompanyDAO.addCompany(companyEmail, 1, companyName, companyContact, companyContinent, companyCountry, companyState, companyDescription, companyPassword);
+            Boolean inserted = CompanyDAO.addCompany(companyEmail, companyName, companyContact, companyContinent, companyCountry, companyState, companyDescription, companyPassword);
 
             if (inserted == true) {
 

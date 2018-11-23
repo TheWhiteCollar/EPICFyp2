@@ -7,6 +7,7 @@ package Model.Dao;
 
 import Controller.ConnectionManager;
 import Model.Entity.Admin;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class AdminDAO {
     public static Admin getAdminByLogin(String adminName, String adminPassword) {
 
         Admin admin = null;
-        String sql = "SELECT * FROM admin WHERE adminName LIKE ? AND adminPassword LIKE ?";
+        String sql = "SELECT adminName, adminLevel FROM admin WHERE adminName=? AND adminPassword=AES_ENCRYPT(?,adminSalt)";
 
         try (Connection conn = ConnectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);) {
@@ -30,7 +31,7 @@ public class AdminDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 if (admin == null) {
-                    admin = new Admin(rs.getString(1), rs.getString(2), rs.getString(3));
+                    admin = new Admin(rs.getString(1), rs.getString(2));
                 }
             }
         } catch (SQLException ex) {
@@ -43,12 +44,22 @@ public class AdminDAO {
     // Update a particular admin row
     public static boolean updateAdmin(String adminName, String adminPassword) {
 
-        String sql = "UPDATE admin SET adminPassword=? WHERE adminName=?";
+        String sql = "UPDATE admin SET adminPassword=AES_ENCRYPT(?,?), adminSalt=? WHERE adminName=?";
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
+            //generate the salt
+            SecureRandom test = new SecureRandom();
+            int testresult = test.nextInt(1000000);
+            String resultStr = testresult + "";
+            if (resultStr.length() != 6) 
+                for (int x = resultStr.length(); x < 6; x++) resultStr = "0" + resultStr;
+            
+            
             stmt.setString(1, adminPassword);
-            stmt.setString(2, adminName);
+            stmt.setString(2, resultStr);
+            stmt.setString(3, resultStr);
+            stmt.setString(4, adminName);
             int result = stmt.executeUpdate();
             if (result == 0) {
                 return false;
@@ -62,13 +73,23 @@ public class AdminDAO {
     // Add a new admin row
     public static boolean addAdmin(String adminName, String adminPassword, String adminLevel) {
 
-        String sql = "INSERT INTO admin (adminName, adminPassword, adminLevel) VALUES (?,?,?)";
+        String sql = "INSERT INTO admin (adminName, adminPassword, adminSalt, adminLevel) VALUES (?,AES_ENCRYPT(?,?),?,?)";
 
         try (Connection conn = ConnectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setString(1, adminName);
+            
+            //generate the salt
+            SecureRandom test = new SecureRandom();
+            int testresult = test.nextInt(1000000);
+            String resultStr = testresult + "";
+            if (resultStr.length() != 6) 
+                for (int x = resultStr.length(); x < 6; x++) resultStr = "0" + resultStr;
+            
             stmt.setString(2, adminPassword);
-            stmt.setString(3, adminLevel);
+            stmt.setString(3, resultStr);
+            stmt.setString(4, resultStr);
+            stmt.setString(5, adminLevel);
             int result = stmt.executeUpdate();
             if (result == 0) {
                 return false;
@@ -100,10 +121,10 @@ public class AdminDAO {
         ArrayList<Admin> allAdmins = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("select * from admin");
+            PreparedStatement stmt = conn.prepareStatement("select adminName, adminLevel  from admin");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                allAdmins.add(new Admin(rs.getString(1), rs.getString(2), rs.getString(3)));
+                allAdmins.add(new Admin(rs.getString(1), rs.getString(2)));
             }
             rs.close();
             stmt.close();

@@ -64,13 +64,14 @@
                         }
                        // tripHTML += '<tr><td class = "align-center"><img src="' + 'images/Belgium.jpg' + '" width =100% height =auto></td></tr>';
                         tripHTML += '<tr><td class = "align-center"><img src="' + 'images/' + trip.tripCountry + '.jpg' + '" width =100% height =auto></td></tr>';
-                        tripHTML += '<tr><td>' + trip.tripTitle + ' | ' + trip.tripCountry + ' | ' + trip.tripStart + ' - ' + trip.tripEnd + ' | SGD$' + trip.tripPrice + ' (Prices are inclusive of air fares)| ';
+                        tripHTML += '<tr><td>' + ' <b> '+ trip.tripTitle + '</b> <br> ' + trip.tripCountry + ' <br> ' + trip.tripStart + ' - ' + trip.tripEnd + ' <br> ' +'  SGD$' + trip.tripPrice + ' (Prices are inclusive of air fares) ' + ' <br> ';
                         if (trip.activated) {
                             tripHTML += 'Activated</td></tr>';
                         } else {
                             tripHTML += 'Not Activated (' + number + " more)</td></tr>";
                         }
-                        tripHTML += '<tr><td>' + trip.tripDescription + '<tr><td>';
+                        tripHTML += '<tr><td>' + '<tr><td>';
+                        
 
             <%
                 User User = (User) session.getAttribute("User");
@@ -85,6 +86,7 @@
                             tripHTML += '<p><input disabled type="submit" value="Applied" class="full_width"/></form></p>';
                         } else {
                             tripHTML += '<p><input type="submit" value="Apply" class="full_width"/></form></p>';
+                            
                         }
             <%
             } else {
