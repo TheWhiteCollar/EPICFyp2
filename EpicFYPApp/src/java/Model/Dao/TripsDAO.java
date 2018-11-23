@@ -85,7 +85,7 @@ public class TripsDAO {
                 }
 
                 ArrayList<String> emails = convertEmailString(tripUserEmail);
-                Trip trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getString(14),emails);
+                Trip trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getString(13),emails);
                 allTrips.add(trip);
             }
         } catch (SQLException ex) {
@@ -128,7 +128,7 @@ public class TripsDAO {
                 }
 
                 ArrayList<String> emails = convertEmailString(tripUserEmail);
-                Trip trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getString(14),emails);
+                Trip trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getString(14),emails);
                 allTrips.add(trip);
             }
         } catch (SQLException ex) {
@@ -161,7 +161,7 @@ public class TripsDAO {
             stmt.setInt(1, tripID);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getString(14), emailList);
+                trip = new Trip(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getBlob(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDate(8), rs.getDate(9), rs.getInt(10), rs.getInt(11), rs.getString(12), rs.getString(13), emailList);
             }
         } catch (SQLException ex) {
             Logger.getLogger(TripsDAO.class.getName()).log(Level.WARNING, "Cannot get trip with tripID: " + tripID, ex);
@@ -198,7 +198,7 @@ public class TripsDAO {
         return true;
     }
 
-    public static boolean insertTrip(String tripTitle, double tripPrice, Part tripItinerary, String tripDescription, String tripCountry, String tripState, Date tripStart, Date tripEnd, int tripDuration, int tripActivation, String tripInterest, int tripTotalSignUp,String tripPicture) {
+    public static boolean insertTrip(String tripTitle, double tripPrice, Part tripItinerary, String tripDescription, String tripCountry, String tripState, Date tripStart, Date tripEnd, int tripDuration, int tripActivation, String tripInterest, String tripPicture) {
         //get max tripID
         String sql1 = "SELECT CONVERT(MAX(CONVERT(tripID,UNSIGNED INTEGER)),CHAR(200)) FROM trip ";
 
@@ -216,7 +216,7 @@ public class TripsDAO {
             return false;
         }
         //insert the trip
-        String sql2 = "INSERT INTO `trip` (`tripID`, `tripTitle`, `tripPrice`, `tripItinerary`, `tripDescription`,`tripCountry`, `tripState`, `tripStart`, `tripEnd`, `tripDuration`,`tripActivation`, `tripInterest`, `tripTotalSignUp`,`tripPicture`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql2 = "INSERT INTO `trip` (`tripID`, `tripTitle`, `tripPrice`, `tripItinerary`, `tripDescription`,`tripCountry`, `tripState`, `tripStart`, `tripEnd`, `tripDuration`,`tripActivation`, `tripInterest`,`tripPicture`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         maxTripID++;
         try (
                 Connection conn = ConnectionManager.getConnection();
@@ -232,8 +232,7 @@ public class TripsDAO {
             stmt.setInt(10, tripDuration);
             stmt.setInt(11, tripActivation);
             stmt.setString(12, tripInterest);
-            stmt.setInt(13, tripTotalSignUp);
-            stmt.setString(14, tripPicture);
+            stmt.setString(13, tripPicture);
             
             //trip itinerary
             InputStream tripInputStream = null;
