@@ -51,6 +51,7 @@
                     if (trip != null) {
                         String tripTitle = trip.getTripTitle();
                         String tripCountry = trip.getTripCountry();
+                        String tripDescription = trip.getTripDescription();
                         Date tripStart = trip.getTripStart();
                         Date tripEnd = trip.getTripEnd();
                         int tripDuration = trip.getTripDuration();
@@ -61,12 +62,13 @@
 
                 <header class="major align-center">
                     <h2>#<%out.print(tripID);%> : <%out.print(tripTitle);%></h2>
-                    <p>Trip Description</p>
+                    <p><%out.print(tripDescription);%></p>
                 </header>
+                
                 <div class="box alt">
                     <div class="row 50% uniform">	
 
-                        <div class="4u"></br><span class="image fit"><img src="images/Belgium.jpg" alt="" width="100%px" height=auto /></span></div>
+                        <div class="4u"></br><span class="image fit"><img src="images/<%out.print(tripCountry);%>.jpg" alt="" width="100%px" height=auto /></span></div>
 
                         <div class="8u">
 
