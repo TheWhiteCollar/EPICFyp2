@@ -85,11 +85,11 @@ public class addPartnerInternship extends HttpServlet {
         String internshipSupervisor = request.getParameter("internshipSupervisor");
         String internshipSupervisorEmail = request.getParameter("internshipSupervisorEmail");
         int internshipVacancy = Integer.parseInt(request.getParameter("internshipVacancy"));
-        
+
         Company company = null;
         HttpSession sessionCom = request.getSession(true);
         company = (Company) sessionCom.getAttribute("Company");
-        
+
         int internshipPartnerID = company.getCompanyID();
 
         java.util.Date dt = new java.util.Date();
@@ -131,13 +131,15 @@ public class addPartnerInternship extends HttpServlet {
                     message.setFrom(new InternetAddress(ourEmail));
                     Address toAddress = new InternetAddress(result.get(i));
                     message.setRecipient(Message.RecipientType.TO, toAddress);
-                    MimeBodyPart textPart = new MimeBodyPart();
-                    Multipart multipart = new MimeMultipart();
-                    String final_Text = "Hello, a new internship have been added and it seems to match your interest. ";
-                    textPart.setText(final_Text);
-                    multipart.addBodyPart(textPart);
-                    message.setContent(multipart);
-                    message.setSubject("Its a match!!");
+                    message.setSubject("EPIC PTE LTD - It's a match!!");
+                    String final_Text = "Hello, <br><br>";
+                    final_Text += "A new overseas internship has been added and it seems that it is a good fit for you! <br><br>";
+                    final_Text += "Login to http://18.191.179.30/EpicFYPApp/index.jsp to take a look at the overseas study trips! <br><br>";
+                    final_Text += "Wait no more, sign up for an overseas internship today!  <br><br>";
+                    final_Text += "Hope to see you soon. <br><br>";
+                    final_Text += "Regards, <br> EPIC <br>";
+                    final_Text += "<p style='font-size:0.67em;'>This is an automatically generated message. Please do not reply to this address. To contact us, please email to <a href='mailto:isabelle@epicjourney.sg' target='top'>isabelle@epicjourney.sg</a> or contact 90059601. </p><br><br>";
+                    message.setContent(final_Text, "text/html");
                     Transport.send(message);
                 } catch (Exception e) {
                     System.out.println(e);
