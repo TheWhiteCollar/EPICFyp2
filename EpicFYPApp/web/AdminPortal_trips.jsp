@@ -107,7 +107,7 @@
                     let tripInterest = $("#tripInterestInput option:selected").val();
                     let tripDescription = $('textarea[name="tripDescription"]').val();
                     let tripState = $('input[name="tripState"]').val();
-                                        
+
                     let tripData = {
                         "tripCountry": tripCountry,
                         "tripPrice": tripPrice,
@@ -118,9 +118,9 @@
                         "tripActivation": tripActivation,
                         "tripInterest": tripInterest,
                         "tripDescription": tripDescription,
-                        "tripState": tripState     
+                        "tripState": tripState
                     }
-                    
+
                     console.log(tripData);
                     //send ajax post request to addTrip servlet with tripData
                     $.post('/EpicFYPApp/addTrip', tripData, function (response) {
@@ -146,7 +146,7 @@
                     });
                     event.preventDefault();
                 });
-                
+
                 function reloadTable() {
                     $.get('/EpicFYPApp/getAllTripsServlet', function (tripJson) {
                         //parse string into JSON object
@@ -174,7 +174,7 @@
                         });
                         tripHTML += '</table></div>';
                         $("#trips").append(tripHTML);
-                        
+
                         $(".deleteTrip").submit(function (event) {
                             var tripID = "" + $(this).children("input").val();
                             var deleteData = {
@@ -208,7 +208,7 @@
                 getAllCountries();
                 getAllInterests()
             });
-            
+
             function getAllCountries() {
                 $.get('/EpicFYPApp/getAllCountries', function (countriesJSON) {
                     const countries = JSON.parse(countriesJSON);
@@ -360,15 +360,16 @@
         <section id="main" class="wrapper">
 
             <!-- Tab for: filter, add trip form -->
-<!--            <div class ="container">
+            <div class ="container">
                 <div class="tab">
-                    <button class="tablinks icon fa-filter" onclick="openUser(event, 'filterTab')"> Filtering Options</button>
+                    <!-- <button class="tablinks icon fa-filter" onclick="openUser(event, 'filterTab')"> Filtering Options</button> -->
                     <button class="tablinks" onclick="openUser(event, 'addTripTab')">Add a new Trip</button>
                     <button class="tablinks" onclick="openUser(event, 'addCountry')">Manage Country List</button>
                     <button class="tablinks" onclick="openUser(event, 'addInterest')">Manage Interest tags</button>
                 </div>
 
-                 For user to choose if they want to login as student or admin 
+                <!-- For user to choose if they want to login as student or admin -->
+                <!--
                 <div id="filterTab" class="tabcontent">
 
                     <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
@@ -376,34 +377,34 @@
                         <p>
                         <div class = "row">
                             <div class="3u 12u(small)">
-                                <% LocalDate todayDate = java.time.LocalDate.now(); %>
+                <% LocalDate todayDate = java.time.LocalDate.now(); %>
 
-                                Date (min):                                                                       
-                                <input name = "startDate" type="date" min = "<% //out.print(todayDate); %>" >
-                            </div>
-                            <div class="3u 12u(small)">
-                                Date (max):                              
-                                <input name = "endDate" type="date" min = "<% //out.print(todayDate);%>" >
-                            </div> 
-                            <div class="3u 12u(small)">
-                                Price (min):
-                                <input type="number" value = "min" min = "0">
-                            </div>
-                            <div class="3u 12u(small)">
-                                Price (max):
-                                <input type="number" value = "max" min = "0">
-                            </div>
-                        </div>
-                        </p>
+                Date (min):                                                                       
+                <input name = "startDate" type="date" min = "<% //out.print(todayDate); %>" >
+            </div>
+            <div class="3u 12u(small)">
+                Date (max):                              
+                <input name = "endDate" type="date" min = "<% //out.print(todayDate);%>" >
+            </div> 
+            <div class="3u 12u(small)">
+                Price (min):
+                <input type="number" value = "min" min = "0">
+            </div>
+            <div class="3u 12u(small)">
+                Price (max):
+                <input type="number" value = "max" min = "0">
+            </div>
+        </div>
+        </p>
 
-                        <input type="submit" value="Apply" style="width:100%"> 
-                    </form> 
-                </div>-->
-                            
-<!--                <form id="myDownloadServlet" action="AdminExcelFileDownload" method="post">
-                    <input type="text" id="fileName" name="fileName" />
-                    <input type="submit" id="btnDownload" name="btnDownload" value="Download Excel File" />
-                </form>     -->
+        <input type="submit" value="Apply" style="width:100%"> 
+    </form> 
+</div>
+                -->
+                <!--                <form id="myDownloadServlet" action="AdminExcelFileDownload" method="post">
+                                    <input type="text" id="fileName" name="fileName" />
+                                    <input type="submit" id="btnDownload" name="btnDownload" value="Download Excel File" />
+                                </form>     -->
 
                 <!-- Adding a trip -->
                 <div id="addTripTab" class="tabcontent">
@@ -415,24 +416,24 @@
                                     Programme Title: <input required type="text" name="tripTitle" placeholder="e.g: Winter Study Trip">
                                 </p>
                             </div>
-                            
+
                             <div class = "4u 12u(xsmall)">
-                            <p>
-                                Country of visit: 
-                                <select id="tripCountryInput" name="tripCountry" required>
-                                    <option disabled selected value style="display:none"> - Select a country - </option>
-                                    <%
-                                        ArrayList<String> result = CountryTripDAO.getAllCountryTrip();
-                                        if (!result.isEmpty()) {
-                                            for (int i = 0; i < result.size(); i++) {
-                                                String country = result.get(i);
-                                    %>
-                                    <option value="<%out.print(country);%>"><%out.print(country);%></option>
+                                <p>
+                                    Country of visit: 
+                                    <select id="tripCountryInput" name="tripCountry" required>
+                                        <option disabled selected value style="display:none"> - Select a country - </option>
+                                        <%
+                                            ArrayList<String> result = CountryTripDAO.getAllCountryTrip();
+                                            if (!result.isEmpty()) {
+                                                for (int i = 0; i < result.size(); i++) {
+                                                    String country = result.get(i);
+                                        %>
+                                        <option value="<%out.print(country);%>"><%out.print(country);%></option>
                                         <%  }
-                                        }
-                                    %>
-                                </select>
-                            </p>
+                                            }
+                                        %>
+                                    </select>
+                                </p>
                             </div>
                         </div>
 
@@ -442,13 +443,13 @@
                                     Trip Start (dd-mm-yyyy): <input name="tripStart" id="tripStart" required type="date" min = "<% out.print(todayDate); %>">
                                 </p>
                             </div>
-                                
+
                             <div class = "4u 12u(xsmall)">
                                 <p>
                                     Trip End (dd-mm-yyyy): <input name="tripEnd" id="tripEnd" required type="date" min = "<% out.print(todayDate); %>">
                                 </p>
                             </div>
-                                
+
                             <div class = "4u 12u(xsmall)">
                                 <p>
                                     Trip Duration (days): 
@@ -456,7 +457,7 @@
                                 </p>
                             </div>
                         </div>
-                                
+
                         <div class ="row 50% uniform">
                             <div class = "4u 12u(xsmall)">
                                 <p>
@@ -472,16 +473,16 @@
                                 <p>
                                     Programme Category tag: 
                                     <select name="tripInterest" id="tripInterestInput" required>
-                                    <option disabled selected value style="display:none"> - select a programme category - </option>
+                                        <option disabled selected value style="display:none"> - select a programme category - </option>
                                         <%
                                             ArrayList<String> allInterest = InterestDAO.getInterests();
                                             if (!allInterest.isEmpty()) {
                                                 for (int i = 0; i < allInterest.size(); i++) {
                                                     String interest = allInterest.get(i);
                                         %>
-                                            <option value="<%out.print(interest);%>"><%out.print(interest);%></option>
-                                            <%  }
-                                             }
+                                        <option value="<%out.print(interest);%>"><%out.print(interest);%></option>
+                                        <%  }
+                                            }
                                         %>
                                     </select>
                                 </p>
@@ -499,111 +500,115 @@
                                     State: <input name="tripState" required type="text" placeholder="E.g: Johor">
                                 </p>
                             </div>
-                            
+
                         </div>
 
-                        <div class = "row 50% uniform">
-                            <div class = "12u 12u(xsmall)">
-                                <p>
-                                    <input type="file" name="tripItineray" id="file-1" class="inputfile inputfile-1" style="visibility:hidden" accept=".pdf"/>
-                                    <label for="file-1" class = "button special"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> 
-                                        <span>Upload Trip Itinerary</span>
-                                    </label>
-                                </p>
-                            </div>
-                        </div>
+                        <!--
+            <div class = "row 50% uniform">
+                <div class = "12u 12u(xsmall)">
+                    <p>
+                        <input type="file" name="tripItineray" id="file-1" class="inputfile inputfile-1" style="visibility:hidden" accept=".pdf"/>
+                        <label for="file-1" class = "button special"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> 
+                            <span>Upload Trip Itinerary</span>
+                        </label>
+                    </p>
+                </div>
+            </div> 
+                        -->
+
+                        <br>
 
                         <input type="submit" value="Create a Trip!" style="width:100%">
                     </form>
                 </div>
-		</div>
-                <div id="addCountry" class="tabcontent">
-                    <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>              
-                    <div class = "row 50% uniform">
-                        <div class = "5u 12u(xsmall) table-wrapper" id="allCountries"></div>
-                        <div class="7u 12u(xsmall)">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="2"><h4 class="align-center">Add a new Country</h4></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" name="countryTripName" placeholder="E.g. Singapore" /></td>
-                                        <td><button onclick="addCountry()" class="button">Add Country</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>                
-                        </div>
-                    </div>
-                </div>
-
-                <div id="addInterest" class="tabcontent">
-                    <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
-                    <div class = "row 50% uniform">
-                        <div class = "5u 12u(xsmall) table-wrapper" id="allInterests"></div>
-                        <div class="7u 12u(xsmall)">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="2"><h4 class="align-center">Add a new Interest tag</h4></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" name="interestName" placeholder="E.g. Business" /></td>
-                                        <td><button onclick="addInterest()" class="button">Add Interest</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>                
-                        </div>
+            </div>
+            <div id="addCountry" class="tabcontent">
+                <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>              
+                <div class = "row 50% uniform">
+                    <div class = "5u 12u(xsmall) table-wrapper" id="allCountries"></div>
+                    <div class="7u 12u(xsmall)">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2"><h4 class="align-center">Add a new Country</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="countryTripName" placeholder="E.g. Singapore" /></td>
+                                    <td><button onclick="addCountry()" class="button">Add Country</button></td>
+                                </tr>
+                            </tbody>
+                        </table>                
                     </div>
                 </div>
             </div>
 
-            <!-- this contains all the trips -->
-            <div class ="container">
-                <br>
-                <h2 class="align-center">All Listed Trips</h2>
-                <div id="trips" class ="container"></div>
-            </div>
-
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">List of Users</h4>
-                        </div>
-                        <div class="modal-body">
-
-                            <table class = "alt" id = "tripUsers">
-                                <thead>
-                                <td>Number</td> 
-                                <td>Name</td>
-                                <td>Email</td>
-                                <td>Phone</td>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Number</td> 
-                                        <td>Name</td>
-                                        <td>Email</td>
-                                        <td>Phone</td> 
-                                    </tr>
-                                    <tr>
-                                        <td>Number</td> 
-                                        <td>Name</td>
-                                        <td>Email</td>
-                                        <td>Phone</td> 
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="button" data-dismiss="modal">Close</button>
-                        </div>
+            <div id="addInterest" class="tabcontent">
+                <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>
+                <div class = "row 50% uniform">
+                    <div class = "5u 12u(xsmall) table-wrapper" id="allInterests"></div>
+                    <div class="7u 12u(xsmall)">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2"><h4 class="align-center">Add a new Interest tag</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="interestName" placeholder="E.g. Business" /></td>
+                                    <td><button onclick="addInterest()" class="button">Add Interest</button></td>
+                                </tr>
+                            </tbody>
+                        </table>                
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- this contains all the trips -->
+        <div class ="container">
+            <br>
+            <h2 class="align-center">All Listed Trips</h2>
+            <div id="trips" class ="container"></div>
+        </div>
+
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">List of Users</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <table class = "alt" id = "tripUsers">
+                            <thead>
+                            <td>Number</td> 
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Phone</td>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Number</td> 
+                                    <td>Name</td>
+                                    <td>Email</td>
+                                    <td>Phone</td> 
+                                </tr>
+                                <tr>
+                                    <td>Number</td> 
+                                    <td>Name</td>
+                                    <td>Email</td>
+                                    <td>Phone</td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         function dateDiff() {
@@ -619,7 +624,7 @@
                 diffDays += 1;
                 document.getElementById("tripDuration").value = diffDays;
             } else {
-                alert ("Start date must be earlier than End date!");
+                alert("Start date must be earlier than End date!");
             }
         }
     </script>

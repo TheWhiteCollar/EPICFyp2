@@ -55,7 +55,7 @@ public class addTrip extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -96,9 +96,9 @@ public class addTrip extends HttpServlet {
         int tripActivation = Integer.parseInt(request.getParameter("tripActivation"));
         String tripInterest = request.getParameter("tripInterest");
         String tripPicture = request.getParameter("tripCountry");
-        
+
         String text = "fail";
-        
+
         if (tripEnd.after(tripStart) && TripsDAO.insertTrip(tripTitle, tripPrice, null, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripPicture)) {
             text = "success";
 
@@ -119,35 +119,37 @@ public class addTrip extends HttpServlet {
             props.put("mail.smtp.user", ourEmail);
             props.put("mail.smtp.password", ourPassword);
             props.put("mail.smtp.auth", "true");
-            
+
             Session session = Session.getInstance(props, new javax.mail.Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(ourEmail, ourPassword);
                 }
             });
-            
+
             for (int i = 0; i < result.size(); i++) {
                 try {
                     Message message = new MimeMessage(session);
                     message.setFrom(new InternetAddress(ourEmail));
                     Address toAddress = new InternetAddress(result.get(i));
                     message.setRecipient(Message.RecipientType.TO, toAddress);
-                    MimeBodyPart textPart = new MimeBodyPart();
-                    Multipart multipart = new MimeMultipart();
-                    String final_Text = "Hello, a new trip have been added and it seems to match your interest. ";
-                    textPart.setText(final_Text);
-                    multipart.addBodyPart(textPart);
-                    message.setContent(multipart);
-                    message.setSubject("Its a match!!");
+                    message.setSubject("EPIC PTE LTD - It's a match!!");
+                    String final_Text = "Hello, <br><br>";
+                    final_Text += "A new overseas study trip has been added and it seems that it is a good fit for you! <br><br>";
+                    final_Text += "Login to http://18.191.179.30/EpicFYPApp/index.jsp to take a look at the overseas study trips! <br><br>";
+                    final_Text += "Wait no more, sign up for an overseas study trip today!  <br><br>";
+                    final_Text += "Hope to see you soon. <br><br>";
+                    final_Text += "Regards, <br> EPIC <br>";
+                    final_Text += "<p style='font-size:0.67em;'>This is an automatically generated message. Please do not reply to this address. To contact us, please email to <a href='mailto:isabelle@epicjourney.sg' target='top'>isabelle@epicjourney.sg</a> or contact 90059601. </p><br><br>";
+                    message.setContent(final_Text, "text/html");
                     Transport.send(message);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
             }
-            
+
         }
-        
+
         response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
         response.getWriter().write(text);       // Write response body.
