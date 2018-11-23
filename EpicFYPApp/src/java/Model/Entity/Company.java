@@ -9,43 +9,36 @@ import java.sql.Blob;
 /* Database sequence
   #1: `companyID` int(11) NOT NULL,
   #2:`companyEmail` varchar(50) NOT NULL,
-  #3:`companyTermsAndConditions` int(1) NOT NULL,
-  #4:`companyName` varchar(100) NOT NULL,
-  #5:`companyContact` int(15) NOT NULL,
-  #6:`companyContinent` varchar(100) NOT NULL,
-  #7:`companyCountry` varchar(100) NOT NULL,
-  #8:`companyState` varchar(100) NOT NULL,
-  #9:`companyDescription` varchar(500) NOT NULL,
-  #10:`companyPassword` varchar(50) NOT NULL,
-  #11: `companyLogo` mediumblob
+  #3:`companyName` varchar(100) NOT NULL,
+  #4:`companyContact` int(15) NOT NULL,
+  #5:`companyContinent` varchar(100) NOT NULL,
+  #6:`companyCountry` varchar(100) NOT NULL,
+  #7:`companyState` varchar(100) NOT NULL,
+  #8:`companyDescription` varchar(500) NOT NULL,
+  #9:`companyPassword` blob NOT NULL,
+  #10:companySalt varchar(6)
     
  */
 
 public class Company {
     private int companyID;
     private String companyEmail;
-    private int companyTermsAndConditions;
     private String companyName;
     private int companyContact;
     private String companyContinent;
     private String companyCountry;
     private String companyState;
     private String companyDescription;
-    private String companyPassword;
-    private Blob companyLogo;
     
-    public Company(int companyID, String companyEmail, int companyTermsAndConditions, String companyName, int companyContact, String companyContinent, String companyCountry, String companyState, String companyDescription, String companyPassword, Blob companyLogo) {
+    public Company(int companyID, String companyEmail, String companyName, int companyContact, String companyContinent, String companyCountry, String companyState, String companyDescription) {
         this.companyID = companyID;
         this.companyEmail = companyEmail;
-        this.companyTermsAndConditions = companyTermsAndConditions;
         this.companyName = companyName;
         this.companyContact = companyContact;
         this.companyContinent = companyContinent;
         this.companyCountry = companyCountry;
         this.companyState = companyState;
         this.companyDescription = companyDescription;
-        this.companyPassword = companyPassword;
-        this.companyLogo = companyLogo;
         
     }
 
@@ -63,14 +56,6 @@ public class Company {
 
     public void setCompanyEmail(String companyEmail) {
         this.companyEmail = companyEmail;
-    }
-
-    public int getCompanyTermsAndConditions() {
-        return companyTermsAndConditions;
-    }
-
-    public void setCompanyTermsAndConditions(int companyTermsAndConditions) {
-        this.companyTermsAndConditions = companyTermsAndConditions;
     }
 
     public String getCompanyName() {
@@ -121,19 +106,4 @@ public class Company {
         this.companyDescription = companyDescription;
     }
 
-    public String getCompanyPassword() {
-        return companyPassword;
-    }
-
-    public void setCompanyPassword(String companyPassword) {
-        this.companyPassword = companyPassword;
-    }
-
-    public Blob getCompanyLogo() {
-        return companyLogo;
-    }
-
-    public void setCompanyLogo(Blob companyLogo) {
-        this.companyLogo = companyLogo;
-    }
 }

@@ -31,7 +31,8 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE IF NOT EXISTS `admin` (
   `adminName` varchar(15) NOT NULL,
-  `adminPassword` varchar(30) NOT NULL,
+  `adminPassword` blob NOT NULL,
+  `adminSalt` varchar(6) NOT NULL,
   `adminLevel` varchar(30) NOT NULL,
   PRIMARY KEY (`adminName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -40,10 +41,10 @@ CREATE TABLE IF NOT EXISTS `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`adminName`, `adminPassword`, `adminLevel`) VALUES
-('admin1', 'admin1234', 'superadmin'),
-('admin2', 'admin4567', 'admin'),
-('admin3', 'admin3456', 'admin');
+INSERT INTO `admin` (`adminName`, `adminPassword`,`adminSalt`, `adminLevel`) VALUES
+('admin1', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', 'superadmin'),
+('admin2', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', 'admin'),
+('admin3', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', 'admin');
 
 -- --------------------------------------------------------
 
@@ -62,7 +63,8 @@ CREATE TABLE IF NOT EXISTS `company` (
   `companyCountry` varchar(100) NOT NULL,
   `companyState` varchar(100) NOT NULL,
   `companyDescription` varchar(500) NOT NULL,
-  `companyPassword` varchar(50) NOT NULL,
+  `companyPassword` blob NOT NULL,
+  `companySalt` varchar(6) NOT NULL,
   `companyLogo` mediumblob,
   PRIMARY KEY (`companyID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
@@ -71,14 +73,13 @@ CREATE TABLE IF NOT EXISTS `company` (
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`companyID`, `companyEmail`, `companyTermsAndConditions`, `companyName`, `companyContact`, `companyContinent`, `companyCountry`, `companyState`, `companyDescription`, `companyPassword`, `companyLogo`) VALUES
-(0, 'information@bloomofyouth.com.hk', 0, 'The Bloom of Youth', 65822092, 'Asia', 'Hong Kong', 'Kowloon', 'The Bloom of Youth is the leading provider of high quality customized international internships abroad. We provide mutually beneficial and streamlined services for youths and organisations.', 'bloomofyouth123', ''),
-(1, 'universtar.bt21sg@gmail.com', 0, 'Universtar BT21 Pte Ltd', 63483001, 'Asia', 'South Korea', 'Seoul', 'Universtar Pte Ltd is one of the top recruitment firm in  the region. It provides youths with the opportunity to step out of their comfort zone and experience the working life in another country.', 'bt211234', ''),
-(2, 'recruitments@daijob.com.jp', 0, 'Daijob Globals', 62211734, 'Asia', 'Japan', 'Tokyo', 'Daijob Globals Japan is one of the largest bilingual recruitment companies in Tokyo, that recruit mainly in IT, Sales & Marketing and Back Office.', 'Daijob123', ''),
-(3, 'find@randstad.com.cn', 0, 'Randstad Canada', 61122335, 'America', 'Canada', 'Toronto', 'Here at Randstad Canada, we believes that the greatest job opportunities lie all around the world. The opportunities out there are endless.', 'Randstad123', ''),
-(4, 'ask@goimr.com', 0, 'International Market Recruiters', 67531443, 'America', 'USA', 'Newark', 'International Market Recruiters is a financial services executive search firm that is home to some of the finest recruiters in the United States.', 'IMR1234', ''),
-(5, 'wideRecruitment@ aliawide.com.au', 0, 'Australia Wide Engineering Recruitment', 92348343, 'Australia', 'Gold Coast', 'Queensland', 'As one of Australia\'s leading technical recruitment firms, we are increasingly being approached by foreign companies to source engineers and other technical staff for international opportunities. We are an attractive source of Australian engineers for international companies because of our long established engineering contacts and databases. Demand for our services has been particularly strong from the Middle East and Asia.', 'AWER1234', ''),
-(6, 'applications@zip.com.ny', 0, 'Zip Recruiter Pte Ltd', 62213458, 'Europe', 'United Kingdom', 'York', 'Being the best in the region, Zip Recruiter believes in delivering a promise to youths that the world is filled with endless internship opportunities.', 'ZR1234', NULL);
+INSERT INTO `company` (`companyID`, `companyEmail`, `companyTermsAndConditions`, `companyName`, `companyContact`, `companyContinent`, `companyCountry`, `companyState`, `companyDescription`, `companyPassword`,`companySalt`, `companyLogo`) VALUES
+(1, 'universtar.bt21sg@gmail.com', 0, 'Universtar BT21 Pte Ltd', 63483001, 'Asia', 'South Korea', 'Seoul', 'Universtar Pte Ltd is one of the top recruitment firm in  the region. It provides youths with the opportunity to step out of their comfort zone and experience the working life in another country.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', ''),
+(2, 'recruitments@daijob.com.jp', 0, 'Daijob Globals', 62211734, 'Asia', 'Japan', 'Tokyo', 'Daijob Globals Japan is one of the largest bilingual recruitment companies in Tokyo, that recruit mainly in IT, Sales & Marketing and Back Office.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', ''),
+(3, 'find@randstad.com.cn', 0, 'Randstad Canada', 61122335, 'America', 'Canada', 'Toronto', 'Here at Randstad Canada, we believes that the greatest job opportunities lie all around the world. The opportunities out there are endless.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', ''),
+(4, 'ask@goimr.com', 0, 'International Market Recruiters', 67531443, 'America', 'USA', 'Newark', 'International Market Recruiters is a financial services executive search firm that is home to some of the finest recruiters in the United States.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', ''),
+(5, 'wideRecruitment@ aliawide.com.au', 0, 'Australia Wide Engineering Recruitment', 92348343, 'Australia', 'Gold Coast', 'Queensland', 'As one of Australia\'s leading technical recruitment firms, we are increasingly being approached by foreign companies to source engineers and other technical staff for international opportunities. We are an attractive source of Australian engineers for international companies because of our long established engineering contacts and databases. Demand for our services has been particularly strong from the Middle East and Asia.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', ''),
+(6, 'applications@zip.com.ny', 0, 'Zip Recruiter Pte Ltd', 62213458, 'Europe', 'United Kingdom', 'York', 'Being the best in the region, Zip Recruiter believes in delivering a promise to youths that the world is filled with endless internship opportunities.', X'CEFCDD428BC709FB3A732C49B03E5148', '774564', '');
 
 -- --------------------------------------------------------
 
