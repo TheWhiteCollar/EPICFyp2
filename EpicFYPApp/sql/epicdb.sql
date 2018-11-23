@@ -289,7 +289,7 @@ INSERT INTO `internshipstudent` (`internshipStudentID`, `internshipUserEmail`, `
 (21, 'yijing.oon.2015@smu.edu.sg', 'Australia', 'Sent interest email - Waiting for user reply', '2018-11-23 13:30:00', 2),
 (22, 'yijing.oon.2015@smu.edu.sg', 'Australia', 'User accepts - Send email to schedule interview', '2018-11-23 13:40:00', 1),
 (23, 'yijing.oon.2015@smu.edu.sg', 'Australia', 'Sent interview schedule email - Waiting for user reply', '2018-11-23 13:50:00', 2),
-(24, 'yijing.oon.2015@smu.edu.sg', 'Australia', 'User withdraws from scheduled interview', '2018-11-23 14:00:00', 0),
+(24, 'yijing.oon.2015@smu.edu.sg', 'Australia', 'User withdraws from scheduled interview - No further action', '2018-11-23 14:00:00', 0),
 (25, 'rachael.low.2015@sis.smu.edu.sg', 'Europe', 'User submitted application - Admin to review application', '2018-11-21 13:14:00', 1),
 (26, 'rachael.low.2015@sis.smu.edu.sg', 'Europe', 'Admin approves application - Send email with internship details for interest confirmation', '2018-11-21 14:20:00', 1),
 (27, 'rachael.low.2015@sis.smu.edu.sg', 'Europe', 'Sent interest email - Waiting for user reply', '2018-11-21 15:03:00', 2),
