@@ -85,6 +85,7 @@
                             tripHTML += '<p><input disabled type="submit" value="Applied" class="full_width"/></form></p>';
                         } else {
                             tripHTML += '<p><input type="submit" value="Apply" class="full_width"/></form></p>';
+                            
                         }
             <%
             } else {

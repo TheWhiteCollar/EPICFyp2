@@ -58,7 +58,7 @@
                         double tripPrice = trip.getTripPrice();
                         boolean tripActivated = trip.getActivated();
                         int studentsToActivation = trip.getTripActivation() - trip.getNumberOfStudents();
-                %>
+                %> 
 
                 <header class="major align-center">
                     <h2>#<%out.print(tripID);%> : <%out.print(tripTitle);%></h2>
