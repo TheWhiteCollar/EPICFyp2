@@ -292,7 +292,7 @@ public class InternshipStudentDAO {
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                if (rs.getString(14).contains(userFieldOfStudy)) {
+                if (rs.getString(15).contains(userFieldOfStudy)) {
                     result.add(rs.getString(1));
                 }
             }
