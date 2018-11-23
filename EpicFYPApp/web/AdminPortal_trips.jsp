@@ -46,7 +46,6 @@
                 $.get('/EpicFYPApp/getAllTripsServlet', function (tripJson) {
                     //parse string into JSON object
                     var trips = JSON.parse(tripJson);
-                    
                     console.log(trips);
                     var tripHTML = '<div class="table-wrapper"><table>';
                     //loop through each trip and print out as rows in a table
@@ -117,8 +116,7 @@
                     let tripInterest = $("#tripInterestInput option:selected").val();
                     let tripDescription = $('textarea[name="tripDescription"]').val();
                     let tripState = $('input[name="tripState"]').val();
-                    let tripTotalSignUp = $('input[name="tripTotalSignUp"]').val();
-                    
+                                        
                     let tripData = {
                         "tripCountry": tripCountry,
                         "tripPrice": tripPrice,
@@ -129,8 +127,7 @@
                         "tripActivation": tripActivation,
                         "tripInterest": tripInterest,
                         "tripDescription": tripDescription,
-                        "tripState": tripState,
-                        "tripTotalSignUp": tripTotalSignUp
+                        "tripState": tripState     
                     }
                     
                     console.log(tripData);
@@ -163,7 +160,6 @@
                     $.get('/EpicFYPApp/getAllTripsServlet', function (tripJson) {
                         //parse string into JSON object
                         var trips = JSON.parse(tripJson);
-                        
                         console.log(trips);
                         $("#trips").empty();
                         var tripHTML = '<div class="table-wrapper"><table>';
@@ -368,9 +364,7 @@
 
         <!-- Header -->
         <jsp:include page="header.jsp" />
-        
         <jsp:include page="AdminPortalPermission.jsp" />
-
         <!-- Main -->
         <section id="main" class="wrapper">
 
@@ -526,12 +520,12 @@
                                     </label>
                                 </p>
                             </div>
-   
+                        </div>
+
                         <input type="submit" value="Create a Trip!" style="width:100%">
                     </form>
                 </div>
-            </div>
-
+		</div>
                 <div id="addCountry" class="tabcontent">
                     <span onclick="this.parentElement.style.display = 'none'" class="toprightClose">&times</span>              
                     <div class = "row 50% uniform">
@@ -619,10 +613,6 @@
                 </div>
             </div>
         </section>
-                                    
-    <script>
-        
-    </script>
 
     <script>
         function dateDiff() {
@@ -646,4 +636,3 @@
     <script src="js/tabs.js"></script>
 </body>
 </html>
-

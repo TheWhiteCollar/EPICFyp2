@@ -95,12 +95,11 @@ public class addTrip extends HttpServlet {
         int tripDuration = Integer.parseInt(request.getParameter("tripDuration"));
         int tripActivation = Integer.parseInt(request.getParameter("tripActivation"));
         String tripInterest = request.getParameter("tripInterest");
-        int tripTotalSignUp = Integer.parseInt(request.getParameter("tripTotalSignUp"));
         String tripPicture = request.getParameter("tripCountry");
         
         String text = "fail";
         
-        if (tripEnd.after(tripStart) && TripsDAO.insertTrip(tripTitle, tripPrice, null, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripTotalSignUp, tripPicture)) {
+        if (tripEnd.after(tripStart) && TripsDAO.insertTrip(tripTitle, tripPrice, null, tripDescription, tripCountry, tripState, tripStart, tripEnd, tripDuration, tripActivation, tripInterest, tripPicture)) {
             text = "success";
 
             // Retrieve all student email with interest related to this trip interest
